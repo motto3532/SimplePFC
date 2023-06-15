@@ -55,10 +55,10 @@
             </objects>
             <point key="canvasLocation" x="1886.2595419847328" y="-27.464788732394368"/>
         </scene>
-        <!--contentStoryboard-->
+        <!--Content-->
         <scene sceneID="81g-3N-osP">
             <objects>
-                <viewControllerPlaceholder referencedIdentifier="contentStoryboard" id="nQ8-a0-V0C" sceneMemberID="viewController"/>
+                <viewControllerPlaceholder storyboardName="Content" id="nQ8-a0-V0C" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9U4-Aa-eGW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2584" y="-27"/>
@@ -71,6 +71,12 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="n3N-UD-0qr">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" systemColor="systemMintColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
                         <navigationBarAppearance key="scrollEdgeAppearance">
                             <color key="backgroundColor" systemColor="systemMintColor"/>
                             <textAttributes key="titleTextAttributes">
