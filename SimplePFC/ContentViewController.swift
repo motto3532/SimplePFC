@@ -1,13 +1,13 @@
 //
-//  MealViewController.swift
+//  ContentViewController.swift
 //  SimplePFC
 //
-//  Created by Atto Rari on 2023/06/10.
+//  Created by Atto Rari on 2023/06/15.
 //
 
 import UIKit
 
-class MealViewController: UIViewController {
+class ContentViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
