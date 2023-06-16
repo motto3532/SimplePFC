@@ -15,6 +15,8 @@
 		3C1589C12A3454540026470F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C1589BF2A3454540026470F /* LaunchScreen.storyboard */; };
 		3C6EEABA2A3B4EE3009F8223 /* Content.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EEAB92A3B4EE3009F8223 /* Content.storyboard */; };
 		3C7546D02A3B47D300BC6390 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7546CF2A3B47D300BC6390 /* ContentViewController.swift */; };
+		3CA235D42A3C948A00B0687E /* AddMeal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CA235D32A3C948A00B0687E /* AddMeal.storyboard */; };
+		3CA235D62A3C949A00B0687E /* AddMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CA235D52A3C949A00B0687E /* AddMealViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		3C1589C22A3454540026470F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3C6EEAB92A3B4EE3009F8223 /* Content.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Content.storyboard; sourceTree = "<group>"; };
 		3C7546CF2A3B47D300BC6390 /* ContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
+		3CA235D32A3C948A00B0687E /* AddMeal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddMeal.storyboard; sourceTree = "<group>"; };
+		3CA235D52A3C949A00B0687E /* AddMealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,8 +68,10 @@
 				3C1589B62A3454520026470F /* SceneDelegate.swift */,
 				3C1589B82A3454520026470F /* ViewController.swift */,
 				3C7546CF2A3B47D300BC6390 /* ContentViewController.swift */,
+				3CA235D52A3C949A00B0687E /* AddMealViewController.swift */,
 				3C1589BA2A3454520026470F /* Main.storyboard */,
 				3C6EEAB92A3B4EE3009F8223 /* Content.storyboard */,
+				3CA235D32A3C948A00B0687E /* AddMeal.storyboard */,
 				3C1589BD2A3454540026470F /* Assets.xcassets */,
 				3C1589BF2A3454540026470F /* LaunchScreen.storyboard */,
 				3C1589C22A3454540026470F /* Info.plist */,
@@ -133,6 +139,7 @@
 			files = (
 				3C6EEABA2A3B4EE3009F8223 /* Content.storyboard in Resources */,
 				3C1589C12A3454540026470F /* LaunchScreen.storyboard in Resources */,
+				3CA235D42A3C948A00B0687E /* AddMeal.storyboard in Resources */,
 				3C1589BE2A3454540026470F /* Assets.xcassets in Resources */,
 				3C1589BC2A3454520026470F /* Main.storyboard in Resources */,
 			);
@@ -147,6 +154,7 @@
 			files = (
 				3C7546D02A3B47D300BC6390 /* ContentViewController.swift in Sources */,
 				3C1589B92A3454520026470F /* ViewController.swift in Sources */,
+				3CA235D62A3C949A00B0687E /* AddMealViewController.swift in Sources */,
 				3C1589B52A3454520026470F /* AppDelegate.swift in Sources */,
 				3C1589B72A3454520026470F /* SceneDelegate.swift in Sources */,
 			);

@@ -49,11 +49,26 @@
                             <constraint firstItem="ACE-jQ-sWu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ihY-XJ-mM3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="シンプルPFC" id="9Gq-O9-lDB"/>
+                    <navigationItem key="navigationItem" title="シンプルPFC" id="9Gq-O9-lDB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="0w4-Dv-fdH">
+                            <color key="tintColor" systemColor="systemPinkColor"/>
+                            <connections>
+                                <segue destination="MBd-6o-C5h" kind="presentation" id="r5w-hb-6wg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1886.2595419847328" y="-27.464788732394368"/>
+        </scene>
+        <!--AddMeal-->
+        <scene sceneID="eHE-kg-6qG">
+            <objects>
+                <viewControllerPlaceholder storyboardName="AddMeal" id="MBd-6o-C5h" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IEI-Fu-m3t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2604" y="-89"/>
         </scene>
         <!--Content-->
         <scene sceneID="81g-3N-osP">
@@ -61,7 +76,7 @@
                 <viewControllerPlaceholder storyboardName="Content" id="nQ8-a0-V0C" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9U4-Aa-eGW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2584" y="-27"/>
+            <point key="canvasLocation" x="2604" y="14"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="s6H-1s-NDS">
@@ -100,6 +115,9 @@
         </systemColor>
         <systemColor name="systemMintColor">
             <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemPinkColor">
+            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
