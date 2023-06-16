@@ -7,23 +7,36 @@
 
 import UIKit
 
-class ContentViewController: UIViewController {
+class ContentViewController: UIViewController, UITableViewDataSource {
 
+    @IBOutlet weak var proteinLabel: UILabel!
+    @IBOutlet weak var fatLabel: UILabel!
+    @IBOutlet weak var carbonhydrateLabel: UILabel!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        tableView.dataSource = self
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    var mealContents: [String] = []
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return mealContents.count
     }
-    */
-
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
+ 
+        cell.textLabel?.text = mealContents[indexPath.row]
+        cell.textLabel?.textColor = UIColor.black
+        cell.backgroundColor = UIColor.white
+        
+        return cell
+    }
+    
 }

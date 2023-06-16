@@ -71,6 +71,12 @@
                         </constraints>
                     </view>
                     <size key="freeformSize" width="393" height="1000"/>
+                    <connections>
+                        <outlet property="carbonhydrateLabel" destination="8sU-bj-lyQ" id="FVR-Vn-YSa"/>
+                        <outlet property="fatLabel" destination="UOa-2E-Von" id="wVm-2Y-bTU"/>
+                        <outlet property="proteinLabel" destination="pO1-qS-dWc" id="q0F-z5-2BV"/>
+                        <outlet property="tableView" destination="NbR-kV-N2F" id="GDm-Ll-hhu"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5l1-dP-XBW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
