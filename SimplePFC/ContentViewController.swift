@@ -19,9 +19,11 @@ class ContentViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         
         tableView.dataSource = self
+        
     }
     
-    var mealContents: [String] = []
+    //食事内容を受け取る変数
+    var mealContents:[(Name: String, protein: Int, fat: Int, carbohydrate: Int)] = []
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -32,11 +34,15 @@ class ContentViewController: UIViewController, UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell(style: .default, reuseIdentifier: "cell")
  
-        cell.textLabel?.text = mealContents[indexPath.row]
+        cell.textLabel?.text = mealContents[indexPath.row].Name
         cell.textLabel?.textColor = UIColor.black
         cell.backgroundColor = UIColor.white
         
         return cell
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print(self.mealContents)
+        tableView.reloadData()
+    }
 }

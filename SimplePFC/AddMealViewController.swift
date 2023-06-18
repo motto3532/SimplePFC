@@ -51,8 +51,10 @@ class AddMealViewController: UIViewController, UITextFieldDelegate {
             meal.carbohydrate = Int(carbohydrate) ?? 0
         }
         
-        //contentViewControllerに渡す処理
-        print("入力された食事内容は\(meal)")
+        //contentViewControllerに値を渡す処理
+        let contentView = ContentViewController()
+        contentView.mealContents.append(meal)
+        self.dismiss(animated: true)
     }
     
     //文字キーボードを閉じる
