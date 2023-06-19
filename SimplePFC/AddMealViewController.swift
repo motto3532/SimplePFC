@@ -28,32 +28,33 @@ class AddMealViewController: UIViewController, UITextFieldDelegate {
         carbohydrateTextField.keyboardType = UIKeyboardType.numberPad
         
     }
-    
-    //食事内容を格納する変数
-    var meal: (Name: String, protein: Int, fat: Int, carbohydrate: Int) = ("", 0, 0, 0)
+//
+//    //食事内容を格納する変数
+//    var meal: (Name: String, protein: Int, fat: Int, carbohydrate: Int) = ("", 0, 0, 0)
     
     @IBAction func addButtonAction(_ sender: Any) {
         //食事内容をtextField毎に格納
         //食事名
         if let foodName = foodNameTextField.text {
-            meal.Name = foodName
+            UserDefaults.standard.set(foodName, forKey: "name")
         }
         //タンパク質
         if let protein = proteinTextField.text {
-            meal.protein = Int(protein) ?? 0
+            let newProtein = Int(protein) ?? 0
+            UserDefaults.standard.set(newProtein, forKey: "protein")
         }
         //脂質
         if let fat = fatTextField.text {
-            meal.fat = Int(fat) ?? 0
+            let newFat = Int(fat) ?? 0
+            UserDefaults.standard.set(newFat, forKey: "fat")
         }
         //炭水化物
         if let carbohydrate = carbohydrateTextField.text {
-            meal.carbohydrate = Int(carbohydrate) ?? 0
+            let newCarbohydrate = Int(carbohydrate) ?? 0
+            UserDefaults.standard.set(newCarbohydrate, forKey: "carbohydrate")
         }
         
-        //contentViewControllerに値を渡す処理
-        let contentView = ContentViewController()
-        contentView.mealContents.append(meal)
+        //modalを閉じる
         self.dismiss(animated: true)
     }
     

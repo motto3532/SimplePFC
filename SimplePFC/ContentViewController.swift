@@ -23,7 +23,7 @@ class ContentViewController: UIViewController, UITableViewDataSource {
     }
     
     //食事内容を受け取る変数
-    var mealContents:[(Name: String, protein: Int, fat: Int, carbohydrate: Int)] = []
+    var mealContents: [(Name: String, protein: Int, fat: Int, carbohydrate: Int)] = []
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -42,6 +42,17 @@ class ContentViewController: UIViewController, UITableViewDataSource {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        //userDefaultsから入力された値を取得
+        guard let newMealName = UserDefaults.standard.string(forKey: "name") else {
+            return
+        }
+        let newMealProtein = UserDefaults.standard.integer(forKey: "protein")
+        let newMealfat = UserDefaults.standard.integer(forKey: "fat")
+        let newMealcarbohydrate = UserDefaults.standard.integer(forKey: "carbohydrate")
+        
+        //mealContentsに格納
+        mealContents.append((Name: newMealName, protein: newMealProtein, fat: newMealfat, carbohydrate: newMealcarbohydrate))
+        
         print(self.mealContents)
         tableView.reloadData()
     }
