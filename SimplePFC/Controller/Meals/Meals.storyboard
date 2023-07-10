@@ -27,19 +27,10 @@
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8l-Xv-ucg">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q8l-Xv-ucg" customClass="ShowPFCView" customModule="SimplePFC" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="42.333333333333329" width="373" height="150"/>
-                                        <subviews>
-                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EWE-tB-3K2">
-                                                <rect key="frame" x="5" y="5" width="363" height="140"/>
-                                            </containerView>
-                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="EWE-tB-3K2" secondAttribute="bottom" constant="5" id="1Nk-Rx-gPA"/>
-                                            <constraint firstItem="EWE-tB-3K2" firstAttribute="leading" secondItem="Q8l-Xv-ucg" secondAttribute="leading" constant="5" id="U38-bX-PFL"/>
-                                            <constraint firstAttribute="trailing" secondItem="EWE-tB-3K2" secondAttribute="trailing" constant="5" id="YaC-nB-H3M"/>
-                                            <constraint firstItem="EWE-tB-3K2" firstAttribute="top" secondItem="Q8l-Xv-ucg" secondAttribute="top" constant="5" id="ngb-RF-Idq"/>
                                             <constraint firstAttribute="height" constant="150" id="sez-Sg-zgT"/>
                                         </constraints>
                                     </view>
@@ -73,7 +64,6 @@
                     </view>
                     <connections>
                         <outlet property="addMealButton" destination="JOV-yo-FWY" id="qfH-ct-dHy"/>
-                        <outlet property="containerView" destination="EWE-tB-3K2" id="GsX-E0-CO9"/>
                         <outlet property="tableView" destination="vJa-qM-TMI" id="pfy-Fn-GXh"/>
                     </connections>
                 </viewController>

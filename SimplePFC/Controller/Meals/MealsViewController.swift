@@ -15,20 +15,12 @@ final class MealsViewController: UIViewController {
         }
     }
     
-    @IBOutlet weak var containerView: UIView! {
-        didSet {
-            let showPFCViewNib = UINib(nibName: "showPFCView", bundle: nil)
-            if let showPFCView = showPFCViewNib.instantiate(withOwner: nil).first as? UIView {
-                containerView.addSubview(showPFCView)
-            }
-        }
-    }
-    
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
-//            tableView.delegate = self
-//            tableView.dataSource = self
-            tableView.isHidden = true
+            tableView.register(UINib.init(nibName: MealTableViewCell.className, bundle: nil), forCellReuseIdentifier: MealTableViewCell.className)
+            tableView.delegate = self
+            tableView.dataSource = self
+//            tableView.isHidden = true
         }
     }
     
@@ -41,18 +33,20 @@ final class MealsViewController: UIViewController {
     }
 }
 
-//extension MealsViewController: UITableViewDelegate {
-//
-//}
-//
-//extension MealsViewController: UITableViewDataSource {
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 1
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        return UITableViewCell()
-//    }
-//}
+extension MealsViewController: UITableViewDelegate {
+}
+
+extension MealsViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
+            fatalError("Fail to load cell.")
+        }
+        return cell
+    }
+}
 
