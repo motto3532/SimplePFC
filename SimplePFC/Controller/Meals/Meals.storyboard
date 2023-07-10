@@ -64,6 +64,7 @@
                     </view>
                     <connections>
                         <outlet property="addMealButton" destination="JOV-yo-FWY" id="qfH-ct-dHy"/>
+                        <outlet property="pfcView" destination="Q8l-Xv-ucg" id="Dnf-Lw-1Dp"/>
                         <outlet property="tableView" destination="vJa-qM-TMI" id="pfy-Fn-GXh"/>
                     </connections>
                 </viewController>

@@ -7,29 +7,39 @@
 
 import UIKit
 
-class ShowPFCView: UIView {
-    @IBOutlet weak var calorieLabel: UILabel!
-    @IBOutlet weak var proteinLabel: UILabel!
-    @IBOutlet weak var fatLabel: UILabel!
-    @IBOutlet weak var carbohydrateLabel: UILabel!
+final class ShowPFCView: UIView {
+    @IBOutlet private weak var calorieLabel: UILabel!
+    @IBOutlet private weak var proteinLabel: UILabel!
+    @IBOutlet private weak var fatLabel: UILabel!
+    @IBOutlet private weak var carbohydrateLabel: UILabel!
+    
+    private var calorie = 0
+    private var protein = 0
+    private var fat = 0
+    private var carbohydrate = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        loadNib()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        configure()
+        loadNib()
     }
     
-    private func configure() {
+    func configure(meal: MealModel) {
         loadNib()
         
-        calorieLabel.text = "カロリー：100kcal"
-        proteinLabel.text = "タンパク質：20g"
-        fatLabel.text = "脂質：3g"
-        carbohydrateLabel.text = "炭水化物：10g"
+        self.calorie += meal.carolie
+        self.protein += meal.protein
+        self.fat += meal.fat
+        self.carbohydrate += meal.carbohydrate
+        
+        calorieLabel.text = "カロリー：\(self.calorie)"
+        proteinLabel.text = "タンパク質：\(self.protein)g"
+        fatLabel.text = "脂質：\(self.fat)g"
+        carbohydrateLabel.text = "炭水化物：\(self.carbohydrate)g"
     }
     
     private func loadNib() {
