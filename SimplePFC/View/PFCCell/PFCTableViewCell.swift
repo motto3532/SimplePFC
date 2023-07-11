@@ -16,13 +16,13 @@ class PFCTableViewCell: UITableViewCell {
             pfcView.clipsToBounds = true
         }
     }
-    @IBOutlet private weak var calorieLabel: UILabel! {didSet{setBorder(label: calorieLabel)}}
+    @IBOutlet private weak var calorieLabel: UILabel!
     @IBOutlet private weak var proteinLabel: UILabel! {didSet{setBorder(label: proteinLabel)}}
     @IBOutlet private weak var fatLabel: UILabel! {didSet{setBorder(label: fatLabel)}}
     @IBOutlet private weak var carbohydrateLabel: UILabel! {didSet{setBorder(label: carbohydrateLabel)}}
     
     func configure(meal: MealModel) {
-        self.calorieLabel.text = "\(String(describing: meal.calorie))kcal"
+        self.calorieLabel.text = "合計 \(String(describing: meal.calorie))kcal"
         self.proteinLabel.text = "P: \(String(describing: meal.protein))g"
         self.fatLabel.text = "F: \(String(describing: meal.fat))g"
         self.carbohydrateLabel.text = "C: \(String(describing: meal.carbohydrate))g"
