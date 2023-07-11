@@ -13,10 +13,11 @@ final class ShowPFCView: UIView {
     @IBOutlet private weak var fatLabel: UILabel!
     @IBOutlet private weak var carbohydrateLabel: UILabel!
     
-    private var calorie = 0
-    private var protein = 0
-    private var fat = 0
-    private var carbohydrate = 0
+    private static var calKey: String { "calorie" }
+    private static var proKey: String { "protein" }
+    private static var fatKey: String { "fat" }
+    private static var carKey: String { "carbohydrate" }
+    private static var totalPfc:[String: Int] = [calKey: 0, proKey: 0, fatKey: 0, carKey: 0]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,15 +32,22 @@ final class ShowPFCView: UIView {
     func configure(meal: MealModel) {
         loadNib()
         
-        self.calorie += meal.carolie
-        self.protein += meal.protein
-        self.fat += meal.fat
-        self.carbohydrate += meal.carbohydrate
+        guard
+            let cal = ShowPFCView.totalPfc[ShowPFCView.calKey],
+            let pro = ShowPFCView.totalPfc[ShowPFCView.proKey],
+            let fat = ShowPFCView.totalPfc[ShowPFCView.fatKey],
+            let car = ShowPFCView.totalPfc[ShowPFCView.carKey]
+        else { return }
         
-        calorieLabel.text = "カロリー：\(self.calorie)"
-        proteinLabel.text = "タンパク質：\(self.protein)g"
-        fatLabel.text = "脂質：\(self.fat)g"
-        carbohydrateLabel.text = "炭水化物：\(self.carbohydrate)g"
+        ShowPFCView.totalPfc.updateValue(cal + meal.calorie, forKey: ShowPFCView.calKey)
+        ShowPFCView.totalPfc.updateValue(pro + meal.protein, forKey: ShowPFCView.proKey)
+        ShowPFCView.totalPfc.updateValue(fat + meal.fat, forKey: ShowPFCView.fatKey)
+        ShowPFCView.totalPfc.updateValue(car + meal.carbohydrate, forKey: ShowPFCView.carKey)
+        
+        calorieLabel.text = "カロリー：\(String(describing: ShowPFCView.totalPfc[ShowPFCView.calKey]))"
+        proteinLabel.text = "タンパク質：\(String(describing: ShowPFCView.totalPfc[ShowPFCView.proKey]))g"
+        fatLabel.text = "脂質：\(String(describing: ShowPFCView.totalPfc[ShowPFCView.fatKey]))g"
+        carbohydrateLabel.text = "炭水化物：\(String(describing: ShowPFCView.totalPfc[ShowPFCView.carKey]))g"
     }
     
     private func loadNib() {

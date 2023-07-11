@@ -22,7 +22,7 @@ final class MealsViewController: UIViewController {
             tableView.register(UINib.init(nibName: MealTableViewCell.className, bundle: nil), forCellReuseIdentifier: MealTableViewCell.className)
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.isHidden = true
+//            tableView.isHidden = true
         }
     }
     
@@ -36,10 +36,8 @@ final class MealsViewController: UIViewController {
         Router.shared.showAddMeal(from: self)
     }
     
-    static func makeFromStoryboard(meal: MealModel) -> MealsViewController {
-        let vc = UIStoryboard(name: "Meals", bundle: nil).instantiateInitialViewController() as! MealsViewController
-        vc.meals.append(meal)
-        return vc
+    func setMeal(meal: MealModel) {
+        self.meals.append(meal)
     }
 }
 

@@ -31,7 +31,7 @@ final class AddMealViewController: UIViewController {
         let fat = fatTextField.textToInt
         let carbohydrate = carbohydrateTextField.textToInt
         
-        let meal = MealModel(name: mealName, carolie: calorie, protein: protein, fat: fat, carbohydrate: carbohydrate)
+        let meal = MealModel(name: mealName, calorie: calorie, protein: protein, fat: fat, carbohydrate: carbohydrate)
         
         Router.shared.showMeals(from: self, meal: meal)
     }

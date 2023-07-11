@@ -27,7 +27,8 @@ final class Router {
     }
     
     func showMeals(from: UIViewController, meal: MealModel) {
-        let vc = MealsViewController.makeFromStoryboard(meal: meal)
+        guard let vc = from.presentedViewController as? MealsViewController else { return }
+        vc.setMeal(meal: meal)
         from.dismiss(animated: true)
     }
 }

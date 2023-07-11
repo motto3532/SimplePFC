@@ -35,7 +35,7 @@ final class MealTableViewCell: UITableViewCell {
     func configure(meal: MealModel) {
         timeLabel.text = "22:00"
         mealNameLabel.text = meal.name
-        calorieLabel.text = String(describing: meal.carolie)
+        calorieLabel.text = String(describing: meal.calorie)
         proteinLabel.text = String(describing: meal.protein)
         fatLabel.text = String(describing: meal.fat)
         carbohydrateLabel.text = String(describing: meal.carbohydrate)
