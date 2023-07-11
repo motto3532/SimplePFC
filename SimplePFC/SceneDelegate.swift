@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQKeyboardManager
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -15,6 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: scene)
         window.frame = UIScreen.main.bounds
         Router.shared.showRoot(window: window)
+        
+        IQKeyboardManager.shared().isEnabled = true
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
