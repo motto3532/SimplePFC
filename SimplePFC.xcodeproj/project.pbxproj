@@ -14,6 +14,7 @@
 		3C20127C2A66FC5A00663334 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C20127B2A66FC5A00663334 /* UITextField+.swift */; };
 		3C20127E2A670C9E00663334 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C20127D2A670C9E00663334 /* UILabel+.swift */; };
 		3CB32D142A5DC25500915D59 /* MealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB32D132A5DC25500915D59 /* MealModel.swift */; };
+		3CC3A9802A671EF400869027 /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC3A97F2A671EF300869027 /* UIView+.swift */; };
 		3CCAC2932A664F0500921F9A /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCAC2922A664F0500921F9A /* UINavigationController+.swift */; };
 		3CCAC2982A66522900921F9A /* AddMeal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CCAC2972A66522900921F9A /* AddMeal.storyboard */; };
 		3CCAC29A2A66524400921F9A /* AddMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCAC2992A66524400921F9A /* AddMealViewController.swift */; };
@@ -38,6 +39,7 @@
 		3C20127B2A66FC5A00663334 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		3C20127D2A670C9E00663334 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
 		3CB32D132A5DC25500915D59 /* MealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModel.swift; sourceTree = "<group>"; };
+		3CC3A97F2A671EF300869027 /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		3CCAC2922A664F0500921F9A /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		3CCAC2972A66522900921F9A /* AddMeal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = AddMeal.storyboard; sourceTree = "<group>"; };
 		3CCAC2992A66524400921F9A /* AddMealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMealViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				3CCAC2922A664F0500921F9A /* UINavigationController+.swift */,
 				3C20127B2A66FC5A00663334 /* UITextField+.swift */,
 				3C20127D2A670C9E00663334 /* UILabel+.swift */,
+				3CC3A97F2A671EF300869027 /* UIView+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3CC3A9802A671EF400869027 /* UIView+.swift in Sources */,
 				3CB32D142A5DC25500915D59 /* MealModel.swift in Sources */,
 				3C20127C2A66FC5A00663334 /* UITextField+.swift in Sources */,
 				3C1589B52A3454520026470F /* AppDelegate.swift in Sources */,

@@ -8,6 +8,9 @@
 import UIKit
 
 final class AddMealViewController: UIViewController {
+   
+    @IBOutlet weak var addMealView: UIView! {didSet{addMealView.setCornerRadius()}}
+    
     @IBOutlet private weak var mealNameTextField: UITextField! {
         didSet { mealNameTextField.configure(onlyNumberPad: false) }
     }

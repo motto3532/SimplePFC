@@ -10,12 +10,7 @@ import UIKit
 class PFCTableViewCell: UITableViewCell {
     static var className: String { String(describing: PFCTableViewCell.self) }
     
-    @IBOutlet private weak var pfcView: UIView! {
-        didSet {
-            pfcView.layer.cornerRadius = 30.0
-            pfcView.clipsToBounds = true
-        }
-    }
+    @IBOutlet private weak var pfcView: UIView! {didSet{pfcView.setCornerRadius()}}
     
     @IBOutlet private weak var calorieLabel: UILabel!
     @IBOutlet private weak var proteinLabel: UILabel! {didSet{proteinLabel.setBorder()}}
