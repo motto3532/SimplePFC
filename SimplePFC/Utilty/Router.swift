@@ -15,7 +15,9 @@ final class Router {
     
     func showRoot(window: UIWindow) {
         guard let vc = UIStoryboard(name: "Meals", bundle: nil).instantiateInitialViewController() as? MealsViewController else { return }
-        window.rootViewController = vc
+        let nc = UINavigationController(rootViewController: vc)
+        nc.configure()
+        window.rootViewController = nc
         window.makeKeyAndVisible()
         self.window = window
     }

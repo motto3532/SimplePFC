@@ -26,6 +26,7 @@ class PFCTableViewCell: UITableViewCell {
         self.proteinLabel.text = "P: \(String(describing: meal.protein))g"
         self.fatLabel.text = "F: \(String(describing: meal.fat))g"
         self.carbohydrateLabel.text = "C: \(String(describing: meal.carbohydrate))g"
+        self.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
     }
     
     private func setBorder(label: UILabel) {

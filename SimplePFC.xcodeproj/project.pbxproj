@@ -12,6 +12,7 @@
 		3C1589BE2A3454540026470F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3C1589BD2A3454540026470F /* Assets.xcassets */; };
 		3C1589C12A3454540026470F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C1589BF2A3454540026470F /* LaunchScreen.storyboard */; };
 		3CB32D142A5DC25500915D59 /* MealModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CB32D132A5DC25500915D59 /* MealModel.swift */; };
+		3CCAC2932A664F0500921F9A /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCAC2922A664F0500921F9A /* UINavigationController+.swift */; };
 		3CCF8E072A5DB81D00ABE104 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCF8E062A5DB81D00ABE104 /* Router.swift */; };
 		3CCF8E0A2A5DB96A00ABE104 /* MealsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CCF8E092A5DB96A00ABE104 /* MealsViewController.swift */; };
 		3CCF8E0C2A5DB97700ABE104 /* Meals.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CCF8E0B2A5DB97700ABE104 /* Meals.storyboard */; };
@@ -29,6 +30,7 @@
 		3C1589C02A3454540026470F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3C1589C22A3454540026470F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3CB32D132A5DC25500915D59 /* MealModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealModel.swift; sourceTree = "<group>"; };
+		3CCAC2922A664F0500921F9A /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		3CCF8E062A5DB81D00ABE104 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		3CCF8E092A5DB96A00ABE104 /* MealsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealsViewController.swift; sourceTree = "<group>"; };
 		3CCF8E0B2A5DB97700ABE104 /* Meals.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Meals.storyboard; sourceTree = "<group>"; };
@@ -70,10 +72,11 @@
 			children = (
 				3C1589B42A3454520026470F /* AppDelegate.swift */,
 				3C1589B62A3454520026470F /* SceneDelegate.swift */,
+				3CCAC2912A664EE600921F9A /* Extension */,
 				3CCF8E052A5DB80D00ABE104 /* Utilty */,
 				3CB32D122A5DC24100915D59 /* Model */,
-				3CCF8E0D2A5DBB9600ABE104 /* View */,
-				3CCF8E082A5DB90400ABE104 /* Controller */,
+				3CCAC2942A66516300921F9A /* Meals */,
+				3CCAC2952A66519E00921F9A /* AddMeal */,
 				3C1589BD2A3454540026470F /* Assets.xcassets */,
 				3C1589BF2A3454540026470F /* LaunchScreen.storyboard */,
 				3C1589C22A3454540026470F /* Info.plist */,
@@ -87,6 +90,30 @@
 				3CB32D132A5DC25500915D59 /* MealModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		3CCAC2912A664EE600921F9A /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				3CCAC2922A664F0500921F9A /* UINavigationController+.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		3CCAC2942A66516300921F9A /* Meals */ = {
+			isa = PBXGroup;
+			children = (
+				3CCF8E0D2A5DBB9600ABE104 /* View */,
+				3CCF8E082A5DB90400ABE104 /* Controller */,
+			);
+			path = Meals;
+			sourceTree = "<group>";
+		};
+		3CCAC2952A66519E00921F9A /* AddMeal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = AddMeal;
 			sourceTree = "<group>";
 		};
 		3CCF8E052A5DB80D00ABE104 /* Utilty */ = {
@@ -211,6 +238,7 @@
 				3CCF8E0A2A5DB96A00ABE104 /* MealsViewController.swift in Sources */,
 				3CCF8E162A5DBC4A00ABE104 /* MealTableViewCell.swift in Sources */,
 				3CCF8E072A5DB81D00ABE104 /* Router.swift in Sources */,
+				3CCAC2932A664F0500921F9A /* UINavigationController+.swift in Sources */,
 				3C1589B72A3454520026470F /* SceneDelegate.swift in Sources */,
 				3CCF8E102A5DBC0E00ABE104 /* PFCTableViewCell.swift in Sources */,
 			);

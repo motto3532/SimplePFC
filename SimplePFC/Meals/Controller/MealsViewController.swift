@@ -7,8 +7,8 @@
 
 import UIKit
 
-class MealsViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView! {
+final class MealsViewController: UIViewController {
+    @IBOutlet private weak var tableView: UITableView! {
         didSet {
             tableView.register(UINib.init(nibName: PFCTableViewCell.className, bundle: nil), forCellReuseIdentifier: PFCTableViewCell.className)
             tableView.register(UINib.init(nibName: MealTableViewCell.className, bundle: nil), forCellReuseIdentifier: MealTableViewCell.className)
@@ -32,6 +32,12 @@ class MealsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
+        let addMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .compose, target: MealsViewController.self, action: #selector(addMealBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItems = [addMealBarButtonItem]
+    }
+    
+    @objc private func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        print("barButton押されたすよ")
     }
 }
 
@@ -49,16 +55,12 @@ extension MealsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else { fatalError() }
             cell.configure(meal: someMeal[indexPath.row])
-            
             return cell
         } else {
-            
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else { fatalError() }
             cell.configure(meal: someMeal[indexPath.row - 1])
-            
             return cell
         }
     }
