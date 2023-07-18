@@ -26,4 +26,10 @@ final class Router {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
         from.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    func showMeals(from: UIViewController, meal: MealModel) {
+        guard let rootVc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
+        rootVc.addMeal(meal: meal)
+        from.navigationController?.popViewController(animated: true)
+    }
 }

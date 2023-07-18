@@ -20,7 +20,7 @@ final class MealsViewController: UIViewController {
         }
     }
     
-    private let someMeal = [
+    private var someMeal = [
         MealModel(name: "きなこ",calorie: 100, protein: 10, fat: 2, carbohydrate: 13),
         MealModel(name: "おこげ",calorie: 200, protein: 2, fat: 16, carbohydrate: 10),
         MealModel(name: "牡蠣",calorie: 100, protein: 10, fat: 2, carbohydrate: 13),
@@ -31,13 +31,17 @@ final class MealsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.reloadData()
         let addMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItems = [addMealBarButtonItem]
     }
     
     @objc private func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
         Router.shared.showAddMeal(from: self)
+    }
+    
+    func addMeal(meal: MealModel) {
+        someMeal.append(meal)
+        tableView.reloadData()
     }
 }
 
@@ -50,13 +54,13 @@ extension MealsViewController: UITableViewDelegate {
 
 extension MealsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return someMeal.count
+        return someMeal.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else { fatalError() }
-            cell.configure(meal: someMeal[indexPath.row])
+            cell.configure(meals: someMeal)
             return cell
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else { fatalError() }

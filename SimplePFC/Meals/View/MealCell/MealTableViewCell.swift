@@ -18,6 +18,6 @@ class MealTableViewCell: UITableViewCell {
     }
     
     func configure(meal: MealModel) {
-        self.MealLabel.text = "\(meal.name) -> \(meal.calorie)kcal   \(meal.protein) : \(meal.fat) : \(meal.carbohydrate)"
+        MealLabel.text = "\(meal.name) -> \(meal.calorie)kcal   \(meal.protein) : \(meal.fat) : \(meal.carbohydrate)"
     }
 }

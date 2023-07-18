@@ -16,23 +16,34 @@ class PFCTableViewCell: UITableViewCell {
             pfcView.clipsToBounds = true
         }
     }
+    
     @IBOutlet private weak var calorieLabel: UILabel!
-    @IBOutlet private weak var proteinLabel: UILabel! {didSet{setBorder(label: proteinLabel)}}
-    @IBOutlet private weak var fatLabel: UILabel! {didSet{setBorder(label: fatLabel)}}
-    @IBOutlet private weak var carbohydrateLabel: UILabel! {didSet{setBorder(label: carbohydrateLabel)}}
+    @IBOutlet private weak var proteinLabel: UILabel! {didSet{proteinLabel.setBorder()}}
+    @IBOutlet private weak var fatLabel: UILabel! {didSet{fatLabel.setBorder()}}
+    @IBOutlet private weak var carbohydrateLabel: UILabel! {didSet{carbohydrateLabel.setBorder()}}
     
-    func configure(meal: MealModel) {
-        self.calorieLabel.text = "合計 \(String(describing: meal.calorie))kcal"
-        self.proteinLabel.text = "P: \(String(describing: meal.protein))g"
-        self.fatLabel.text = "F: \(String(describing: meal.fat))g"
-        self.carbohydrateLabel.text = "C: \(String(describing: meal.carbohydrate))g"
+    private var calorie: String { "calorie" }
+    private var protein: String { "protein" }
+    private var fat: String { "fat" }
+    private var carbohydrate: String { "carbohydrate" }
+    
+    func configure(meals: [MealModel]) {
         self.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
-    }
-    
-    private func setBorder(label: UILabel) {
-        label.layer.borderWidth = 1.0
-        label.layer.borderColor = UIColor.white.cgColor
-        label.layer.cornerRadius = 20.0
-        label.clipsToBounds = true
+        
+        var sumOfNutrients = [calorie: 0, protein: 0, fat: 0, carbohydrate: 0]
+        for meal in meals {
+            let nutrients = [calorie: meal.calorie, protein: meal.protein, fat: meal.fat, carbohydrate: meal.carbohydrate]
+            nutrients.forEach({ (key, value) in sumOfNutrients[key]! += value })
+        }
+        guard
+            let sumOfCalorie = sumOfNutrients[calorie],
+            let sumOfProtein = sumOfNutrients[protein],
+            let sumOfFat = sumOfNutrients[fat],
+            let sumOfCarbohydrate = sumOfNutrients[carbohydrate]
+        else { return }
+        self.calorieLabel.text = "合計 \(String(describing: sumOfCalorie))kcal"
+        self.proteinLabel.text = "P: \(String(describing: sumOfProtein))g"
+        self.fatLabel.text = "F: \(String(describing: sumOfFat))g"
+        self.carbohydrateLabel.text = "C: \(String(describing: sumOfCarbohydrate))g"
     }
 }

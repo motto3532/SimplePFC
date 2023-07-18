@@ -9,19 +9,19 @@ import UIKit
 
 final class AddMealViewController: UIViewController {
     @IBOutlet private weak var mealNameTextField: UITextField! {
-        didSet { configureTextField(tf: mealNameTextField, onlyNumberPad: false) }
+        didSet { mealNameTextField.configure(onlyNumberPad: false) }
     }
     @IBOutlet private weak var calorieTextField: UITextField! {
-        didSet { configureTextField(tf: calorieTextField, onlyNumberPad: false) }
+        didSet { calorieTextField.configure(onlyNumberPad: true) }
     }
     @IBOutlet private weak var proteinTextField: UITextField! {
-        didSet { configureTextField(tf: proteinTextField, onlyNumberPad: true) }
+        didSet { proteinTextField.configure(onlyNumberPad: true) }
     }
     @IBOutlet private weak var fatTextField: UITextField! {
-        didSet { configureTextField(tf: fatTextField, onlyNumberPad: true) }
+        didSet { fatTextField.configure(onlyNumberPad: true) }
     }
-    @IBOutlet private weak var carbohydratesTextField: UITextField! {
-        didSet { configureTextField(tf: carbohydratesTextField, onlyNumberPad: true) }
+    @IBOutlet private weak var carbohydrateTextField: UITextField! {
+        didSet { carbohydrateTextField.configure(onlyNumberPad: true) }
     }
     
     @IBOutlet private weak var addMealButton: UIButton! {
@@ -31,14 +31,25 @@ final class AddMealViewController: UIViewController {
     }
     
     @objc func tapAddMealButton(_sender: UIResponder) {
-        print("meal added")
-    }
-    
-    private func configureTextField(tf: UITextField, onlyNumberPad: Bool) {
-        tf.backgroundColor = .white
-        tf.textColor = .black
-        if onlyNumberPad {
-            tf.keyboardType = UIKeyboardType.numberPad
+        guard
+            let name = mealNameTextField.text,
+            let calorie = calorieTextField.text,
+            let protein = proteinTextField.text,
+            let fat = fatTextField.text,
+            let carbohydrate = carbohydrateTextField.text
+        else { return }
+        
+        guard !name.isEmpty, !calorie.isEmpty else {
+            let alert = UIAlertController(title: "未記入の項目があります", message: nil, preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(ok)
+            present(alert, animated: true, completion: nil)
+            return
         }
+        
+        let nutrients = [calorie, protein, fat, carbohydrate].map{ Int($0) ?? 0 }
+        let meal = MealModel(name: name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
+        
+        Router.shared.showMeals(from: self, meal: meal)
     }
 }
