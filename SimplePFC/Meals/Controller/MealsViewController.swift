@@ -32,12 +32,12 @@ final class MealsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.reloadData()
-        let addMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .compose, target: MealsViewController.self, action: #selector(addMealBarButtonItemTapped(_:)))
+        let addMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItems = [addMealBarButtonItem]
     }
     
     @objc private func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        print("barButton押されたすよ")
+        Router.shared.showAddMeal(from: self)
     }
 }
 

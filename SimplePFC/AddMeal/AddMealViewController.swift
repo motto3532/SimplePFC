@@ -7,14 +7,24 @@
 
 import UIKit
 
-class AddMealViewController: UIViewController {
-    @IBOutlet weak var mealNameTextField: UITextField!
-    @IBOutlet weak var calorieTextField: UITextField!
-    @IBOutlet weak var proteinTextField: UITextField!
-    @IBOutlet weak var fatTextField: UITextField!
-    @IBOutlet weak var carbohydratesTextField: UITextField!
+final class AddMealViewController: UIViewController {
+    @IBOutlet private weak var mealNameTextField: UITextField! {
+        didSet { configureTextField(tf: mealNameTextField, onlyNumberPad: false) }
+    }
+    @IBOutlet private weak var calorieTextField: UITextField! {
+        didSet { configureTextField(tf: calorieTextField, onlyNumberPad: false) }
+    }
+    @IBOutlet private weak var proteinTextField: UITextField! {
+        didSet { configureTextField(tf: proteinTextField, onlyNumberPad: true) }
+    }
+    @IBOutlet private weak var fatTextField: UITextField! {
+        didSet { configureTextField(tf: fatTextField, onlyNumberPad: true) }
+    }
+    @IBOutlet private weak var carbohydratesTextField: UITextField! {
+        didSet { configureTextField(tf: carbohydratesTextField, onlyNumberPad: true) }
+    }
     
-    @IBOutlet weak var addMealButton: UIButton! {
+    @IBOutlet private weak var addMealButton: UIButton! {
         didSet {
             addMealButton.addTarget(self, action: #selector(tapAddMealButton(_sender:)), for: .touchUpInside)
         }
@@ -22,5 +32,13 @@ class AddMealViewController: UIViewController {
     
     @objc func tapAddMealButton(_sender: UIResponder) {
         print("meal added")
+    }
+    
+    private func configureTextField(tf: UITextField, onlyNumberPad: Bool) {
+        tf.backgroundColor = .white
+        tf.textColor = .black
+        if onlyNumberPad {
+            tf.keyboardType = UIKeyboardType.numberPad
+        }
     }
 }

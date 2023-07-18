@@ -21,4 +21,9 @@ final class Router {
         window.makeKeyAndVisible()
         self.window = window
     }
+    
+    func showAddMeal(from: UIViewController) {
+        guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
+        from.navigationController?.pushViewController(vc, animated: true)
+    }
 }
