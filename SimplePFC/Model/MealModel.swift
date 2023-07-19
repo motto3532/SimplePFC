@@ -3,7 +3,6 @@
 //  SimplePFC
 //
 //  Created by Atto Rari on 2023/07/12.
-//
 
 import Foundation
 

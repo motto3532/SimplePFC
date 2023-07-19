@@ -259,6 +259,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C3F02332A5AAECE00E61D82 /* ShowPFCView.xib in Resources */,
 				3C1589C12A3454540026470F /* LaunchScreen.storyboard in Resources */,
 				3CCAC2982A66522900921F9A /* AddMeal.storyboard in Resources */,
 				3CCF8E112A5DBC0E00ABE104 /* PFCTableViewCell.xib in Resources */,
