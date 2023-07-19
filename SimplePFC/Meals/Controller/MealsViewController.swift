@@ -39,8 +39,12 @@ final class MealsViewController: UIViewController {
         Router.shared.showAddMeal(from: self)
     }
     
-    func addMeal(meal: MealModel) {
-        someMeal.append(meal)
+    func addMeal(meal: MealModel, index: Int?) {
+        if let _index = index {
+            someMeal[_index] = meal
+        } else {
+            someMeal.append(meal)
+        }
         tableView.reloadData()
     }
 }
@@ -49,6 +53,10 @@ extension MealsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard indexPath.row > 0 else { return 200 }
         return 100
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Router.shared.showAddMeal(from: self, meal: someMeal[indexPath.row - 1], index: indexPath.row - 1)
     }
 }
 

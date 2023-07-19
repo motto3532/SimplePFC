@@ -9,7 +9,7 @@ import UIKit
 
 final class AddMealViewController: UIViewController {
    
-    @IBOutlet weak var addMealView: UIView! {didSet{addMealView.setCornerRadius()}}
+    @IBOutlet private weak var addMealView: UIView! {didSet{addMealView.setCornerRadius()}}
     
     @IBOutlet private weak var mealNameTextField: UITextField! {
         didSet { mealNameTextField.configure(onlyNumberPad: false) }
@@ -33,7 +33,36 @@ final class AddMealViewController: UIViewController {
         }
     }
     
-    @objc func tapAddMealButton(_sender: UIResponder) {
+    private var meal: MealModel? = nil
+    private var index: Int? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        if let _meal = meal { configureEditMeal(meal: _meal) }
+    }
+    
+    func editMeal(meal: MealModel, index: Int) {
+        self.meal = meal
+        self.index = index
+    }
+    
+    private func configureEditMeal(meal: MealModel) {
+        mealNameTextField.text = meal.name
+        calorieTextField.text = String(describing: meal.calorie)
+        proteinTextField.text = String(describing: meal.protein)
+        fatTextField.text = String(describing: meal.fat)
+        carbohydrateTextField.text = String(describing: meal.carbohydrate)
+        
+        let deleteMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMealBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItems = [deleteMealBarButtonItem]
+        
+        addMealButton.titleLabel?.text = "編集"
+    }
+}
+
+@objc private extension AddMealViewController {
+    
+    func tapAddMealButton(_sender: UIResponder) {
         guard
             let name = mealNameTextField.text,
             let calorie = calorieTextField.text,
@@ -51,8 +80,16 @@ final class AddMealViewController: UIViewController {
         }
         
         let nutrients = [calorie, protein, fat, carbohydrate].map{ Int($0) ?? 0 }
-        let meal = MealModel(name: name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
+        let newMeal = MealModel(name: name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
         
-        Router.shared.showMeals(from: self, meal: meal)
+        guard let _index = self.index else {
+            Router.shared.showMeals(from: self, meal: newMeal)
+            return
+        }
+        Router.shared.showMeals(from: self, meal: newMeal, index: _index)
+    }
+    
+    func deleteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        print("削除したよ")
     }
 }

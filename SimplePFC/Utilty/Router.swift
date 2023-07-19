@@ -22,14 +22,17 @@ final class Router {
         self.window = window
     }
     
-    func showAddMeal(from: UIViewController) {
+    func showAddMeal(from: UIViewController, meal: MealModel? = nil, index: Int? = nil) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
+        if let _meal = meal, let _index = index {
+            vc.editMeal(meal: _meal, index: _index)
+        }
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showMeals(from: UIViewController, meal: MealModel) {
+    func showMeals(from: UIViewController, meal: MealModel, index: Int? = nil) {
         guard let rootVc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
-        rootVc.addMeal(meal: meal)
+        rootVc.addMeal(meal: meal, index: index)
         from.navigationController?.popViewController(animated: true)
     }
 }
