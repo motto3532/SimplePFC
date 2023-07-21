@@ -33,6 +33,7 @@ final class AddMealViewController: UIViewController {
         }
     }
     
+    //直接値保持してるけどMVCだからいいのかな？
     private var meal: MealModel? = nil
     private var index: Int? = nil
     
@@ -41,6 +42,7 @@ final class AddMealViewController: UIViewController {
         if let _meal = meal { configureEditMeal(meal: _meal) }
     }
     
+    //index貰ってるのなんか無駄な気がする。
     func editMeal(meal: MealModel, index: Int) {
         self.meal = meal
         self.index = index
@@ -83,13 +85,16 @@ final class AddMealViewController: UIViewController {
         let newMeal = MealModel(name: name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
         
         guard let _index = self.index else {
+            //addMeal
             Router.shared.showMeals(from: self, meal: newMeal)
             return
         }
+        //editMeal
         Router.shared.showMeals(from: self, meal: newMeal, index: _index)
     }
     
     func deleteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        //ここに削除機能入れたいけど、realm使うべき
         print("削除したよ")
     }
 }

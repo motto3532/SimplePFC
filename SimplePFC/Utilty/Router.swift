@@ -22,6 +22,7 @@ final class Router {
         self.window = window
     }
     
+    //食事内容を編集するためにindex渡してるけど、realmで直接やりとりした方が良さそう。汚いし。
     func showAddMeal(from: UIViewController, meal: MealModel? = nil, index: Int? = nil) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
         if let _meal = meal, let _index = index {
