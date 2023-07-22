@@ -6,6 +6,7 @@
 
 import Foundation
 
+//時間も保持するべきだよね
 struct MealModel {
     let name: String
     let calorie: Int

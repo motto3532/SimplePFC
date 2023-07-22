@@ -17,6 +17,7 @@ class MealTableViewCell: UITableViewCell {
         MealLabel.text = nil
     }
     
+    //時間も追加したい
     func configure(meal: MealModel) {
         MealLabel.text = "\(meal.name) -> \(meal.calorie)kcal   \(meal.protein) : \(meal.fat) : \(meal.carbohydrate)"
     }
