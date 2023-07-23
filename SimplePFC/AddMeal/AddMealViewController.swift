@@ -82,7 +82,7 @@ final class AddMealViewController: UIViewController {
         
         if let meal = self.meal {
             //編集
-            //プロパティを更新するときはトランザクション内で。
+            //プロパティを更新するのはトランザクション内
             try? realm.write {
                 meal.name = name
                 meal.calorie = nutrients[0]
@@ -112,7 +112,7 @@ final class AddMealViewController: UIViewController {
     func deleteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
         let alert = UIAlertController(title: "食事内容を削除しますか？", message: nil, preferredStyle: .alert)
         let delete = UIAlertAction(title: "削除", style: .default) {_ in
-            
+            //削除
             guard let meal = self.meal else {return}
             try? self.realm.write {
                 self.realm.delete(meal)
