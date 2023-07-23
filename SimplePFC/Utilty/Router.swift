@@ -22,18 +22,16 @@ final class Router {
         self.window = window
     }
     
-    //食事内容を編集するためにindex渡してるけど、realmで直接やりとりした方が良さそう。汚いし。
-    func showAddMeal(from: UIViewController, meal: MealModel? = nil, index: Int? = nil) {
+    func showMeal(from: UIViewController, meal: MealModel? = nil) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
-        if let _meal = meal, let _index = index {
-            vc.editMeal(meal: _meal, index: _index)
-        }
+        //編集
+        if let _meal = meal { vc.configure(meal: _meal) }
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showMeals(from: UIViewController, meal: MealModel, index: Int? = nil) {
-        guard let rootVc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
-        rootVc.addMeal(meal: meal, index: index)
+    func showMeals(from: UIViewController) {
+        guard let vc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
+        vc.configure()
         from.navigationController?.popViewController(animated: true)
     }
 }

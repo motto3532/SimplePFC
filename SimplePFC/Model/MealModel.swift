@@ -5,12 +5,18 @@
 //  Created by Atto Rari on 2023/07/12.
 
 import Foundation
+import RealmSwift
 
-//時間も保持するべきだよね
-struct MealModel {
-    let name: String
-    let calorie: Int
-    let protein: Int
-    let fat: Int
-    let carbohydrate: Int
+/*
+ Objectクラスのサブクラスとして定義する必要があるらしい。
+ structじゃなくてclassなのは、"Objective-Cとの相互接続性が必要であればclassを使いましょう"とのこと。
+ */
+class MealModel: Object {
+    //primaryKeyは更新・追加の時に必要
+    @Persisted(primaryKey: true) var id: ObjectId//勝手にidうまいことしてくれるぽい
+    @Persisted var name: String
+    @Persisted var calorie: Int
+    @Persisted var protein: Int
+    @Persisted var fat: Int
+    @Persisted var carbohydrate: Int
 }

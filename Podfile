@@ -7,4 +7,5 @@ target 'SimplePFC' do
 
   # Pods for SimplePFC
   pod 'IQKeyboardManager'
+  pod 'RealmSwift', '~>10'
 end

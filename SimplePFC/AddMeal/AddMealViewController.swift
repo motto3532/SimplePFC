@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 final class AddMealViewController: UIViewController {
    
@@ -33,32 +34,29 @@ final class AddMealViewController: UIViewController {
         }
     }
     
-    //直接値保持してるけどMVCだからいいのかな？
     private var meal: MealModel? = nil
-    private var index: Int? = nil
+    
+    private let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let _meal = meal { configureEditMeal(meal: _meal) }
-    }
-    
-    //index貰ってるのなんか無駄な気がする。
-    func editMeal(meal: MealModel, index: Int) {
-        self.meal = meal
-        self.index = index
-    }
-    
-    private func configureEditMeal(meal: MealModel) {
-        mealNameTextField.text = meal.name
-        calorieTextField.text = String(describing: meal.calorie)
-        proteinTextField.text = String(describing: meal.protein)
-        fatTextField.text = String(describing: meal.fat)
-        carbohydrateTextField.text = String(describing: meal.carbohydrate)
+        
+        guard let _meal = meal else { return }
+        //編集
+        mealNameTextField.text = _meal.name
+        calorieTextField.text = String(describing: _meal.calorie)
+        proteinTextField.text = String(describing: _meal.protein)
+        fatTextField.text = String(describing: _meal.fat)
+        carbohydrateTextField.text = String(describing: _meal.carbohydrate)
         
         let deleteMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItems = [deleteMealBarButtonItem]
         
         addMealButton.titleLabel?.text = "編集"
+    }
+    
+    func configure(meal: MealModel) {
+        self.meal = meal
     }
 }
 
@@ -80,21 +78,54 @@ final class AddMealViewController: UIViewController {
             present(alert, animated: true, completion: nil)
             return
         }
-        
         let nutrients = [calorie, protein, fat, carbohydrate].map{ Int($0) ?? 0 }
-        let newMeal = MealModel(name: name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
         
-        guard let _index = self.index else {
-            //addMeal
-            Router.shared.showMeals(from: self, meal: newMeal)
+        guard let meal = self.meal else {
+            //新規追加
+            let meal = MealModel()
+            meal.name = name
+            meal.calorie = nutrients[0]
+            meal.protein = nutrients[1]
+            meal.fat = nutrients[2]
+            meal.carbohydrate = nutrients[3]
+            
+            //realm追加
+            try? realm.write {
+                realm.add(meal, update: .modified)
+            }
+            
+            Router.shared.showMeals(from: self)
             return
         }
-        //editMeal
-        Router.shared.showMeals(from: self, meal: newMeal, index: _index)
+        
+        //編集
+        meal.name = name
+        meal.calorie = nutrients[0]
+        meal.protein = nutrients[1]
+        meal.fat = nutrients[2]
+        meal.carbohydrate = nutrients[3]
+        
+        //realm更新
+        try? realm.write {
+            realm.add(meal, update: .modified)
+        }
+        
+        Router.shared.showMeals(from: self)
     }
     
     func deleteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        //ここに削除機能入れたいけど、realm使うべき
-        print("削除したよ")
+        let alert = UIAlertController(title: "食事内容を削除しますか？", message: nil, preferredStyle: .alert)
+        let delete = UIAlertAction(title: "削除", style: .default) {(action) -> Void in
+            guard let meal = self.meal else { return }
+            try? self.realm.write {
+                self.realm.delete(meal)
+            }
+            Router.shared.showMeals(from: self)
+        }
+        let cancel = UIAlertAction(title: "キャンセル", style: .cancel)
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+        
     }
 }
