@@ -24,8 +24,7 @@ final class Router {
     
     func showMeal(from: UIViewController, meal: MealModel? = nil) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
-        //編集
-        if let _meal = meal { vc.configure(meal: _meal) }
+        vc.configure(meal: meal)
         from.navigationController?.pushViewController(vc, animated: true)
     }
     

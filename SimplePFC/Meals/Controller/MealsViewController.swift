@@ -23,26 +23,28 @@ final class MealsViewController: UIViewController {
     
     private var meals: [MealModel] = []
     
+    private let realm = try! Realm()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        configure()
         let addMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItems = [addMealBarButtonItem]
     }
     
-    @objc private func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        Router.shared.showMeal(from: self)
-    }
-    
     func configure() {
-        //appendするだけだと編集処理の後に同じmealが増えるからrealm読み取りかな？
-        //filterメソッドとかで置換してもいいけど、addとeditで場合分けだるそう
-        let realm = try! Realm()
+        meals = []
         let realmRegistedData = realm.objects(MealModel.self)
         for data in realmRegistedData {
             self.meals.append(data)
         }
-        
         tableView.reloadData()
+    }
+}
+
+@objc private extension MealsViewController {
+    func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        Router.shared.showMeal(from: self)
     }
 }
 
