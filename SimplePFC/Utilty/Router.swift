@@ -15,14 +15,15 @@ final class Router {
     
     func showRoot(window: UIWindow) {
         guard let vc = UIStoryboard(name: "Meals", bundle: nil).instantiateInitialViewController() as? MealsViewController else { return }
+        let presenter = MealsPresenter(output: vc)
+        vc.inject(presenter: presenter)
         let nc = UINavigationController(rootViewController: vc)
-        nc.configure()
         window.rootViewController = nc
         window.makeKeyAndVisible()
         self.window = window
     }
     
-    func showMeal(from: UIViewController, meal: MealModel? = nil) {
+    func showMeal(from: UIViewController, meal: MealModel?) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
         vc.configure(meal: meal)
         from.navigationController?.pushViewController(vc, animated: true)
@@ -30,7 +31,6 @@ final class Router {
     
     func showMeals(from: UIViewController) {
         guard let vc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
-        vc.configure()
         from.navigationController?.popViewController(animated: true)
     }
 }

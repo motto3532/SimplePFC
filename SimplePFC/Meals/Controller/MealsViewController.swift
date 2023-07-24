@@ -13,77 +13,82 @@ final class MealsViewController: UIViewController {
         didSet {
             tableView.register(UINib.init(nibName: PFCTableViewCell.className, bundle: nil), forCellReuseIdentifier: PFCTableViewCell.className)
             tableView.register(UINib.init(nibName: MealTableViewCell.className, bundle: nil), forCellReuseIdentifier: MealTableViewCell.className)
-            
             tableView.delegate = self
             tableView.dataSource = self
-            
             tableView.backgroundColor = .white
         }
     }
     
-    private var meals: [MealModel] = []
-    
-    private let realm = try! Realm()
+    private var presenter: MealsPresenterInput!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        
+        self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
+        
         let addMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItems = [addMealBarButtonItem]
     }
     
-    func configure() {
-        meals = []
-        let realmRegistedData = realm.objects(MealModel.self)
-        for data in realmRegistedData {
-            self.meals.append(data)
-        }
-        tableView.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.presenter.reloadData()
+    }
+    
+    func inject(presenter: MealsPresenterInput) {
+        self.presenter = presenter
     }
 }
 
 @objc private extension MealsViewController {
     func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        Router.shared.showMeal(from: self)
+        self.presenter.addMealBarButtonItemTapped()
+    }
+}
+
+extension MealsViewController: MealsPresenterOutput {
+    
+    func reload() {
+        self.tableView.reloadData()
+    }
+    
+    func showMeal(meal: MealModel?) {
+        Router.shared.showMeal(from: self, meal: meal)
+    }
+    
+    func pfcCell() -> PFCTableViewCell {
+        guard let pfcCell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
+            fatalError()
+        }
+        return pfcCell
+    }
+    
+    func mealCell() -> MealTableViewCell {
+        guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
+            fatalError()
+        }
+        return mealCell
     }
 }
 
 extension MealsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        //PFCセル
-        guard indexPath.row > 0 else {
-            return 200
-        }
-        //Mealセル
-        return 100
+        return self.presenter.cellHeight(index: indexPath.row)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Router.shared.showMeal(from: self, meal: meals[indexPath.row - 1])//PFCセルの分
+        self.tableView.deselectRow(at: indexPath, animated: true)
+        self.presenter.didSelect(index: indexPath.row)
     }
 }
 
 extension MealsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return meals.count + 1//PFCセルの分
+        return self.presenter.numberOfRowsInSection
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //PFCセル
-        guard indexPath.row > 0 else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
-                fatalError()
-            }
-            cell.configure(meals: meals)
-            return cell
-        }
-        
-        //Mealセル
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
-            fatalError()
-        }
-        cell.configure(meal: meals[indexPath.row - 1])
-        return cell
-        
+        return self.presenter.cellForRowAt(index: indexPath.row)
     }
 }
