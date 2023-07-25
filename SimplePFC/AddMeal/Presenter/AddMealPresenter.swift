@@ -76,7 +76,7 @@ extension AddMealPresenter: AddMealPresenterInput {
          1.PresenterがoutputとしてViewControllerを強参照
          2.viewControllerのdeleteAlertメソッドでAlertがdeleteとしてクロージャを強参照
          3.クロージャがselfとしてPresenterを強参照
-         4.1に戻ることで循環参照
+         4.1に戻ることで循環参照が発生
          これを避けるために、3のselfへの強参照をweak selfで弱参照に変更
          */
         self.output.deleteAlert {[weak self] () -> Void in
