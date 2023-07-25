@@ -9,7 +9,7 @@ import UIKit
 import RealmSwift
 
 final class AddMealViewController: UIViewController {
-   
+    
     @IBOutlet private weak var addMealView: UIView! {didSet{addMealView.setCornerRadius()}}
     
     @IBOutlet private weak var mealNameTextField: UITextField! {
@@ -67,27 +67,6 @@ final class AddMealViewController: UIViewController {
 }
 
 extension AddMealViewController: AddMealPresenterOutput {
-                                //↓ここ
-    func deleteAlert(action: @escaping (UIAlertAction) -> Void) {
-        let alert = UIAlertController(title: "食事内容を削除しますか？", message: nil, preferredStyle: .alert)
-        //deleteとしてクロージャがAlertに渡されるため、deleteAlertメソッドのスコープ外に保持されることになる。つまりクロージャに'@escaping'が必要(84行のとこ)
-        let delete = UIAlertAction(title: "削除", style: .default, handler: action)
-        let cancel = UIAlertAction(title: "キャンセル", style: .cancel)
-        alert.addAction(delete)
-        alert.addAction(cancel)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func showMeals() {
-        Router.shared.showMeals(from: self)
-    }
-    
-    func emptyAlert() {
-        let alert = UIAlertController(title: "未記入の項目があります", message: nil, preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(ok)
-        present(alert, animated: true, completion: nil)
-    }
     
     func configureEditMeal(meal: MealModel) {
         mealNameTextField.text = meal.name
@@ -100,5 +79,28 @@ extension AddMealViewController: AddMealPresenterOutput {
         self.navigationItem.rightBarButtonItems = [deleteMealBarButtonItem]
         //編集ボタン
         addMealButton.titleLabel?.text = "編集"
+    }
+    
+    func emptyAlert() {
+        let alert = UIAlertController(title: "未記入の項目があります", message: nil, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showMeals() {
+        Router.shared.showMeals(from: self)
+    }
+    
+    func deleteAlert(action: @escaping () -> Void) {
+        let alert = UIAlertController(title: "食事内容を削除しますか？", message: nil, preferredStyle: .alert)
+        //deleteとしてクロージャがAlertに渡されるため、deleteAlertメソッドのスコープ外に保持されることになる。つまりクロージャに'@escaping'が必要(このメソッドの引数のとこ)
+        let delete = UIAlertAction(title: "削除", style: .default) {(UIAlertAction) -> Void in//省略したい
+            action()
+        }
+        let cancel = UIAlertAction(title: "キャンセル", style: .cancel)
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
     }
 }

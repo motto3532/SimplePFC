@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 protocol AddMealPresenterInput {
     func viewDidLoad()
@@ -18,38 +17,29 @@ protocol AddMealPresenterOutput: AnyObject {
     func configureEditMeal(meal: MealModel)
     func emptyAlert()
     func showMeals()
-    func deleteAlert(action: @escaping (UIAlertAction) -> Void)
+    func deleteAlert(action: @escaping () -> Void)
 }
 
 final class AddMealPresenter {
     private weak var output: AddMealPresenterOutput!
-    private var meal: MealModel?
-    private let realm = try! Realm()
+    private let meal: MealModel?
+    private let realm: MealRealm
     
-    init(output: AddMealPresenterOutput, meal: MealModel?) {
+    init(output: AddMealPresenterOutput, meal: MealModel?, realm: MealRealm = MealRealm.shared) {
         self.output = output
         self.meal = meal
+        self.realm = realm
     }
 }
 
 extension AddMealPresenter: AddMealPresenterInput {
-    func deleteMealButtonTapped() {
-        /*
-         1.PresenterがoutputとしてViewControllerを強参照
-         2.viewControllerのdeleteAlertメソッドでAlertがdeleteとしてクロージャを強参照
-         3.クロージャがselfとしてPresenterを強参照
-         4.1に戻ることで循環参照
-         これを避けるために、3のselfへの強参照をweak selfで弱参照に変更
-         */
-        self.output.deleteAlert {[weak self] (UIAlertAction) -> Void in
-            //削除
-            guard let meal = self?.meal else {return}
-            try? self?.realm.write {
-                self?.realm.delete(meal)
-            }
-            
-            self?.output.showMeals()
+    
+    func viewDidLoad() {
+        //mealに値があれば編集画面
+        guard let _meal = meal else {
+            return
         }
+        self.output.configureEditMeal(meal: _meal)
     }
     
     func addMealButtonTapped(name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
@@ -66,15 +56,7 @@ extension AddMealPresenter: AddMealPresenterInput {
         
         if let meal = self.meal {
             //編集処理
-            try? realm.write {//プロパティを更新するのはトランザクション内
-                meal.name = _name
-                meal.calorie = nutrients[0]
-                meal.protein = nutrients[1]
-                meal.fat = nutrients[2]
-                meal.carbohydrate = nutrients[3]
-                
-                realm.add(meal, update: .modified)//.modifiedでprimaryKey合えば書き換えしてくれる
-            }
+            self.realm.edit(meal: meal, name: _name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
         } else {
             //追加処理
             let newMeal = MealModel()
@@ -84,18 +66,24 @@ extension AddMealPresenter: AddMealPresenterInput {
             newMeal.fat = nutrients[2]
             newMeal.carbohydrate = nutrients[3]
             
-            try? realm.write {
-                realm.add(newMeal)
-            }
+            self.realm.add(meal: newMeal)
         }
         self.output.showMeals()
     }
     
-    func viewDidLoad() {
-        //mealに値があれば編集画面
-        guard let _meal = meal else {
-            return
+    func deleteMealButtonTapped() {
+        /*
+         1.PresenterがoutputとしてViewControllerを強参照
+         2.viewControllerのdeleteAlertメソッドでAlertがdeleteとしてクロージャを強参照
+         3.クロージャがselfとしてPresenterを強参照
+         4.1に戻ることで循環参照
+         これを避けるために、3のselfへの強参照をweak selfで弱参照に変更
+         */
+        self.output.deleteAlert {[weak self] () -> Void in
+            //アラートの削除ボタンが押されたら実行される
+            guard let meal = self?.meal else {return}
+            self?.realm.delete(meal: meal)
+            self?.output.showMeals()
         }
-        self.output.configureEditMeal(meal: _meal)
     }
 }

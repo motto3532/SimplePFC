@@ -57,20 +57,6 @@ extension MealsViewController: MealsPresenterOutput {
     func showMeal(meal: MealModel?) {
         Router.shared.showMeal(from: self, meal: meal)
     }
-    
-    func pfcCell() -> PFCTableViewCell {
-        guard let pfcCell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
-            fatalError()
-        }
-        return pfcCell
-    }
-    
-    func mealCell() -> MealTableViewCell {
-        guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
-            fatalError()
-        }
-        return mealCell
-    }
 }
 
 extension MealsViewController: UITableViewDelegate {
@@ -90,6 +76,43 @@ extension MealsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return self.presenter.cellForRowAt(index: indexPath.row)
+        guard indexPath.row > 0 else {
+            guard let pfcCell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
+                fatalError()
+            }
+            pfcCell.configure(meals: self.presenter.getMeals())
+            return pfcCell
+        }
+        
+        guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
+            fatalError()
+        }
+        mealCell.configure(meal: self.presenter.getMeal(index: indexPath.row - 1))
+        return mealCell
+        
+        /*
+        無理やりpresenterに処理渡したやつだけどめちゃわかりにくい
+        var cell: UITableViewCell?
+        
+        let makePfcCell = {(meals: [MealModel]) -> Void in
+            guard let pfcCell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
+                fatalError()
+            }
+            pfcCell.configure(meals: meals)
+            
+            cell = pfcCell
+        }
+        let makeMealCell = {(meal: MealModel) -> Void in
+            guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
+                fatalError()
+            }
+            mealCell.configure(meal: meal)
+            
+            cell = mealCell
+        }
+        self.presenter.cellForRowAt(index: indexPath.row, pfcCell: makePfcCell, mealCell: makeMealCell)
+        
+        return cell!
+         */
     }
 }

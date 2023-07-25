@@ -31,6 +31,9 @@ final class Router {
     }
     
     func showMeals(from: UIViewController) {
+        //値渡しじゃなくていいのかね?
+        //guard let vc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
+        //vc.configure()
         from.navigationController?.popViewController(animated: true)
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RealmSwift
 
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterInput {
@@ -15,24 +14,29 @@ protocol MealsPresenterInput {
     func addMealBarButtonItemTapped()
     func cellHeight(index: Int) -> CGFloat
     func didSelect(index: Int)
-    func cellForRowAt(index: Int) -> UITableViewCell
+    //下2つは返す値の型が違うから別で定義してるけど、ジェネリクス使えば1つにまとめられそう
+    func getMeals() -> [MealModel]
+    func getMeal(index: Int) -> MealModel
+    /*
+     無理やり引っ張ってきたやつ
+     func cellForRowAt(index: Int, pfcCell: ([MealModel]) -> Void, mealCell: (MealModel) -> Void)
+     */
 }
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにすることでweak var使える
     func reload()
     func showMeal(meal: MealModel?)
-    func pfcCell() -> PFCTableViewCell
-    func mealCell() -> MealTableViewCell
 }
 
 final class MealsPresenter {
     //viewController側でもpresenterを保持するから、presenter側から弱参照で保持することで循環参照回避
     private weak var output: MealsPresenterOutput!
     private var meals: [MealModel] = []
-    private let realm = try! Realm()
+    private let realm: MealRealm
     
-    init(output: MealsPresenterOutput) {
+    init(output: MealsPresenterOutput, realm: MealRealm = MealRealm.shared) {
         self.output = output
+        self.realm = realm
     }
 }
 
@@ -45,7 +49,7 @@ extension MealsPresenter: MealsPresenterInput {
     func reloadData() {
         //meals更新
         self.meals = []
-        let realmRegistedData = realm.objects(MealModel.self)
+        let realmRegistedData = self.realm.getData()
         for data in realmRegistedData {
             self.meals.append(data)
         }
@@ -71,16 +75,22 @@ extension MealsPresenter: MealsPresenterInput {
         self.output.showMeal(meal: meal)
     }
     
-    func cellForRowAt(index: Int) -> UITableViewCell {
-        guard index > 0 else {
-            //PFCセル
-            let pfcCell = self.output.pfcCell()
-            pfcCell.configure(meals: self.meals)
-            return pfcCell
-        }
-        //Mealセル
-        let mealCell = self.output.mealCell()
-        mealCell.configure(meal: meals[index - 1])
-        return mealCell
+    func getMeals() -> [MealModel] {
+        return self.meals
     }
+    
+    func getMeal(index: Int) -> MealModel {
+        return self.meals[index]
+    }
+    
+    /*
+    クロージャで無理やりこっちに処理引っ張ってきたやつ
+    func cellForRowAt(index: Int, pfcCell: ([MealModel]) -> Void, mealCell: (MealModel) -> Void) {
+        guard index > 0 else {
+            pfcCell(self.meals)
+            return
+        }
+        mealCell(self.meals[index - 1])
+    }
+     */
 }
