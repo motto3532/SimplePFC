@@ -19,6 +19,7 @@ final class MealsViewController: UIViewController {
         }
     }
     
+    //init()で初期化するわけじゃないからvarで宣言
     private var presenter: MealsPresenterInput!
     
     override func viewDidLoad() {

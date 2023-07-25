@@ -71,7 +71,6 @@ extension MealsPresenter: MealsPresenterInput {
         self.output.showMeal(meal: meal)
     }
     
-    
     func cellForRowAt(index: Int) -> UITableViewCell {
         guard index > 0 else {
             //PFCセル
@@ -84,6 +83,4 @@ extension MealsPresenter: MealsPresenterInput {
         mealCell.configure(meal: meals[index - 1])
         return mealCell
     }
-    
-    
 }
