@@ -15,9 +15,24 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IAe-ig-dmE" customClass="FSCalendar">
+                                <rect key="frame" x="39.333333333333343" y="213" width="314.33333333333326" height="426"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="IAe-ig-dmE" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" multiplier="0.8" id="H7S-Tp-kn9"/>
+                            <constraint firstItem="IAe-ig-dmE" firstAttribute="height" secondItem="5EZ-qb-Rvc" secondAttribute="height" multiplier="0.5" id="Lcb-R6-jD1"/>
+                            <constraint firstItem="IAe-ig-dmE" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="RS8-oR-3lN"/>
+                            <constraint firstItem="IAe-ig-dmE" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="gGX-YP-Rzu"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="calendar" destination="IAe-ig-dmE" id="x34-h8-I3R"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

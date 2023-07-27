@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 final class MealsViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {

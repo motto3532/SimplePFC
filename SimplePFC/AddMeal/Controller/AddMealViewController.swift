@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import RealmSwift
 
 final class AddMealViewController: UIViewController {
     
@@ -37,7 +36,6 @@ final class AddMealViewController: UIViewController {
     private var presenter: AddMealPresenterInput!
     
     private var meal: MealModel?
-    private let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
