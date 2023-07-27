@@ -36,4 +36,9 @@ final class Router {
         //vc.configure()
         from.navigationController?.popViewController(animated: true)
     }
+    
+    func showCalendar(from: UIViewController) {
+        guard let vc = UIStoryboard(name: "Calendar", bundle: nil).instantiateInitialViewController() as? CalendarViewController else { return }
+        from.navigationController?.pushViewController(vc, animated: true)
+    }
 }
