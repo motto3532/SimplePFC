@@ -14,13 +14,18 @@ final class Router {
     private var window: UIWindow?
     
     func showRoot(window: UIWindow) {
-        guard let vc = UIStoryboard(name: "Meals", bundle: nil).instantiateInitialViewController() as? MealsViewController else { return }
-        let presenter = MealsPresenter(output: vc)
-        vc.inject(presenter: presenter)
+        guard let vc = UIStoryboard(name: "Calendar", bundle: nil).instantiateInitialViewController() as? CalendarViewController else { return }
         let nc = UINavigationController(rootViewController: vc)
         window.rootViewController = nc
         window.makeKeyAndVisible()
         self.window = window
+    }
+    
+    func showMeals(from: UIViewController) {
+        guard let vc = UIStoryboard(name: "Meals", bundle: nil).instantiateInitialViewController() as? MealsViewController else { return }
+        let presenter = MealsPresenter(output: vc)
+        vc.inject(presenter: presenter)
+        from.navigationController?.pushViewController(vc, animated: true)
     }
     
     func showMeal(from: UIViewController, meal: MealModel?) {
@@ -30,7 +35,7 @@ final class Router {
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showMeals(from: UIViewController) {
+    func goBack(from: UIViewController) {
         //値渡しじゃなくていいのかね?
         //guard let vc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
         //vc.configure()

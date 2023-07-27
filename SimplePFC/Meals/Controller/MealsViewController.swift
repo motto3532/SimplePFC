@@ -29,9 +29,6 @@ final class MealsViewController: UIViewController {
         //編集ボタン
         let addMealBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItem = addMealBarButtonItem
-        //カレンダーボタン
-        let calendarBarButtonItem = UIBarButtonItem(barButtonSystemItem: .reply, target: self, action: #selector(calendarBarButtonItemTapped(_:)))
-        self.navigationItem.leftBarButtonItem = calendarBarButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -48,10 +45,6 @@ final class MealsViewController: UIViewController {
 @objc private extension MealsViewController {
     func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
         self.presenter.addMealBarButtonItemTapped()
-    }
-    
-    func calendarBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        Router.shared.showCalendar(from: self)
     }
 }
 

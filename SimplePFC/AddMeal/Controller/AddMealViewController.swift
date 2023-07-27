@@ -86,8 +86,8 @@ extension AddMealViewController: AddMealPresenterOutput {
         present(alert, animated: true, completion: nil)
     }
     
-    func showMeals() {
-        Router.shared.showMeals(from: self)
+    func goBack() {
+        Router.shared.goBack(from: self)
     }
     
     func deleteAlert(action: @escaping () -> Void) {

@@ -16,7 +16,7 @@ protocol AddMealPresenterInput {
 protocol AddMealPresenterOutput: AnyObject {
     func configureEditMeal(meal: MealModel)
     func emptyAlert()
-    func showMeals()
+    func goBack()
     func deleteAlert(action: @escaping () -> Void)
 }
 
@@ -68,7 +68,7 @@ extension AddMealPresenter: AddMealPresenterInput {
             
             self.realm.add(meal: newMeal)
         }
-        self.output.showMeals()
+        self.output.goBack()
     }
     
     func deleteMealButtonTapped() {
@@ -83,7 +83,7 @@ extension AddMealPresenter: AddMealPresenterInput {
             //アラートの削除ボタンが押されたら実行される
             guard let meal = self?.meal else {return}
             self?.realm.delete(meal: meal)
-            self?.output.showMeals()
+            self?.output.goBack()
         }
     }
 }

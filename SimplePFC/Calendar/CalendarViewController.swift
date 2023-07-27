@@ -19,6 +19,9 @@ final class CalendarViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Router.shared.showMeals(from: self)
+        
         calendar.calendarHeaderView.backgroundColor = .green
         calendar.calendarWeekdayView.backgroundColor = .gray
         calendar.backgroundColor = .white
