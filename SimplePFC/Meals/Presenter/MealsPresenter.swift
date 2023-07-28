@@ -10,6 +10,7 @@ import Foundation
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterInput {
     var numberOfRowsInSection: Int { get }
+    func getDate() -> String
     func reloadData()
     func addMealBarButtonItemTapped()
     func cellHeight(index: Int) -> CGFloat
@@ -33,10 +34,12 @@ final class MealsPresenter {
     private weak var output: MealsPresenterOutput!
     private var meals: [MealModel] = []
     private let realm: MealRealm
+    private let time: Date
     
-    init(output: MealsPresenterOutput, realm: MealRealm = MealRealm.shared) {
+    init(output: MealsPresenterOutput, realm: MealRealm = MealRealm.shared, time: Date) {
         self.output = output
         self.realm = realm
+        self.time = time
     }
 }
 
@@ -46,12 +49,27 @@ extension MealsPresenter: MealsPresenterInput {
         self.meals.count + 1//PFCセルの分
     }
     
+    func getDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        dateFormatter.dateFormat = "yyyy年M月d日(EEEE)"
+        return dateFormatter.string(from: self.time)
+    }
+    
     func reloadData() {
         //meals更新
         self.meals = []
         let realmRegistedData = self.realm.getData()
+        //meals画面に表示する日付をstringに書き換え
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        let timeStr = dateFormatter.string(from: self.time)
+        //realmデータから表示するmealを検索
         for data in realmRegistedData {
-            self.meals.append(data)
+            if timeStr == dateFormatter.string(from: data.time) {
+                self.meals.append(data)
+            }
         }
         //reloadData()
         self.output.reload()
@@ -71,6 +89,7 @@ extension MealsPresenter: MealsPresenterInput {
     }
     
     func didSelect(index: Int) {
+        guard index > 0 else { return }
         let meal = self.meals[index - 1]//PFCセルの分
         self.output.showMeal(meal: meal)
     }

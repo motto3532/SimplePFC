@@ -9,7 +9,7 @@ import Foundation
 
 protocol AddMealPresenterInput {
     func viewDidLoad()
-    func addMealButtonTapped(name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
+    func addMealButtonTapped(time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
     func deleteMealButtonTapped()
 }
 
@@ -42,7 +42,7 @@ extension AddMealPresenter: AddMealPresenterInput {
         self.output.configureEditMeal(meal: _meal)
     }
     
-    func addMealButtonTapped(name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
+    func addMealButtonTapped(time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
         guard let _name = name, let _calorie = calorie, let _protein = protein, let _fat = fat, let _carbohydrate = carbohydrate else {
             return
         }
@@ -56,10 +56,11 @@ extension AddMealPresenter: AddMealPresenterInput {
         
         if let meal = self.meal {
             //編集処理
-            self.realm.edit(meal: meal, name: _name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
+            self.realm.edit(time: time, meal: meal, name: _name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
         } else {
             //追加処理
             let newMeal = MealModel()
+            newMeal.time = time
             newMeal.name = _name
             newMeal.calorie = nutrients[0]
             newMeal.protein = nutrients[1]

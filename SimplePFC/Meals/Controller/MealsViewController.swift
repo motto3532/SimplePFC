@@ -26,6 +26,10 @@ final class MealsViewController: UIViewController {
         
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
         
+        //日付表示(なんか表示されない)
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.blue]
+        self.title = self.presenter.getDate()
+        
         //編集ボタン
         let addMealBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItem = addMealBarButtonItem

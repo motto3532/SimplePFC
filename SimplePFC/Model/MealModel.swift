@@ -11,9 +11,24 @@ import RealmSwift
  Objectクラスのサブクラスとして定義する必要があるらしい。
  structじゃなくてclassなのは、"Objective-Cとの相互接続性が必要であればclassを使いましょう"とのこと。
  */
-class MealModel: Object {
+final class MealModel: Object {
     //primaryKeyは更新・追加の時に必要
     @Persisted(primaryKey: true) var id: ObjectId//勝手にidうまいことしてくれるぽい
+    @Persisted var time: Date
+    @Persisted var name: String
+    @Persisted var calorie: Int
+    @Persisted var protein: Int
+    @Persisted var fat: Int
+    @Persisted var carbohydrate: Int
+}
+
+final class MealsForTheDayModel: Object {
+    @Persisted var time: Int//調べる
+    //@Persisted var meals: [MealModel]
+}
+
+final class FavoriteMealModel: Object {
+    @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var name: String
     @Persisted var calorie: Int
     @Persisted var protein: Int

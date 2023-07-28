@@ -8,6 +8,8 @@
 import UIKit
 
 final class AddMealViewController: UIViewController {
+    //現在時刻ボタン追加したい
+    @IBOutlet private weak var datePicker: UIDatePicker!
     
     @IBOutlet private weak var addMealView: UIView! {didSet{addMealView.setCornerRadius()}}
     
@@ -39,6 +41,10 @@ final class AddMealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        datePicker.locale = Locale(identifier: "ja_JP")
+        datePicker.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        datePicker.preferredDatePickerStyle = .compact
+        //datePicker.datePickerMode = .dateAndTimeここうまくいかん
         self.presenter.viewDidLoad()
     }
     
@@ -51,6 +57,7 @@ final class AddMealViewController: UIViewController {
     
     func addMealButtonTapped(_sender: UIResponder) {
         self.presenter.addMealButtonTapped(
+            time: datePicker.date,
             name: mealNameTextField.text,
             calorie: calorieTextField.text,
             protein: proteinTextField.text,
@@ -67,11 +74,12 @@ final class AddMealViewController: UIViewController {
 extension AddMealViewController: AddMealPresenterOutput {
     
     func configureEditMeal(meal: MealModel) {
-        mealNameTextField.text = meal.name
-        calorieTextField.text = String(describing: meal.calorie)
-        proteinTextField.text = String(describing: meal.protein)
-        fatTextField.text = String(describing: meal.fat)
-        carbohydrateTextField.text = String(describing: meal.carbohydrate)
+        self.datePicker.date = meal.time
+        self.mealNameTextField.text = meal.name
+        self.calorieTextField.text = String(describing: meal.calorie)
+        self.proteinTextField.text = String(describing: meal.protein)
+        self.fatTextField.text = String(describing: meal.fat)
+        self.carbohydrateTextField.text = String(describing: meal.carbohydrate)
         //削除ボタン
         let deleteMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItems = [deleteMealBarButtonItem]
