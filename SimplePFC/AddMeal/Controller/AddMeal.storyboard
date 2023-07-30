@@ -22,8 +22,11 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="wNI-9R-etn">
                                         <rect key="frame" x="30" y="30" width="273" height="434.66666666666669"/>
                                         <subviews>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qEx-J5-Huz">
+                                                <rect key="frame" x="0.0" y="0.0" width="275" height="31"/>
+                                            </switch>
                                             <datePicker contentMode="scaleToFill" verticalCompressionResistancePriority="250" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="W5S-nl-r19">
-                                                <rect key="frame" x="0.0" y="0.0" width="273" height="138.66666666666666"/>
+                                                <rect key="frame" x="0.0" y="51.000000000000007" width="273" height="87.666666666666686"/>
                                             </datePicker>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zwv-h6-lgV" customClass="IQPreviousNextView" customModule="IQKeyboardManagerSwift">
                                                 <rect key="frame" x="0.0" y="158.66666666666669" width="273" height="276"/>
@@ -208,6 +211,7 @@
                         <outlet property="carbohydrateTextField" destination="Whg-8C-7Mt" id="wvh-W3-t6b"/>
                         <outlet property="datePicker" destination="W5S-nl-r19" id="7NH-oe-HW1"/>
                         <outlet property="fatTextField" destination="4Y0-ig-V0m" id="Itq-IE-QlB"/>
+                        <outlet property="favoriteSwitch" destination="qEx-J5-Huz" id="zRs-KI-pK4"/>
                         <outlet property="mealNameTextField" destination="l3g-8g-9fY" id="uzt-GH-dV9"/>
                         <outlet property="proteinTextField" destination="Ikq-Ac-SdZ" id="V8d-FI-rGU"/>
                     </connections>

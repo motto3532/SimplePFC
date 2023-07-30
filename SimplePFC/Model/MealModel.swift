@@ -22,11 +22,6 @@ final class MealModel: Object {
     @Persisted var carbohydrate: Int
 }
 
-final class MealsForTheDayModel: Object {
-    @Persisted var time: Int//調べる
-    //@Persisted var meals: [MealModel]
-}
-
 final class FavoriteMealModel: Object {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var name: String

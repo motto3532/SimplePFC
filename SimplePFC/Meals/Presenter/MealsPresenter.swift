@@ -60,7 +60,7 @@ extension MealsPresenter: MealsPresenterInput {
     func reloadData() {
         //meals更新
         self.meals = []
-        let realmRegistedData = self.realm.getData()
+        let realmRegistedData = self.realm.getMealsData()
         //meals画面に表示する日付をstringに書き換え
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"

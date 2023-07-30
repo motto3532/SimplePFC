@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PFCTableViewCell: UITableViewCell {
+final class PFCTableViewCell: UITableViewCell {
     static var className: String { String(describing: PFCTableViewCell.self) }
     
     @IBOutlet private weak var pfcView: UIView! {didSet{pfcView.setCornerRadius()}}

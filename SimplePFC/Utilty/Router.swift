@@ -28,9 +28,9 @@ final class Router {
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showMeal(from: UIViewController, meal: MealModel?) {
+    func showMeal(from: UIViewController, meal: MealModel? = nil, favoriteMeal: FavoriteMealModel? = nil) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
-        let presenter = AddMealPresenter(output: vc, meal: meal)
+        let presenter = AddMealPresenter(output: vc, meal: meal, favoriteMeal: favoriteMeal)
         vc.inject(presenter: presenter)
         from.navigationController?.pushViewController(vc, animated: true)
     }
@@ -44,6 +44,13 @@ final class Router {
     
     func showCalendar(from: UIViewController) {
         guard let vc = UIStoryboard(name: "Calendar", bundle: nil).instantiateInitialViewController() as? CalendarViewController else { return }
+        from.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func showFavoriteMeals(from: UIViewController) {
+        guard let vc = UIStoryboard(name: "FavoriteMeal", bundle: nil).instantiateInitialViewController() as? FavoriteMealViewController else { return }
+        let presenter = FavoriteMealPresenter(output: vc)
+        vc.inject(presenter: presenter)
         from.navigationController?.pushViewController(vc, animated: true)
     }
 }

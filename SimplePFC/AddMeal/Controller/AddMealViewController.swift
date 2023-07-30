@@ -8,6 +8,7 @@
 import UIKit
 
 final class AddMealViewController: UIViewController {
+    @IBOutlet private weak var favoriteSwitch: UISwitch!
     //現在時刻ボタン追加したい
     @IBOutlet private weak var datePicker: UIDatePicker!
     
@@ -31,7 +32,7 @@ final class AddMealViewController: UIViewController {
     
     @IBOutlet private weak var addMealButton: UIButton! {
         didSet {
-            addMealButton.addTarget(self, action: #selector(addMealButtonTapped(_sender:)), for: .touchUpInside)
+            addMealButton.addTarget(self, action: #selector(addMealButtonTapped(_:)), for: .touchUpInside)
         }
     }
     
@@ -45,6 +46,10 @@ final class AddMealViewController: UIViewController {
         datePicker.timeZone = TimeZone(identifier: "Asia/Tokyo")
         datePicker.preferredDatePickerStyle = .compact
         //datePicker.datePickerMode = .dateAndTimeここうまくいかん
+        
+        let favoriteMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItems = [favoriteMealBarButtonItem]
+        
         self.presenter.viewDidLoad()
     }
     
@@ -55,8 +60,9 @@ final class AddMealViewController: UIViewController {
 
 @objc private extension AddMealViewController {
     
-    func addMealButtonTapped(_sender: UIResponder) {
+    func addMealButtonTapped(_ sender: UIResponder) {
         self.presenter.addMealButtonTapped(
+            favorite: favoriteSwitch.isOn,
             time: datePicker.date,
             name: mealNameTextField.text,
             calorie: calorieTextField.text,
@@ -69,11 +75,15 @@ final class AddMealViewController: UIViewController {
     func deleteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
         self.presenter.deleteMealButtonTapped()
     }
+    
+    func favoriteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        self.presenter.favoriteMealBarButtonItemTapped()
+    }
 }
 
 extension AddMealViewController: AddMealPresenterOutput {
     
-    func configureEditMeal(meal: MealModel) {
+    func configure(meal: MealModel) {
         self.datePicker.date = meal.time
         self.mealNameTextField.text = meal.name
         self.calorieTextField.text = String(describing: meal.calorie)
@@ -84,8 +94,18 @@ extension AddMealViewController: AddMealPresenterOutput {
         let deleteMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(deleteMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItems = [deleteMealBarButtonItem]
         //編集ボタン
-        addMealButton.titleLabel?.text = "編集"
+        self.addMealButton.titleLabel?.text = "編集"
     }
+    
+    func configure(favoriteMeal: FavoriteMealModel) {
+        self.datePicker.date = Date()
+        self.mealNameTextField.text = favoriteMeal.name
+        self.calorieTextField.text = String(describing: favoriteMeal.calorie)
+        self.proteinTextField.text = String(describing: favoriteMeal.protein)
+        self.fatTextField.text = String(describing: favoriteMeal.fat)
+        self.carbohydrateTextField.text = String(describing: favoriteMeal.carbohydrate)
+    }
+    
     
     func emptyAlert() {
         let alert = UIAlertController(title: "未記入の項目があります", message: nil, preferredStyle: .alert)
@@ -108,5 +128,9 @@ extension AddMealViewController: AddMealPresenterOutput {
         alert.addAction(delete)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
+    }
+    
+    func showFavoriteMeals() {
+        Router.shared.showFavoriteMeals(from: self)
     }
 }

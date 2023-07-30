@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MealTableViewCell: UITableViewCell {
+final class MealTableViewCell: UITableViewCell {
     static var className: String { String(describing: MealTableViewCell.self) }
     
     @IBOutlet private weak var MealLabel: UILabel!

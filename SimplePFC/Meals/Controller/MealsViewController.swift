@@ -26,7 +26,7 @@ final class MealsViewController: UIViewController {
         
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
         
-        //日付表示(なんか表示されない)
+        //日付表示(なんか次ページのbackに反映されてる)
         self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.blue]
         self.title = self.presenter.getDate()
         
@@ -82,7 +82,7 @@ extension MealsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard indexPath.row > 0 else {
-            guard let pfcCell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
+            guard let pfcCell = self.tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
                 fatalError()
             }
             pfcCell.configure(meals: self.presenter.getMeals())

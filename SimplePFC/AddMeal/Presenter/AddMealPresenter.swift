@@ -9,26 +9,31 @@ import Foundation
 
 protocol AddMealPresenterInput {
     func viewDidLoad()
-    func addMealButtonTapped(time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
+    func addMealButtonTapped(favorite: Bool, time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
     func deleteMealButtonTapped()
+    func favoriteMealBarButtonItemTapped()
 }
 
 protocol AddMealPresenterOutput: AnyObject {
-    func configureEditMeal(meal: MealModel)
+    func configure(meal: MealModel)
+    func configure(favoriteMeal: FavoriteMealModel)
     func emptyAlert()
     func goBack()
     func deleteAlert(action: @escaping () -> Void)
+    func showFavoriteMeals()
 }
 
 final class AddMealPresenter {
     private weak var output: AddMealPresenterOutput!
     private let meal: MealModel?
     private let realm: MealRealm
+    private let favoriteMeal: FavoriteMealModel?
     
-    init(output: AddMealPresenterOutput, meal: MealModel?, realm: MealRealm = MealRealm.shared) {
+    init(output: AddMealPresenterOutput, meal: MealModel?, favoriteMeal: FavoriteMealModel?, realm: MealRealm = MealRealm.shared) {
         self.output = output
         self.meal = meal
         self.realm = realm
+        self.favoriteMeal = favoriteMeal
     }
 }
 
@@ -36,13 +41,17 @@ extension AddMealPresenter: AddMealPresenterInput {
     
     func viewDidLoad() {
         //mealに値があれば編集画面
-        guard let _meal = meal else {
-            return
+        if let _meal = self.meal {
+            self.output.configure(meal: _meal)
         }
-        self.output.configureEditMeal(meal: _meal)
+        //favoriteMealに値があればそれを反映
+        if let _favoriteMeal = self.favoriteMeal {
+            self.output.configure(favoriteMeal: _favoriteMeal)
+        }
     }
     
-    func addMealButtonTapped(time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
+    func addMealButtonTapped(favorite: Bool, time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
+    //食事内容追加・編集
         guard let _name = name, let _calorie = calorie, let _protein = protein, let _fat = fat, let _carbohydrate = carbohydrate else {
             return
         }
@@ -66,9 +75,20 @@ extension AddMealPresenter: AddMealPresenterInput {
             newMeal.protein = nutrients[1]
             newMeal.fat = nutrients[2]
             newMeal.carbohydrate = nutrients[3]
-            
             self.realm.add(meal: newMeal)
         }
+        
+    //お気に入り登録
+        if favorite {
+            let favoriteMeal = FavoriteMealModel()
+            favoriteMeal.name = _name
+            favoriteMeal.calorie = nutrients[0]
+            favoriteMeal.protein = nutrients[1]
+            favoriteMeal.fat = nutrients[2]
+            favoriteMeal.carbohydrate = nutrients[3]
+            self.realm.add(favoriteMeal: favoriteMeal)
+        }
+        
         self.output.goBack()
     }
     
@@ -86,5 +106,9 @@ extension AddMealPresenter: AddMealPresenterInput {
             self?.realm.delete(meal: meal)
             self?.output.goBack()
         }
+    }
+    
+    func favoriteMealBarButtonItemTapped() {
+        self.output.showFavoriteMeals()
     }
 }
