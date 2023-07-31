@@ -56,6 +56,16 @@ final class AddMealViewController: UIViewController {
     func inject(presenter: AddMealPresenterInput) {
         self.presenter = presenter
     }
+    
+    func configure(favoriteMeal: FavoriteMealModel) {
+        self.favoriteSwitch.setOn(false, animated: false)
+        self.datePicker.date = Date()
+        self.mealNameTextField.text = favoriteMeal.name
+        self.calorieTextField.text = String(describing: favoriteMeal.calorie)
+        self.proteinTextField.text = String(describing: favoriteMeal.protein)
+        self.fatTextField.text = String(describing: favoriteMeal.fat)
+        self.carbohydrateTextField.text = String(describing: favoriteMeal.carbohydrate)
+    }
 }
 
 @objc private extension AddMealViewController {
@@ -96,16 +106,6 @@ extension AddMealViewController: AddMealPresenterOutput {
         //編集ボタン
         self.addMealButton.titleLabel?.text = "編集"
     }
-    
-    func configure(favoriteMeal: FavoriteMealModel) {
-        self.datePicker.date = Date()
-        self.mealNameTextField.text = favoriteMeal.name
-        self.calorieTextField.text = String(describing: favoriteMeal.calorie)
-        self.proteinTextField.text = String(describing: favoriteMeal.protein)
-        self.fatTextField.text = String(describing: favoriteMeal.fat)
-        self.carbohydrateTextField.text = String(describing: favoriteMeal.carbohydrate)
-    }
-    
     
     func emptyAlert() {
         let alert = UIAlertController(title: "未記入の項目があります", message: nil, preferredStyle: .alert)

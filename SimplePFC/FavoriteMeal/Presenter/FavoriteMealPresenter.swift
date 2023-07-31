@@ -15,7 +15,7 @@ protocol FavoriteMealPresenterProtocolInput {
 }
 
 protocol FavoriteMealPresenterProtocolOutput: AnyObject {
-    func showMeal(favoriteMeal: FavoriteMealModel)
+    func goBack(favoriteMeal: FavoriteMealModel)
     func reload()
 }
 
@@ -47,7 +47,6 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
     }
     
     func didSelect(index: Int) {
-        //これ間違ってる。
-        self.output.showMeal(favoriteMeal: self.favoriteMeals[index])
+        self.output.goBack(favoriteMeal: self.favoriteMeals[index])
     }
 }

@@ -13,7 +13,6 @@ import UIKit
  ・タップでAddMeal画面に移動
  ・お気に入り食材を複数まとめて選択してAddMeal画面に移動(編集モード的なの想像してたけど、セルのタップイベントと競合しそう <- 編集モードの時はタップイベントオフにすればいいか)
  ・お気に入り食材同士を合成してお気に入り登録(合成ボタンでも追加するか)
- ・お気に入り食材をAddMeal画面で編集できるようにする（datePicker.isHiddenで隠せばいけるかな？）
  */
 final class FavoriteMealViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {
@@ -38,8 +37,8 @@ final class FavoriteMealViewController: UIViewController {
 }
 
 extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
-    func showMeal(favoriteMeal: FavoriteMealModel) {
-        Router.shared.showMeal(from: self, favoriteMeal: favoriteMeal)
+    func goBack(favoriteMeal: FavoriteMealModel) {
+        Router.shared.goBack(from: self, favoriteMeal: favoriteMeal)
     }
     
     func reload() {

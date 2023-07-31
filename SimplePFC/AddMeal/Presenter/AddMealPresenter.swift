@@ -16,7 +16,6 @@ protocol AddMealPresenterInput {
 
 protocol AddMealPresenterOutput: AnyObject {
     func configure(meal: MealModel)
-    func configure(favoriteMeal: FavoriteMealModel)
     func emptyAlert()
     func goBack()
     func deleteAlert(action: @escaping () -> Void)
@@ -27,13 +26,11 @@ final class AddMealPresenter {
     private weak var output: AddMealPresenterOutput!
     private let meal: MealModel?
     private let realm: MealRealm
-    private let favoriteMeal: FavoriteMealModel?
     
-    init(output: AddMealPresenterOutput, meal: MealModel?, favoriteMeal: FavoriteMealModel?, realm: MealRealm = MealRealm.shared) {
+    init(output: AddMealPresenterOutput, meal: MealModel?, realm: MealRealm = MealRealm.shared) {
         self.output = output
         self.meal = meal
         self.realm = realm
-        self.favoriteMeal = favoriteMeal
     }
 }
 
@@ -43,10 +40,6 @@ extension AddMealPresenter: AddMealPresenterInput {
         //mealに値があれば編集画面
         if let _meal = self.meal {
             self.output.configure(meal: _meal)
-        }
-        //favoriteMealに値があればそれを反映
-        if let _favoriteMeal = self.favoriteMeal {
-            self.output.configure(favoriteMeal: _favoriteMeal)
         }
     }
     

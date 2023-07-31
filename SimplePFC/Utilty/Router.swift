@@ -28,17 +28,19 @@ final class Router {
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showMeal(from: UIViewController, meal: MealModel? = nil, favoriteMeal: FavoriteMealModel? = nil) {
+    func showMeal(from: UIViewController, meal: MealModel?) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
-        let presenter = AddMealPresenter(output: vc, meal: meal, favoriteMeal: favoriteMeal)
+        let presenter = AddMealPresenter(output: vc, meal: meal)
         vc.inject(presenter: presenter)
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func goBack(from: UIViewController) {
-        //値渡しじゃなくていいのかね?
-        //guard let vc = from.navigationController?.viewControllers.first as? MealsViewController else { return }
-        //vc.configure()
+    func goBack(from: UIViewController, favoriteMeal: FavoriteMealModel? = nil) {
+        if let _favoriteMeal = favoriteMeal {
+            guard let numOfVc = from.navigationController?.viewControllers.count else { return }
+            guard let vc = from.navigationController?.viewControllers[numOfVc - 2] as? AddMealViewController else { return }
+            vc.configure(favoriteMeal: _favoriteMeal)
+        }
         from.navigationController?.popViewController(animated: true)
     }
     
