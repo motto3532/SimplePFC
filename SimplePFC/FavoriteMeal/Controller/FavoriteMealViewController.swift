@@ -8,9 +8,7 @@
 import UIKit
 
 /*
- ・セルに表示するのは食材名だけ
  ・スライドでお気に入りから削除
- ・タップでAddMeal画面に移動
  ・お気に入り食材を複数まとめて選択してAddMeal画面に移動(編集モード的なの想像してたけど、セルのタップイベントと競合しそう <- 編集モードの時はタップイベントオフにすればいいか)
  ・お気に入り食材同士を合成してお気に入り登録(合成ボタンでも追加するか)
  */
@@ -53,6 +51,12 @@ extension FavoriteMealViewController: UITableViewDelegate {
 }
 
 extension FavoriteMealViewController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        self.presenter.deleteFavoriteMeal(index: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.presenter.numOfFavoriteMeals
     }

@@ -13,6 +13,7 @@ protocol MealRealmProtocol {
     func add(favoriteMeal: FavoriteMealModel)
     func edit(time: Date, meal: MealModel, name: String, calorie: Int, protein: Int, fat: Int, carbohydrate: Int)
     func delete(meal: MealModel)
+    func delete(favoriteMeal: FavoriteMealModel)
     func getMealsData() -> Results<MealModel>
     func getFavoriteMealsData() -> Results<FavoriteMealModel>
 }
@@ -53,6 +54,12 @@ final class MealRealm: MealRealmProtocol {
     func delete(meal: MealModel) {
         try? self.realm.write {
             self.realm.delete(meal)
+        }
+    }
+    
+    func delete(favoriteMeal: FavoriteMealModel) {
+        try? self.realm.write {
+            self.realm.delete(favoriteMeal)
         }
     }
     

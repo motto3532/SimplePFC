@@ -12,6 +12,7 @@ protocol FavoriteMealPresenterProtocolInput {
     func reloadData()
     func getFavoriteMeal(index: Int) -> FavoriteMealModel
     func didSelect(index: Int)
+    func deleteFavoriteMeal(index: Int)
 }
 
 protocol FavoriteMealPresenterProtocolOutput: AnyObject {
@@ -48,5 +49,10 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
     
     func didSelect(index: Int) {
         self.output.goBack(favoriteMeal: self.favoriteMeals[index])
+    }
+    
+    func deleteFavoriteMeal(index: Int) {
+        self.realm.delete(favoriteMeal: self.favoriteMeals[index])
+        self.favoriteMeals.remove(at: index)
     }
 }
