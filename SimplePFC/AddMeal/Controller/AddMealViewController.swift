@@ -8,7 +8,9 @@
 import UIKit
 
 final class AddMealViewController: UIViewController {
-    @IBOutlet private weak var favoriteSwitch: UISwitch!
+    @IBOutlet private weak var favoriteSwitch: UISwitch! {
+        didSet { favoriteSwitch.setOn(false, animated: false) }
+    }
     //現在時刻ボタン追加したい
     @IBOutlet private weak var datePicker: UIDatePicker!
     
@@ -58,7 +60,6 @@ final class AddMealViewController: UIViewController {
     }
     
     func configure(favoriteMeal: FavoriteMealModel) {
-        self.favoriteSwitch.setOn(false, animated: false)
         self.datePicker.date = Date()
         self.mealNameTextField.text = favoriteMeal.name
         self.calorieTextField.text = String(describing: favoriteMeal.calorie)

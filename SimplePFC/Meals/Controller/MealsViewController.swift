@@ -27,8 +27,11 @@ final class MealsViewController: UIViewController {
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
         
         //日付表示(なんか次ページのbackに反映されてる)
-        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.blue]
-        self.title = self.presenter.getDate()
+        let titleLabel = UILabel()
+        titleLabel.backgroundColor = .clear
+        titleLabel.textColor = .blue
+        titleLabel.text = self.presenter.getDate()
+        self.navigationItem.titleView = titleLabel
         
         //編集ボタン
         let addMealBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
