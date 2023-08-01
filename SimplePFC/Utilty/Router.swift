@@ -35,11 +35,15 @@ final class Router {
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func goBack(from: UIViewController, favoriteMeal: FavoriteMealModel? = nil) {
+    func goBack(from: UIViewController, favoriteMeal: FavoriteMealModel? = nil, favoriteMeals: [FavoriteMealModel]? = nil) {
         if let _favoriteMeal = favoriteMeal {
             guard let numOfVc = from.navigationController?.viewControllers.count else { return }
             guard let vc = from.navigationController?.viewControllers[numOfVc - 2] as? AddMealViewController else { return }
             vc.configure(favoriteMeal: _favoriteMeal)
+        } else if let _favoriteMeals = favoriteMeals {
+            guard let numOfVc = from.navigationController?.viewControllers.count else { return }
+            guard let vc = from.navigationController?.viewControllers[numOfVc - 2] as? AddMealViewController else { return }
+            vc.configure(favoriteMeals: _favoriteMeals)
         }
         from.navigationController?.popViewController(animated: true)
     }

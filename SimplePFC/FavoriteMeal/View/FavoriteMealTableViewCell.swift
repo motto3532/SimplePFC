@@ -10,12 +10,12 @@ import UIKit
 final class FavoriteMealTableViewCell: UITableViewCell {
     static var className: String { String(describing: FavoriteMealTableViewCell.self) }
     
-    @IBOutlet private weak var view: UIView!
     @IBOutlet private weak var favoriteMealLabel: UILabel!
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.view.backgroundColor = .white
+        self.accessoryType = .none
+        self.favoriteMealLabel.backgroundColor = .white
         self.favoriteMealLabel.text = ""
         self.favoriteMealLabel.textColor = .black
     }

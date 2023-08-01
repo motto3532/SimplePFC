@@ -49,8 +49,8 @@ final class AddMealViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .compact
         //datePicker.datePickerMode = .dateAndTimeここうまくいかん
         
-        let favoriteMealBarButtonItem: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
-        self.navigationItem.rightBarButtonItems = [favoriteMealBarButtonItem]
+        let favoriteMealBarButton: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItem = favoriteMealBarButton
         
         self.presenter.viewDidLoad()
     }
@@ -66,6 +66,16 @@ final class AddMealViewController: UIViewController {
         self.proteinTextField.text = String(describing: favoriteMeal.protein)
         self.fatTextField.text = String(describing: favoriteMeal.fat)
         self.carbohydrateTextField.text = String(describing: favoriteMeal.carbohydrate)
+    }
+    
+    func configure(favoriteMeals: [FavoriteMealModel]) {
+        let synthesizedFavoriteMeal = self.presenter.synthesizeFavoriteMeals(favoriteMeals: favoriteMeals)
+        self.datePicker.date = Date()
+        self.mealNameTextField.text = synthesizedFavoriteMeal.name
+        self.calorieTextField.text = String(describing: synthesizedFavoriteMeal.calorie)
+        self.proteinTextField.text = String(describing: synthesizedFavoriteMeal.protein)
+        self.fatTextField.text = String(describing: synthesizedFavoriteMeal.fat)
+        self.carbohydrateTextField.text = String(describing: synthesizedFavoriteMeal.carbohydrate)
     }
 }
 

@@ -31,7 +31,6 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="favoriteMealLabel" destination="wiD-2D-tQ5" id="CiX-1z-pZ0"/>
-                <outlet property="view" destination="H2p-sc-9uM" id="fji-Mp-RHv"/>
             </connections>
             <point key="canvasLocation" x="122" y="20"/>
         </tableViewCell>

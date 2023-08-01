@@ -20,7 +20,7 @@ final class MealsViewController: UIViewController {
     
     //init()で初期化するわけじゃないからvarで宣言
     private var presenter: MealsPresenterInput!
-    
+                                                                                                
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -34,8 +34,8 @@ final class MealsViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         
         //編集ボタン
-        let addMealBarButtonItem = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
-        self.navigationItem.rightBarButtonItem = addMealBarButtonItem
+        let addMealBarButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
+        self.navigationItem.rightBarButtonItem = addMealBarButton
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -12,6 +12,7 @@ protocol AddMealPresenterInput {
     func addMealButtonTapped(favorite: Bool, time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
     func deleteMealButtonTapped()
     func favoriteMealBarButtonItemTapped()
+    func synthesizeFavoriteMeals(favoriteMeals: [FavoriteMealModel]) -> FavoriteMealModel
 }
 
 protocol AddMealPresenterOutput: AnyObject {
@@ -103,5 +104,24 @@ extension AddMealPresenter: AddMealPresenterInput {
     
     func favoriteMealBarButtonItemTapped() {
         self.output.showFavoriteMeals()
+    }
+    
+    func synthesizeFavoriteMeals(favoriteMeals: [FavoriteMealModel]) -> FavoriteMealModel {
+        let favMeal = FavoriteMealModel()
+        favMeal.name = ""
+        favMeal.calorie = 0
+        favMeal.protein = 0
+        favMeal.fat = 0
+        favMeal.carbohydrate = 0
+        
+        for favoriteMeal in favoriteMeals {
+            favMeal.name += favMeal.name.isEmpty ? favoriteMeal.name : "+\(favoriteMeal.name)"
+            favMeal.calorie += favoriteMeal.calorie
+            favMeal.protein += favoriteMeal.protein
+            favMeal.fat += favoriteMeal.fat
+            favMeal.carbohydrate += favoriteMeal.carbohydrate
+        }
+        
+        return favMeal
     }
 }

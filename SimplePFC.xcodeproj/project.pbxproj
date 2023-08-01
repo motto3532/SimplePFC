@@ -159,8 +159,8 @@
 		3C9CBAA42A7568BA0074E43E /* FavoriteMeal */ = {
 			isa = PBXGroup;
 			children = (
-				3C9CBAAA2A75E3E20074E43E /* View */,
 				3C9CBAAF2A75E63B0074E43E /* Presenter */,
+				3C9CBAAA2A75E3E20074E43E /* View */,
 				3C9CBAA92A75E3DB0074E43E /* Controller */,
 			);
 			path = FavoriteMeal;
