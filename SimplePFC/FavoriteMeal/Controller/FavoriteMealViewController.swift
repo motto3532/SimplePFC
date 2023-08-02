@@ -31,7 +31,7 @@ final class FavoriteMealViewController: UIViewController {
         self.presenter.reloadData()
         
         //複数選択ボタン
-        let multipleSelectionBarButton = UIBarButtonItem(title: "複数選択", style: .plain, target: self, action: #selector(multipleSelectionBarButtonTapped(_:)))
+        let multipleSelectionBarButton = UIBarButtonItem(title: "まとめて記録", style: .plain, target: self, action: #selector(multipleSelectionBarButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = multipleSelectionBarButton
     }
 }
@@ -40,7 +40,7 @@ final class FavoriteMealViewController: UIViewController {
     func multipleSelectionBarButtonTapped(_ sender: UIResponder) {
         self.tableView.allowsMultipleSelection = true
         
-        let decisionBarButton = UIBarButtonItem(title: "決定", style: .plain, target: self, action: #selector(decisionBarButtonTapped(_:)))
+        let decisionBarButton = UIBarButtonItem(title: "記録", style: .plain, target: self, action: #selector(decisionBarButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = decisionBarButton
     }
     
@@ -67,8 +67,8 @@ extension FavoriteMealViewController: UITableViewDelegate {
          でも下の記述だと分岐処理書いてるからMVPじゃないね
          */
         if self.tableView.allowsMultipleSelection {
-            let cell = tableView.cellForRow(at: indexPath)
-            cell?.accessoryType = .checkmark
+            guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteMealTableViewCell else { return }
+            cell.isChecked()
             self.presenter.didSelect(index: indexPath.row, isChecked: true)
         } else {
             self.presenter.didSelect(index: indexPath.row, isChecked: false)
@@ -76,9 +76,13 @@ extension FavoriteMealViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath)
-        cell?.accessoryType = .none
+        guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteMealTableViewCell else { return }
+        cell.isUnchecked()
         self.presenter.didDeselect(index: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
 

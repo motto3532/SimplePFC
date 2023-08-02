@@ -12,15 +12,31 @@ final class FavoriteMealTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var favoriteMealLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.backgroundColor = .white
+        self.favoriteMealLabel.textColor = .black
+        //backgroundViewに適当なview差し込むのが良さそう
+        let cellSelectedBackgroundView = UIView()
+        cellSelectedBackgroundView.backgroundColor = .yellow
+        self.selectedBackgroundView = cellSelectedBackgroundView
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.accessoryType = .none
-        self.favoriteMealLabel.backgroundColor = .white
+        self.isUnchecked()
         self.favoriteMealLabel.text = ""
-        self.favoriteMealLabel.textColor = .black
     }
     
     func configure(favoriteMeal: FavoriteMealModel) {
         self.favoriteMealLabel.text = favoriteMeal.name
+    }
+    
+    func isChecked() {
+        self.accessoryType = .checkmark
+    }
+    
+    func isUnchecked() {
+        self.accessoryType = .none
     }
 }
