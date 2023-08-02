@@ -8,8 +8,6 @@
 import UIKit
 
 /*
- ・お気に入り食材を複数まとめて選択してAddMeal画面に移動(編集モード的なの想像してたけど、セルのタップイベントと競合しそう <- 編集モードの時はタップイベントオフにすればいいか)
- ↑viewでcellForRowメソッドを用意してそこでselectとdeselectを判別してチェックマークの画像を表示する（もしくはチェック状態を管理するUIパーツを配置）
  ・お気に入り食材同士を合成してお気に入り登録(合成ボタンでも追加するか)
  */
 final class FavoriteMealViewController: UIViewController {
