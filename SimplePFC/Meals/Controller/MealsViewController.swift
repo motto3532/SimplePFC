@@ -26,7 +26,6 @@ final class MealsViewController: UIViewController {
         
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
         
-        //日付表示(なんか次ページのbackに反映されてる)
         let titleLabel = UILabel()
         titleLabel.backgroundColor = .clear
         titleLabel.textColor = .blue
@@ -35,7 +34,13 @@ final class MealsViewController: UIViewController {
         
         //編集ボタン
         let addMealBarButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
-        self.navigationItem.rightBarButtonItem = addMealBarButton
+        
+        //お気に入りボタン
+        let favoriteMealBarButton: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
+        
+        self.navigationItem.rightBarButtonItems = [addMealBarButton, favoriteMealBarButton]
+        
+        //お気に入り画面に遷移するボタンも欲しいかな
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -53,6 +58,10 @@ final class MealsViewController: UIViewController {
     func addMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
         self.presenter.addMealBarButtonItemTapped()
     }
+    
+    func favoriteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
+        self.presenter.favoriteMealBarButtonItemTapped()
+    }
 }
 
 extension MealsViewController: MealsPresenterOutput {
@@ -63,6 +72,10 @@ extension MealsViewController: MealsPresenterOutput {
     
     func showMeal(meal: MealModel?) {
         Router.shared.showMeal(from: self, meal: meal)
+    }
+    
+    func showFavoriteMeal() {
+        Router.shared.showFavoriteMeals(from: self)
     }
 }
 

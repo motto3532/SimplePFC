@@ -9,6 +9,7 @@ import UIKit
 
 /*
  ・お気に入り食材同士を合成してお気に入り登録(合成ボタンでも追加するか)
+ ・お気に入りを登録/編集するための画面があっても良いかも(今使ってるアプリだと実際にそれが煩わしいし)
  */
 final class FavoriteMealViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {

@@ -13,6 +13,7 @@ protocol MealsPresenterInput {
     func getDate() -> String
     func reloadData()
     func addMealBarButtonItemTapped()
+    func favoriteMealBarButtonItemTapped()
     func cellHeight(index: Int) -> CGFloat
     func didSelect(index: Int)
     //下2つは返す値の型が違うから別で定義してるけど、ジェネリクス使えば1つにまとめられそう
@@ -27,6 +28,7 @@ protocol MealsPresenterInput {
 protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにすることでweak var使える
     func reload()
     func showMeal(meal: MealModel?)
+    func showFavoriteMeal()
 }
 
 final class MealsPresenter {
@@ -77,6 +79,10 @@ extension MealsPresenter: MealsPresenterInput {
     
     func addMealBarButtonItemTapped() {
         self.output.showMeal(meal: nil)
+    }
+    
+    func favoriteMealBarButtonItemTapped() {
+        self.output.showFavoriteMeal()
     }
     
     func cellHeight(index: Int) -> CGFloat {

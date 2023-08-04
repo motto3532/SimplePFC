@@ -49,6 +49,10 @@ final class AddMealViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .compact
         //datePicker.datePickerMode = .dateAndTimeここうまくいかん
         
+        /*
+         食事追加画面からお気に入り画面に行くより、最初からお気に入り食材を登録するつもりなんだろうから、お気に入り画面への遷移はここよりmeals画面からの方が良いかも。
+         あとは、お気に入りを編集するだけの画面が欲しいかなぁ
+         */
         let favoriteMealBarButton: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
         self.navigationItem.rightBarButtonItem = favoriteMealBarButton
         
