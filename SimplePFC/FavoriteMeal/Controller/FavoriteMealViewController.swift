@@ -29,10 +29,16 @@ final class FavoriteMealViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let titleLabel = UILabel()
+        titleLabel.textColor = .blue
+        titleLabel.backgroundColor = .clear
+        titleLabel.text = "お気に入り食材"
+        self.navigationItem.titleView = titleLabel
+        
         self.presenter.reloadData()
         
         //複数選択ボタン
-        let multipleSelectionBarButton = UIBarButtonItem(title: "まとめて記録", style: .plain, target: self, action: #selector(multipleSelectionBarButtonTapped(_:)))
+        let multipleSelectionBarButton = UIBarButtonItem(title: "まとめて選択", style: .plain, target: self, action: #selector(multipleSelectionBarButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = multipleSelectionBarButton
     }
 }
@@ -46,14 +52,14 @@ final class FavoriteMealViewController: UIViewController {
     }
     
     func decisionBarButtonTapped(_ sender: UIResponder) {
-        Router.shared.goBack(from: self, favoriteMeals: self.presenter.selectedFavoriteMeals())
+        Router.shared.showAddMeal(from: self, favoriteMeals: self.presenter.selectedFavoriteMeals())
     }
 }
 
 extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
     
-    func goBack(favoriteMeal: FavoriteMealModel) {
-        Router.shared.goBack(from: self, favoriteMeal: favoriteMeal)
+    func showAddMeal(favoriteMeal: FavoriteMealModel) {
+        Router.shared.showAddMeal(from: self, favoriteMeal: favoriteMeal)
     }
     
     func reload() {

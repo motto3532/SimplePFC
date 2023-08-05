@@ -49,37 +49,11 @@ final class AddMealViewController: UIViewController {
         datePicker.preferredDatePickerStyle = .compact
         //datePicker.datePickerMode = .dateAndTimeここうまくいかん
         
-        /*
-         食事追加画面からお気に入り画面に行くより、最初からお気に入り食材を登録するつもりなんだろうから、お気に入り画面への遷移はここよりmeals画面からの方が良いかも。
-         あとは、お気に入りを編集するだけの画面が欲しいかなぁ
-         */
-        let favoriteMealBarButton: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
-        self.navigationItem.rightBarButtonItem = favoriteMealBarButton
-        
         self.presenter.viewDidLoad()
     }
     
     func inject(presenter: AddMealPresenterInput) {
         self.presenter = presenter
-    }
-    
-    func configure(favoriteMeal: FavoriteMealModel) {
-        self.datePicker.date = Date()
-        self.mealNameTextField.text = favoriteMeal.name
-        self.calorieTextField.text = String(describing: favoriteMeal.calorie)
-        self.proteinTextField.text = String(describing: favoriteMeal.protein)
-        self.fatTextField.text = String(describing: favoriteMeal.fat)
-        self.carbohydrateTextField.text = String(describing: favoriteMeal.carbohydrate)
-    }
-    
-    func configure(favoriteMeals: [FavoriteMealModel]) {
-        let synthesizedFavoriteMeal = self.presenter.synthesizeFavoriteMeals(favoriteMeals: favoriteMeals)
-        self.datePicker.date = Date()
-        self.mealNameTextField.text = synthesizedFavoriteMeal.name
-        self.calorieTextField.text = String(describing: synthesizedFavoriteMeal.calorie)
-        self.proteinTextField.text = String(describing: synthesizedFavoriteMeal.protein)
-        self.fatTextField.text = String(describing: synthesizedFavoriteMeal.fat)
-        self.carbohydrateTextField.text = String(describing: synthesizedFavoriteMeal.carbohydrate)
     }
 }
 
@@ -100,10 +74,6 @@ final class AddMealViewController: UIViewController {
     func deleteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
         self.presenter.deleteMealButtonTapped()
     }
-    
-    func favoriteMealBarButtonItemTapped(_ sender: UIBarButtonItem) {
-        self.presenter.favoriteMealBarButtonItemTapped()
-    }
 }
 
 extension AddMealViewController: AddMealPresenterOutput {
@@ -120,6 +90,15 @@ extension AddMealViewController: AddMealPresenterOutput {
         self.navigationItem.rightBarButtonItems = [deleteMealBarButtonItem]
         //編集ボタン
         self.addMealButton.titleLabel?.text = "編集"
+    }
+    
+    func configure(favoriteMeal: FavoriteMealModel) {
+        self.datePicker.date = Date()
+        self.mealNameTextField.text = favoriteMeal.name
+        self.calorieTextField.text = String(describing: favoriteMeal.calorie)
+        self.proteinTextField.text = String(describing: favoriteMeal.protein)
+        self.fatTextField.text = String(describing: favoriteMeal.fat)
+        self.carbohydrateTextField.text = String(describing: favoriteMeal.carbohydrate)
     }
     
     func emptyAlert() {

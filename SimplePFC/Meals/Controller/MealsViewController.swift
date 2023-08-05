@@ -70,8 +70,8 @@ extension MealsViewController: MealsPresenterOutput {
         self.tableView.reloadData()
     }
     
-    func showMeal(meal: MealModel?) {
-        Router.shared.showMeal(from: self, meal: meal)
+    func showAddMeal(meal: MealModel?) {
+        Router.shared.showAddMeal(from: self, meal: meal)
     }
     
     func showFavoriteMeal() {

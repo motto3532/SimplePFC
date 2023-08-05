@@ -27,7 +27,7 @@ protocol MealsPresenterInput {
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにすることでweak var使える
     func reload()
-    func showMeal(meal: MealModel?)
+    func showAddMeal(meal: MealModel?)
     func showFavoriteMeal()
 }
 
@@ -78,7 +78,7 @@ extension MealsPresenter: MealsPresenterInput {
     }
     
     func addMealBarButtonItemTapped() {
-        self.output.showMeal(meal: nil)
+        self.output.showAddMeal(meal: nil)
     }
     
     func favoriteMealBarButtonItemTapped() {
@@ -97,7 +97,7 @@ extension MealsPresenter: MealsPresenterInput {
     func didSelect(index: Int) {
         guard index > 0 else { return }
         let meal = self.meals[index - 1]//PFCセルの分
-        self.output.showMeal(meal: meal)
+        self.output.showAddMeal(meal: meal)
     }
     
     func getMeals() -> [MealModel] {

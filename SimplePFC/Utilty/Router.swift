@@ -28,24 +28,17 @@ final class Router {
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showMeal(from: UIViewController, meal: MealModel?) {
+    func showAddMeal(from: UIViewController, meal: MealModel? = nil, favoriteMeal: FavoriteMealModel? = nil, favoriteMeals: [FavoriteMealModel]? = nil) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
-        let presenter = AddMealPresenter(output: vc, meal: meal)
+        let presenter = AddMealPresenter(output: vc, meal: meal, favoriteMeal: favoriteMeal, favoriteMeals: favoriteMeals)
         vc.inject(presenter: presenter)
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func goBack(from: UIViewController, favoriteMeal: FavoriteMealModel? = nil, favoriteMeals: [FavoriteMealModel]? = nil) {
-        if let _favoriteMeal = favoriteMeal {
-            guard let numOfVc = from.navigationController?.viewControllers.count else { return }
-            guard let vc = from.navigationController?.viewControllers[numOfVc - 2] as? AddMealViewController else { return }
-            vc.configure(favoriteMeal: _favoriteMeal)
-        } else if let _favoriteMeals = favoriteMeals {
-            guard let numOfVc = from.navigationController?.viewControllers.count else { return }
-            guard let vc = from.navigationController?.viewControllers[numOfVc - 2] as? AddMealViewController else { return }
-            vc.configure(favoriteMeals: _favoriteMeals)
-        }
-        from.navigationController?.popViewController(animated: true)
+    func goBack(from: UIViewController) {
+        //Meals画面取得
+        guard let vc = from.navigationController?.viewControllers[1] else { return }
+        from.navigationController?.popToViewController(vc, animated: true)
     }
     
     func showCalendar(from: UIViewController) {
