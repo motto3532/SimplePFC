@@ -17,6 +17,15 @@ final class MealTableViewCell: UITableViewCell {
     @IBOutlet private weak var fatLabel: UILabel!
     @IBOutlet private weak var carbohydrateLabel: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        self.backgroundColor = .white
+        
+        let cellSelectedBackgroundView = UIView()
+        cellSelectedBackgroundView.backgroundColor = .systemMint
+        self.selectedBackgroundView = cellSelectedBackgroundView
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

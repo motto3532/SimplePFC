@@ -70,7 +70,6 @@
                         </subviews>
                     </stackView>
                 </subviews>
-                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="QfY-kr-Ju8" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="Hag-II-3du"/>
                     <constraint firstItem="sQM-rg-naT" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" id="VjM-Fd-iE6"/>

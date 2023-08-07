@@ -22,7 +22,7 @@ final class FavoriteMealTableViewCell: UITableViewCell {
         
         //選択時の色はbackgroundViewに適当なview差し込むのが良さそう
         let cellSelectedBackgroundView = UIView()
-        cellSelectedBackgroundView.backgroundColor = .systemCyan
+        cellSelectedBackgroundView.backgroundColor = .systemMint
         self.selectedBackgroundView = cellSelectedBackgroundView
     }
     

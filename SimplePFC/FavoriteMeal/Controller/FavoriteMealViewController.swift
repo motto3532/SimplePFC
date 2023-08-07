@@ -30,15 +30,15 @@ final class FavoriteMealViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let titleLabel = UILabel()
-        titleLabel.textColor = .blue
+        titleLabel.textColor = .systemBlue
         titleLabel.backgroundColor = .clear
-        titleLabel.text = "お気に入り食材"
+        titleLabel.text = "お気に入り食品"
         self.navigationItem.titleView = titleLabel
         
         self.presenter.reloadData()
         
         //複数選択ボタン
-        let multipleSelectionBarButton = UIBarButtonItem(title: "まとめて選択", style: .plain, target: self, action: #selector(multipleSelectionBarButtonTapped(_:)))
+        let multipleSelectionBarButton = UIBarButtonItem(title: "複数選択", style: .plain, target: self, action: #selector(multipleSelectionBarButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = multipleSelectionBarButton
     }
 }
