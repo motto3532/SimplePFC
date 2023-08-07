@@ -1,6 +1,6 @@
 //
 //  MealTableViewCell.swift
-//  SimplePFC
+//  SimplePFC/Users/attorari/Desktop/Swift-beginners/SimplePFC/SimplePFC/Meals/View/MealCell/MealTableViewCell.xib
 //
 //  Created by Atto Rari on 2023/07/12.
 //
@@ -8,17 +8,29 @@
 import UIKit
 
 final class MealTableViewCell: UITableViewCell {
+    
     static var className: String { String(describing: MealTableViewCell.self) }
     
-    @IBOutlet private weak var MealLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var calorieLabel: UILabel!
+    @IBOutlet private weak var proteinLabel: UILabel!
+    @IBOutlet private weak var fatLabel: UILabel!
+    @IBOutlet private weak var carbohydrateLabel: UILabel!
+    
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        MealLabel.text = nil
+        self.nameLabel.text = ""
+        self.calorieLabel.text = ""
+        self.proteinLabel.text = ""
+        self.fatLabel.text = ""
+        self.carbohydrateLabel.text = ""
     }
-    
-    //時間も追加したい <-ここに時間表示する必要ない
     func configure(meal: MealModel) {
-        MealLabel.text = "\(meal.name) -> \(meal.calorie)kcal   \(meal.protein) : \(meal.fat) : \(meal.carbohydrate)"
+        self.nameLabel.text = "\(meal.name)"
+        self.calorieLabel.text = "\(meal.calorie) kcal"
+        self.proteinLabel.text = String(describing: meal.protein)
+        self.fatLabel.text = String(describing: meal.fat)
+        self.carbohydrateLabel.text = String(describing: meal.carbohydrate)
     }
 }
