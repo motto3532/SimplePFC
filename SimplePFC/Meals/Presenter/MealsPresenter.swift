@@ -91,7 +91,7 @@ extension MealsPresenter: MealsPresenterInput {
             return 200
         }
         //Mealセル
-        return 100
+        return 80
     }
     
     func didSelect(index: Int) {
