@@ -26,14 +26,8 @@ final class MealsViewController: UIViewController {
         
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
         
-        let titleLabel = UILabel()
-        titleLabel.backgroundColor = .clear
-        titleLabel.textColor = .blue
-        titleLabel.text = self.presenter.getDate()
-        self.navigationItem.titleView = titleLabel
-        
-        //編集ボタン
-        let addMealBarButton = UIBarButtonItem(barButtonSystemItem: .compose, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
+        //追加ボタン
+        let addMealBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         
         //お気に入りボタン
         let favoriteMealBarButton: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
@@ -101,7 +95,7 @@ extension MealsViewController: UITableViewDataSource {
             guard let pfcCell = self.tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
                 fatalError()
             }
-            pfcCell.configure(meals: self.presenter.getMeals())
+            pfcCell.configure(meals: self.presenter.getMeals(), date: self.presenter.getDate())
             return pfcCell
         }
         

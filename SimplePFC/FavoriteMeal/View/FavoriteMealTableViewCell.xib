@@ -16,23 +16,38 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiD-2D-tQ5">
-                        <rect key="frame" x="139" y="11.666666666666664" width="42" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="ki9-bb-hub">
+                        <rect key="frame" x="16" y="0.0" width="288" height="44"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiD-2D-tQ5">
+                                <rect key="frame" x="0.0" y="0.0" width="160" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NP0-CN-TDB">
+                                <rect key="frame" x="180" y="0.0" width="108" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="wiD-2D-tQ5" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="evb-rR-YpW"/>
-                    <constraint firstItem="wiD-2D-tQ5" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="qG2-hP-hb4"/>
+                    <constraint firstItem="wiD-2D-tQ5" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.5" id="BIO-kk-XxF"/>
+                    <constraint firstItem="ki9-bb-hub" firstAttribute="height" secondItem="H2p-sc-9uM" secondAttribute="height" id="EU9-Yf-fOv"/>
+                    <constraint firstItem="ki9-bb-hub" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.9" id="GeC-ee-kMc"/>
+                    <constraint firstItem="ki9-bb-hub" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="RnB-sJ-jq3"/>
+                    <constraint firstItem="ki9-bb-hub" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="hPE-lM-yh9"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="favoriteMealLabel" destination="wiD-2D-tQ5" id="CiX-1z-pZ0"/>
+                <outlet property="calorieLabel" destination="NP0-CN-TDB" id="336-wB-C1z"/>
+                <outlet property="nameLabel" destination="wiD-2D-tQ5" id="DKz-hr-etk"/>
             </connections>
-            <point key="canvasLocation" x="122" y="20"/>
+            <point key="canvasLocation" x="100.76335877862596" y="-1.4084507042253522"/>
         </tableViewCell>
     </objects>
 </document>

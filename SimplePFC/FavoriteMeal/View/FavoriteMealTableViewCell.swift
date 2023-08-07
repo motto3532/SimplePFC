@@ -10,26 +10,32 @@ import UIKit
 final class FavoriteMealTableViewCell: UITableViewCell {
     static var className: String { String(describing: FavoriteMealTableViewCell.self) }
     
-    @IBOutlet private weak var favoriteMealLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var calorieLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         self.backgroundColor = .white
-        self.favoriteMealLabel.textColor = .black
-        //backgroundViewに適当なview差し込むのが良さそう
+        self.nameLabel.textColor = .black
+        
+        //選択時の色はbackgroundViewに適当なview差し込むのが良さそう
         let cellSelectedBackgroundView = UIView()
-        cellSelectedBackgroundView.backgroundColor = .yellow
+        cellSelectedBackgroundView.backgroundColor = .systemCyan
         self.selectedBackgroundView = cellSelectedBackgroundView
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.isUnchecked()
-        self.favoriteMealLabel.text = ""
+        self.nameLabel.text = ""
+        self.calorieLabel.text = ""
     }
     
     func configure(favoriteMeal: FavoriteMealModel) {
-        self.favoriteMealLabel.text = favoriteMeal.name
+        self.nameLabel.text = favoriteMeal.name
+        self.calorieLabel.text = "\(favoriteMeal.calorie) kcal"
     }
     
     func isChecked() {

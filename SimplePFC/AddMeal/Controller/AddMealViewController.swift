@@ -14,7 +14,11 @@ final class AddMealViewController: UIViewController {
     //現在時刻ボタン追加したい
     @IBOutlet private weak var datePicker: UIDatePicker!
     
-    @IBOutlet private weak var addMealView: UIView! {didSet{addMealView.setCornerRadius()}}
+    @IBOutlet private weak var addMealView: UIView! {
+        didSet {
+            addMealView.setCornerRadius(cornerRadius: CGFloat(30.0))
+        }
+    }
     
     @IBOutlet private weak var mealNameTextField: UITextField! {
         didSet { mealNameTextField.configure(onlyNumberPad: false) }
@@ -34,6 +38,7 @@ final class AddMealViewController: UIViewController {
     
     @IBOutlet private weak var addMealButton: UIButton! {
         didSet {
+            addMealButton.setCornerRadius(cornerRadius: CGFloat(10.0))
             addMealButton.addTarget(self, action: #selector(addMealButtonTapped(_:)), for: .touchUpInside)
         }
     }

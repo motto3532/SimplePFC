@@ -23,12 +23,23 @@
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ejD-f1-gE1">
                                 <rect key="frame" x="10" y="10" width="317" height="163"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BES-C1-Bqg">
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="A5Q-kM-wWA">
                                         <rect key="frame" x="0.0" y="0.0" width="156" height="163"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mnk-Gy-hQN">
+                                                <rect key="frame" x="0.0" y="0.0" width="156" height="81.666666666666671"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BES-C1-Bqg">
+                                                <rect key="frame" x="0.0" y="81.666666666666686" width="156" height="81.333333333333314"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dmY-vM-9OB">
                                         <rect key="frame" x="161" y="0.0" width="156" height="163"/>
                                         <subviews>
@@ -76,6 +87,7 @@
             <connections>
                 <outlet property="calorieLabel" destination="BES-C1-Bqg" id="PUw-Hb-fDj"/>
                 <outlet property="carbohydrateLabel" destination="WhU-1a-qg4" id="3XO-HK-pOn"/>
+                <outlet property="dateLabel" destination="mnk-Gy-hQN" id="yuQ-iV-DKg"/>
                 <outlet property="fatLabel" destination="7bZ-Ll-hgZ" id="4Rn-gZ-FP0"/>
                 <outlet property="pfcView" destination="NBY-dC-Ojp" id="zWn-YD-BvD"/>
                 <outlet property="proteinLabel" destination="eXK-T8-FpZ" id="n3D-OW-Xjh"/>

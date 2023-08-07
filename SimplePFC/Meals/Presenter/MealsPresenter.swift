@@ -55,7 +55,7 @@ extension MealsPresenter: MealsPresenterInput {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        dateFormatter.dateFormat = "yyyy年M月d日(EEEE)"
+        dateFormatter.dateFormat = "yyyy年M月d日\n(EEEE)"
         return dateFormatter.string(from: self.time)
     }
     

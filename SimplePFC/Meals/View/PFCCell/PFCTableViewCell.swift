@@ -10,8 +10,13 @@ import UIKit
 final class PFCTableViewCell: UITableViewCell {
     static var className: String { String(describing: PFCTableViewCell.self) }
     
-    @IBOutlet private weak var pfcView: UIView! {didSet{pfcView.setCornerRadius()}}
+    @IBOutlet private weak var pfcView: UIView! {
+        didSet {
+            pfcView.setCornerRadius(cornerRadius: CGFloat(30.0))
+         }
+    }
     
+    @IBOutlet private weak var dateLabel: UILabel!
     @IBOutlet private weak var calorieLabel: UILabel!
     @IBOutlet private weak var proteinLabel: UILabel! {didSet{proteinLabel.setBorder()}}
     @IBOutlet private weak var fatLabel: UILabel! {didSet{fatLabel.setBorder()}}
@@ -22,8 +27,11 @@ final class PFCTableViewCell: UITableViewCell {
     private var fat: String { "fat" }
     private var carbohydrate: String { "carbohydrate" }
     
-    func configure(meals: [MealModel]) {
+    func configure(meals: [MealModel], date: String) {
+        //tableViewの区切り線を右の画面外に飛ばす
         self.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
+        
+        self.dateLabel.text = date
         
         var sumOfNutrients = [calorie: 0, protein: 0, fat: 0, carbohydrate: 0]
         for meal in meals {

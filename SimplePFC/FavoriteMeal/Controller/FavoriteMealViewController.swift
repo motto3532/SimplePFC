@@ -78,6 +78,7 @@ extension FavoriteMealViewController: UITableViewDelegate {
             cell.isChecked()
             self.presenter.didSelect(index: indexPath.row, isChecked: true)
         } else {
+            self.tableView.deselectRow(at: indexPath, animated: true)
             self.presenter.didSelect(index: indexPath.row, isChecked: false)
         }
     }
