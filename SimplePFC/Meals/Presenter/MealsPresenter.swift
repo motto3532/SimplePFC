@@ -16,13 +16,8 @@ protocol MealsPresenterInput {
     func favoriteMealBarButtonItemTapped()
     func cellHeight(index: Int) -> CGFloat
     func didSelect(index: Int)
-    //下2つは返す値の型が違うから別で定義してるけど、ジェネリクス使えば1つにまとめられそう
     func getMeals() -> [MealModel]
     func getMeal(index: Int) -> MealModel
-    /*
-     無理やり引っ張ってきたやつ
-     func cellForRowAt(index: Int, pfcCell: ([MealModel]) -> Void, mealCell: (MealModel) -> Void)
-     */
 }
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにすることでweak var使える
@@ -36,12 +31,12 @@ final class MealsPresenter {
     private weak var output: MealsPresenterOutput!
     private var meals: [MealModel] = []
     private let realm: MealRealm
-    private let time: Date
+    private let date: Date
     
-    init(output: MealsPresenterOutput, realm: MealRealm = MealRealm.shared, time: Date) {
+    init(output: MealsPresenterOutput, realm: MealRealm = MealRealm.shared, date: Date) {
         self.output = output
         self.realm = realm
-        self.time = time
+        self.date = date
     }
 }
 
@@ -56,25 +51,27 @@ extension MealsPresenter: MealsPresenterInput {
         dateFormatter.locale = Locale(identifier: "ja_JP")
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
         dateFormatter.dateFormat = "yyyy年M月d日\n(EEEE)"
-        return dateFormatter.string(from: self.time)
+        return dateFormatter.string(from: self.date)
     }
     
     func reloadData() {
         //meals更新
         self.meals = []
         let realmRegistedData = self.realm.getMealsData()
-        //meals画面に表示する日付をstringに書き換え
+        /*
+         表示したいmealの日付をstringに書き換えて検索する準備
+        realmに保存されてるtimeは世界標準時だからカレンダーからルーター経由で渡されてきたdateをそのまま使う
+         */
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
-        let timeStr = dateFormatter.string(from: self.time)
+        let dateStr = dateFormatter.string(from: self.date)
         //realmデータから表示するmealを検索
         for data in realmRegistedData {
-            if timeStr == dateFormatter.string(from: data.time) {
+            if dateStr == dateFormatter.string(from: data.date) {
                 self.meals.append(data)
             }
         }
-        //reloadData()
-        self.output.reload()
+        self.output.reload()//reloadData()
     }
     
     func addMealBarButtonItemTapped() {
@@ -107,15 +104,4 @@ extension MealsPresenter: MealsPresenterInput {
     func getMeal(index: Int) -> MealModel {
         return self.meals[index]
     }
-    
-    /*
-    クロージャで無理やりこっちに処理引っ張ってきたやつ
-    func cellForRowAt(index: Int, pfcCell: ([MealModel]) -> Void, mealCell: (MealModel) -> Void) {
-        guard index > 0 else {
-            pfcCell(self.meals)
-            return
-        }
-        mealCell(self.meals[index - 1])
-    }
-     */
 }

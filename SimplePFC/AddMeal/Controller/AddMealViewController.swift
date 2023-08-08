@@ -45,8 +45,6 @@ final class AddMealViewController: UIViewController {
     
     private var presenter: AddMealPresenterInput!
     
-    private var meal: MealModel?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker.locale = Locale(identifier: "ja_JP")
@@ -66,13 +64,13 @@ final class AddMealViewController: UIViewController {
     
     func addMealButtonTapped(_ sender: UIResponder) {
         self.presenter.addMealButtonTapped(
-            favorite: favoriteSwitch.isOn,
-            time: datePicker.date,
-            name: mealNameTextField.text,
-            calorie: calorieTextField.text,
-            protein: proteinTextField.text,
-            fat: fatTextField.text,
-            carbohydrate: carbohydrateTextField.text
+            favorite: self.favoriteSwitch.isOn,
+            date: self.datePicker.date,
+            name: self.mealNameTextField.text,
+            calorie: self.calorieTextField.text,
+            protein: self.proteinTextField.text,
+            fat: self.fatTextField.text,
+            carbohydrate: self.carbohydrateTextField.text
         )
     }
     
@@ -84,7 +82,7 @@ final class AddMealViewController: UIViewController {
 extension AddMealViewController: AddMealPresenterOutput {
     
     func configure(meal: MealModel) {
-        self.datePicker.date = meal.time
+        self.datePicker.date = meal.date
         self.mealNameTextField.text = meal.name
         self.calorieTextField.text = String(describing: meal.calorie)
         self.proteinTextField.text = String(describing: meal.protein)

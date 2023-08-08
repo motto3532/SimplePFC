@@ -21,9 +21,9 @@ final class Router {
         self.window = window
     }
     
-    func showMeals(from: UIViewController, time: Date) {
+    func showMeals(from: UIViewController, date: Date) {
         guard let vc = UIStoryboard(name: "Meals", bundle: nil).instantiateInitialViewController() as? MealsViewController else { return }
-        let presenter = MealsPresenter(output: vc, time: time)
+        let presenter = MealsPresenter(output: vc, date: date)
         vc.inject(presenter: presenter)
         from.navigationController?.pushViewController(vc, animated: true)
     }

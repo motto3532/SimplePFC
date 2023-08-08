@@ -14,7 +14,7 @@ import RealmSwift
 final class MealModel: Object {
     //primaryKeyは更新・追加の時に必要
     @Persisted(primaryKey: true) var id: ObjectId//勝手にidうまいことしてくれるぽい
-    @Persisted var time: Date
+    @Persisted var date: Date
     @Persisted var name: String
     @Persisted var calorie: Int
     @Persisted var protein: Int

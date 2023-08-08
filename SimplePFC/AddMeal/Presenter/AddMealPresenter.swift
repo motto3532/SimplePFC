@@ -9,7 +9,7 @@ import Foundation
 
 protocol AddMealPresenterInput {
     func viewDidLoad()
-    func addMealButtonTapped(favorite: Bool, time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
+    func addMealButtonTapped(favorite: Bool, date: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
     func deleteMealButtonTapped()
     func favoriteMealBarButtonItemTapped()
     func synthesizeFavoriteMeals(favoriteMeals: [FavoriteMealModel]) -> FavoriteMealModel
@@ -71,7 +71,7 @@ extension AddMealPresenter: AddMealPresenterInput {
         }
     }
     
-    func addMealButtonTapped(favorite: Bool, time: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
+    func addMealButtonTapped(favorite: Bool, date: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
     //食事内容追加・編集
         guard let _name = name, let _calorie = calorie, let _protein = protein, let _fat = fat, let _carbohydrate = carbohydrate else {
             return
@@ -86,11 +86,11 @@ extension AddMealPresenter: AddMealPresenterInput {
         
         if let meal = self.meal {
             //編集処理
-            self.realm.edit(time: time, meal: meal, name: _name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
+            self.realm.edit(date: date, meal: meal, name: _name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
         } else {
             //追加処理
             let newMeal = MealModel()
-            newMeal.time = time
+            newMeal.date = date
             newMeal.name = _name
             newMeal.calorie = nutrients[0]
             newMeal.protein = nutrients[1]

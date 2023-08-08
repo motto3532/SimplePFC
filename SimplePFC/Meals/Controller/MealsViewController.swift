@@ -33,8 +33,6 @@ final class MealsViewController: UIViewController {
         let favoriteMealBarButton: UIBarButtonItem! = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(favoriteMealBarButtonItemTapped(_:)))
         
         self.navigationItem.rightBarButtonItems = [addMealBarButton, favoriteMealBarButton]
-        
-        //お気に入り画面に遷移するボタンも欲しいかな
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -104,30 +102,5 @@ extension MealsViewController: UITableViewDataSource {
         }
         mealCell.configure(meal: self.presenter.getMeal(index: indexPath.row - 1))
         return mealCell
-        
-        /*
-        無理やりpresenterに処理渡したやつだけどめちゃわかりにくい
-        var cell: UITableViewCell?
-        
-        let makePfcCell = {(meals: [MealModel]) -> Void in
-            guard let pfcCell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
-                fatalError()
-            }
-            pfcCell.configure(meals: meals)
-            
-            cell = pfcCell
-        }
-        let makeMealCell = {(meal: MealModel) -> Void in
-            guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
-                fatalError()
-            }
-            mealCell.configure(meal: meal)
-            
-            cell = mealCell
-        }
-        self.presenter.cellForRowAt(index: indexPath.row, pfcCell: makePfcCell, mealCell: makeMealCell)
-        
-        return cell!
-         */
     }
 }

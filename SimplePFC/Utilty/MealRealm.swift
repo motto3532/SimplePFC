@@ -11,7 +11,7 @@ import RealmSwift
 protocol MealRealmProtocol {
     func add(meal: MealModel)
     func add(favoriteMeal: FavoriteMealModel)
-    func edit(time: Date, meal: MealModel, name: String, calorie: Int, protein: Int, fat: Int, carbohydrate: Int)
+    func edit(date: Date, meal: MealModel, name: String, calorie: Int, protein: Int, fat: Int, carbohydrate: Int)
     func delete(meal: MealModel)
     func delete(favoriteMeal: FavoriteMealModel)
     func getMealsData() -> Results<MealModel>
@@ -36,11 +36,11 @@ final class MealRealm: MealRealmProtocol {
         }
     }
     
-    func edit(time: Date, meal: MealModel, name: String, calorie: Int, protein: Int, fat: Int, carbohydrate: Int) {
+    func edit(date: Date, meal: MealModel, name: String, calorie: Int, protein: Int, fat: Int, carbohydrate: Int) {
         //meal追加
         try? self.realm.write {
             //プロパティを更新するのはトランザクション内
-            meal.time = time
+            meal.date = date
             meal.name = name
             meal.calorie = calorie
             meal.protein = protein

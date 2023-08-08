@@ -20,7 +20,7 @@ final class CalendarViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         //rootでこの画面きたらすぐmealsへ移動
-        Router.shared.showMeals(from: self, time: Date())
+        Router.shared.showMeals(from: self, date: Date())
         
         calendar.calendarHeaderView.backgroundColor = .white
         calendar.calendarWeekdayView.backgroundColor = .white
@@ -40,7 +40,7 @@ extension CalendarViewController: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         //dateはDate型だから、絶対時間(日本より9時間遅い)が格納されてる
         //print(date)
-        Router.shared.showMeals(from: self, time: date)
+        Router.shared.showMeals(from: self, date: date)
     }
 }
 
