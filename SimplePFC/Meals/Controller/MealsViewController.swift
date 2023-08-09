@@ -73,23 +73,38 @@ extension MealsViewController: MealsPresenterOutput {
 
 extension MealsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.presenter.cellHeight(index: indexPath.row)
+        return self.presenter.cellHeight(section: indexPath.section)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        self.presenter.didSelect(index: indexPath.row)
+        self.presenter.didSelect(section: indexPath.section, row: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .lightGray
+        guard let header = view as? UITableViewHeaderFooterView else {
+            fatalError()
+        }
+        header.textLabel?.textColor = .black
     }
 }
 
 extension MealsViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return self.presenter.numberOfSection
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.presenter.numberOfRowsInSection
+        return self.presenter.numberOfRowsInSection(section: section)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return self.presenter.titleForHeaderInSection(section: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard indexPath.row > 0 else {
+        if indexPath.section == 0 {
             guard let pfcCell = self.tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
                 fatalError()
             }
@@ -100,7 +115,7 @@ extension MealsViewController: UITableViewDataSource {
         guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
             fatalError()
         }
-        mealCell.configure(meal: self.presenter.getMeal(index: indexPath.row - 1))
+        mealCell.configure(meal: self.presenter.getMeal(section: indexPath.section, row: indexPath.row))
         return mealCell
     }
 }

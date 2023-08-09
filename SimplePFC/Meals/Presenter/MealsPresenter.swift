@@ -7,24 +7,19 @@
 
 import Foundation
 
-/*
- tableViewにmealを１時間ごとにセクションで分けて表示したい
- セクションのタイトルは"14:00~"とか
- タプル型で(sectionTitle: String, meals: Array<MealModel>)
- そのタプルを配列に格納してViewControllerの方に適宜渡せば良さそう
- */
-
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterInput {
-    var numberOfRowsInSection: Int { get }
+    var numberOfSection: Int { get }
+    func numberOfRowsInSection(section: Int) -> Int
+    func titleForHeaderInSection(section: Int) -> String?
     func getDate() -> String
     func reloadData()
     func addMealBarButtonItemTapped()
     func favoriteMealBarButtonItemTapped()
-    func cellHeight(index: Int) -> CGFloat
-    func didSelect(index: Int)
+    func cellHeight(section: Int) -> CGFloat
+    func didSelect(section: Int, row: Int)
     func getMeals() -> [MealModel]
-    func getMeal(index: Int) -> MealModel
+    func getMeal(section: Int, row: Int) -> MealModel
 }
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにすることでweak var使える
@@ -39,6 +34,9 @@ final class MealsPresenter {
     private var meals: [MealModel] = []
     private let realm: MealRealm
     private let date: Date
+    //typealiasで型として定義
+    private typealias SectionRowPair = (section: String, row: [MealModel])
+    private var sectionRowPairs: [SectionRowPair] = []
     
     init(output: MealsPresenterOutput, realm: MealRealm = MealRealm.shared, date: Date) {
         self.output = output
@@ -48,9 +46,18 @@ final class MealsPresenter {
 }
 
 extension MealsPresenter: MealsPresenterInput {
+    var numberOfSection: Int {
+        self.sectionRowPairs.count + 1//PFCセルの分
+    }
     
-    var numberOfRowsInSection: Int {
-        self.meals.count + 1//PFCセルの分
+    func numberOfRowsInSection(section: Int) -> Int {
+        if section == 0 { return 1 }//PFCセルの分
+        return self.sectionRowPairs[section - 1].row.count
+    }
+    
+    func titleForHeaderInSection(section: Int) -> String? {
+        if section == 0 { return nil }//PFCセルの分
+        return "\(self.sectionRowPairs[section - 1].section):00〜"
     }
     
     func getDate() -> String {
@@ -62,13 +69,10 @@ extension MealsPresenter: MealsPresenterInput {
     }
     
     func reloadData() {
-        //meals更新
         self.meals = []
+        self.sectionRowPairs = []
         let realmRegistedData = self.realm.getMealsData()
-        /*
-         表示したいmealの日付をstringに書き換えて検索する準備
-        realmに保存されてるtimeは世界標準時だからカレンダーからルーター経由で渡されてきたdateをそのまま使う
-         */
+        //表示するmealは日付が一致するもの
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
         let dateStr = dateFormatter.string(from: self.date)
@@ -78,6 +82,29 @@ extension MealsPresenter: MealsPresenterInput {
                 self.meals.append(data)
             }
         }
+        
+        //mealsを時間ごとにセクションで分ける
+        let dateFormatter2 = DateFormatter()
+        dateFormatter2.locale = Locale(identifier: "ja_JP")
+        dateFormatter2.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        dateFormatter2.dateFormat = "H"//24時間
+        for meal in self.meals {
+            let time = dateFormatter2.string(from: meal.date)
+            //すでに時間がsectionとして格納されているか検索
+            if let existingSectionIndex = sectionRowPairs.firstIndex(where: { $0.section == time }) {
+                sectionRowPairs[existingSectionIndex].row.append(meal)
+            } else {
+                //時間がsectionに格納されていなければ新規追加
+                sectionRowPairs.append((time, [meal]))
+            }
+        }
+        //時間ごとに分けたmealsを時間順に並び替え
+        sectionRowPairs.sort(by: {
+            //sectionRowPairs.sectionは"H"状態で格納されてるから、一旦Int型に直して比較できるようにする
+            guard let former = Int($0.section), let latter = Int($1.section) else { fatalError() }
+            return former < latter//前に格納される時間の方が小さくなる
+        })
+        
         self.output.reload()//reloadData()
     }
     
@@ -89,8 +116,8 @@ extension MealsPresenter: MealsPresenterInput {
         self.output.showFavoriteMeal()
     }
     
-    func cellHeight(index: Int) -> CGFloat {
-        guard index > 0 else {
+    func cellHeight(section: Int) -> CGFloat {
+        if section == 0 {
             //PFCセル
             return 200
         }
@@ -98,9 +125,9 @@ extension MealsPresenter: MealsPresenterInput {
         return 80
     }
     
-    func didSelect(index: Int) {
-        guard index > 0 else { return }
-        let meal = self.meals[index - 1]//PFCセルの分
+    func didSelect(section: Int, row: Int) {
+        guard section > 0 else { return }
+        let meal = self.sectionRowPairs[section - 1].row[row]//PFCセルの分
         self.output.showAddMeal(meal: meal)
     }
     
@@ -108,7 +135,7 @@ extension MealsPresenter: MealsPresenterInput {
         return self.meals
     }
     
-    func getMeal(index: Int) -> MealModel {
-        return self.meals[index]
+    func getMeal(section: Int, row: Int) -> MealModel {
+        return self.sectionRowPairs[section - 1].row[row]//PFCセルの分
     }
 }
