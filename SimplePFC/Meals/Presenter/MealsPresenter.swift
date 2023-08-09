@@ -7,6 +7,13 @@
 
 import Foundation
 
+/*
+ tableViewにmealを１時間ごとにセクションで分けて表示したい
+ セクションのタイトルは"14:00~"とか
+ タプル型で(sectionTitle: String, meals: Array<MealModel>)
+ そのタプルを配列に格納してViewControllerの方に適宜渡せば良さそう
+ */
+
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterInput {
     var numberOfRowsInSection: Int { get }
