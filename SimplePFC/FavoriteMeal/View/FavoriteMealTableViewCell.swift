@@ -9,6 +9,7 @@ import UIKit
 
 final class FavoriteMealTableViewCell: UITableViewCell {
     static var className: String { String(describing: FavoriteMealTableViewCell.self) }
+    static var cellHeight: CGFloat { 50 }
     
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var calorieLabel: UILabel!
