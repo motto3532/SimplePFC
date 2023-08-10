@@ -15,6 +15,7 @@ final class MealsViewController: UIViewController {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.backgroundColor = .white
+            tableView.sectionHeaderTopPadding = 0
         }
     }
     
@@ -57,6 +58,13 @@ final class MealsViewController: UIViewController {
 }
 
 extension MealsViewController: MealsPresenterOutput {
+    var pfcCellHeight: CGFloat {
+        PFCTableViewCell.cellHeight
+    }
+    
+    var mealCellHeight: CGFloat {
+        MealTableViewCell.cellHeight
+    }
     
     func reload() {
         self.tableView.reloadData()
@@ -73,12 +81,12 @@ extension MealsViewController: MealsPresenterOutput {
 
 extension MealsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return self.presenter.cellHeight(section: indexPath.section)
+        return self.presenter.heightForRowAt(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.tableView.deselectRow(at: indexPath, animated: true)
-        self.presenter.didSelect(section: indexPath.section, row: indexPath.row)
+        self.presenter.didSelect(indexPath: indexPath)
     }
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
@@ -104,18 +112,42 @@ extension MealsViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            guard let pfcCell = self.tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
+        var cell: UITableViewCell?
+        
+        let pfcCell = {(meals: [MealModel], date: Date) -> Void in
+            guard let pfcCell = tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
                 fatalError()
             }
-            pfcCell.configure(meals: self.presenter.getMeals(), date: self.presenter.getDate())
-            return pfcCell
+            pfcCell.configure(meals: meals, date: date)
+            cell = pfcCell
         }
         
-        guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
-            fatalError()
+        let mealCell = {(meal: MealModel) -> Void in
+            guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
+                fatalError()
+            }
+            mealCell.configure(meal: meal)
+            cell = mealCell
         }
-        mealCell.configure(meal: self.presenter.getMeal(section: indexPath.section, row: indexPath.row))
-        return mealCell
+        
+        self.presenter.cellForRowAt(indexPath: indexPath, pfcCell: pfcCell, mealCell: mealCell)
+        
+        guard let _cell = cell else { fatalError() }
+        return _cell
+        
+        
+        //        if indexPath.section == 0 {
+        //            guard let pfcCell = self.tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
+        //                fatalError()
+        //            }
+        //            pfcCell.configure(meals: self.presenter.getMeals(), date: self.presenter.getDate)
+        //            return pfcCell
+        //        }
+        //
+        //        guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
+        //            fatalError()
+        //        }
+        //        mealCell.configure(meal: self.presenter.getMeal(indexPath: indexPath))
+        //        return mealCell
     }
 }

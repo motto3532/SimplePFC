@@ -9,6 +9,7 @@ import UIKit
 
 final class PFCTableViewCell: UITableViewCell {
     static var className: String { String(describing: PFCTableViewCell.self) }
+    static var cellHeight: CGFloat { 200 }
     
     @IBOutlet private weak var pfcView: UIView! {
         didSet {
@@ -27,12 +28,18 @@ final class PFCTableViewCell: UITableViewCell {
     private var fat: String { "fat" }
     private var carbohydrate: String { "carbohydrate" }
     
-    func configure(meals: [MealModel], date: String) {
+    func configure(meals: [MealModel], date: Date) {
         //tableViewの区切り線を右の画面外に飛ばす
         self.separatorInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: .greatestFiniteMagnitude)
         
-        self.dateLabel.text = date
+        //日付表示
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ja_JP")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        dateFormatter.dateFormat = "yyyy年M月d日\n(EEEE)"
+        self.dateLabel.text = dateFormatter.string(from: date)
         
+        //栄養素を集計
         var sumOfNutrients = [calorie: 0, protein: 0, fat: 0, carbohydrate: 0]
         for meal in meals {
             let nutrients = [calorie: meal.calorie, protein: meal.protein, fat: meal.fat, carbohydrate: meal.carbohydrate]

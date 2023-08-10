@@ -10,19 +10,22 @@ import Foundation
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterInput {
     var numberOfSection: Int { get }
+    var getDate: Date { get }
     func numberOfRowsInSection(section: Int) -> Int
     func titleForHeaderInSection(section: Int) -> String?
-    func getDate() -> String
     func reloadData()
     func addMealBarButtonItemTapped()
     func favoriteMealBarButtonItemTapped()
-    func cellHeight(section: Int) -> CGFloat
-    func didSelect(section: Int, row: Int)
-    func getMeals() -> [MealModel]
-    func getMeal(section: Int, row: Int) -> MealModel
+    func heightForRowAt(indexPath: IndexPath) -> CGFloat
+    func didSelect(indexPath: IndexPath)
+//    func getMeals() -> [MealModel]
+//    func getMeal(indexPath: IndexPath) -> MealModel
+    func cellForRowAt(indexPath: IndexPath, pfcCell: ([MealModel], Date) -> Void, mealCell: (MealModel) -> Void)
 }
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにすることでweak var使える
+    var pfcCellHeight: CGFloat { get }
+    var mealCellHeight: CGFloat { get }
     func reload()
     func showAddMeal(meal: MealModel?)
     func showFavoriteMeal()
@@ -37,6 +40,8 @@ final class MealsPresenter {
     //typealiasで型として定義
     private typealias SectionRowPair = (section: String, row: [MealModel])
     private var sectionRowPairs: [SectionRowPair] = []
+    //セルの高さのキャッシュ
+    private let heightCache: [IndexPath: CGFloat] = [:]
     
     init(output: MealsPresenterOutput, realm: MealRealm = MealRealm.shared, date: Date) {
         self.output = output
@@ -50,6 +55,10 @@ extension MealsPresenter: MealsPresenterInput {
         self.sectionRowPairs.count + 1//PFCセルの分
     }
     
+    var getDate: Date {
+        self.date
+    }
+    
     func numberOfRowsInSection(section: Int) -> Int {
         if section == 0 { return 1 }//PFCセルの分
         return self.sectionRowPairs[section - 1].row.count
@@ -60,17 +69,10 @@ extension MealsPresenter: MealsPresenterInput {
         return "\(self.sectionRowPairs[section - 1].section):00〜"
     }
     
-    func getDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ja_JP")
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        dateFormatter.dateFormat = "yyyy年M月d日\n(EEEE)"
-        return dateFormatter.string(from: self.date)
-    }
-    
     func reloadData() {
         self.meals = []
         self.sectionRowPairs = []
+        
         let realmRegistedData = self.realm.getMealsData()
         //表示するmealは日付が一致するもの
         let dateFormatter = DateFormatter()
@@ -116,26 +118,40 @@ extension MealsPresenter: MealsPresenterInput {
         self.output.showFavoriteMeal()
     }
     
-    func cellHeight(section: Int) -> CGFloat {
-        if section == 0 {
-            //PFCセル
-            return 200
+    func heightForRowAt(indexPath: IndexPath) -> CGFloat {
+        //キャッシュがあればそれを返す
+        if let height = self.heightCache[indexPath] {
+            return height
         }
-        //Mealセル
-        return 80
+        
+        if indexPath.section == 0 {
+            //PFCセル
+            return self.output.pfcCellHeight
+        } else {
+            //Mealセル
+            return self.output.mealCellHeight
+        }
     }
     
-    func didSelect(section: Int, row: Int) {
-        guard section > 0 else { return }
-        let meal = self.sectionRowPairs[section - 1].row[row]//PFCセルの分
+    func didSelect(indexPath: IndexPath) {
+        guard indexPath.section > 0 else { return }
+        let meal = self.sectionRowPairs[indexPath.section - 1].row[indexPath.row]//PFCセルの分
         self.output.showAddMeal(meal: meal)
     }
     
-    func getMeals() -> [MealModel] {
-        return self.meals
-    }
+//    func getMeals() -> [MealModel] {
+//        return self.meals
+//    }
+//
+//    func getMeal(indexPath: IndexPath) -> MealModel {
+//        return self.sectionRowPairs[indexPath.section - 1].row[indexPath.row]//PFCセルの分
+//    }
     
-    func getMeal(section: Int, row: Int) -> MealModel {
-        return self.sectionRowPairs[section - 1].row[row]//PFCセルの分
+    func cellForRowAt(indexPath: IndexPath, pfcCell: ([MealModel], Date) -> Void, mealCell: (MealModel) -> Void) {
+        if indexPath.section == 0 {
+            pfcCell(self.meals, self.date)
+        } else {
+            mealCell(self.sectionRowPairs[indexPath.section - 1].row[indexPath.row])//PFCセルの分
+        }
     }
 }

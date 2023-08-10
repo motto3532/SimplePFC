@@ -10,6 +10,7 @@ import UIKit
 final class MealTableViewCell: UITableViewCell {
     
     static var className: String { String(describing: MealTableViewCell.self) }
+    static var cellHeight: CGFloat { 100 }
     
     @IBOutlet private weak var nameLabel: UILabel!
     @IBOutlet private weak var calorieLabel: UILabel!
@@ -35,6 +36,7 @@ final class MealTableViewCell: UITableViewCell {
         self.fatLabel.text = ""
         self.carbohydrateLabel.text = ""
     }
+    
     func configure(meal: MealModel) {
         self.nameLabel.text = "\(meal.name)"
         self.calorieLabel.text = "\(meal.calorie) kcal"
