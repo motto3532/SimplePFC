@@ -99,6 +99,12 @@ extension MealsViewController: UITableViewDelegate {
 }
 
 extension MealsViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        let deleteRow: () -> Void = { tableView.deleteRows(at: [indexPath], with: .automatic) }
+        let deleteSection: () -> Void = { tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic) }
+        self.presenter.deleteMeal(indexPath: indexPath, deleteRow: deleteRow, deleteSection: deleteSection)
+    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.presenter.numberOfSection
     }

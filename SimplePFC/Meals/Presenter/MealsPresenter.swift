@@ -11,6 +11,7 @@ import Foundation
 protocol MealsPresenterInput {
     var numberOfSection: Int { get }
     var getDate: Date { get }
+    func deleteMeal(indexPath: IndexPath, deleteRow: () -> Void, deleteSection: () -> Void)
     func numberOfRowsInSection(section: Int) -> Int
     func titleForHeaderInSection(section: Int) -> String?
     func reloadData()
@@ -51,6 +52,21 @@ final class MealsPresenter {
 }
 
 extension MealsPresenter: MealsPresenterInput {
+    func deleteMeal(indexPath: IndexPath, deleteRow: () -> Void, deleteSection: () -> Void) {
+        //realmから消す
+        self.realm.delete(meal: self.sectionRowPairs[indexPath.section - 1].row[indexPath.row])
+        
+        if self.sectionRowPairs[indexPath.section - 1].row.count == 1 {
+            //対象セクションの中の食事内容が1つならセクションごと消す
+            self.sectionRowPairs.remove(at: indexPath.section - 1)
+            deleteSection()
+        } else {
+            //それ以外は対象のmealだけ消す
+            self.sectionRowPairs[indexPath.section - 1].row.remove(at: indexPath.row)
+            deleteRow()
+        }
+    }
+    
     var numberOfSection: Int {
         self.sectionRowPairs.count + 1//PFCセルの分
     }
