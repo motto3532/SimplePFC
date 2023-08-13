@@ -96,6 +96,14 @@ extension MealsViewController: UITableViewDelegate {
         }
         header.textLabel?.textColor = .black
     }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        //PFCセルは削除できない
+        if indexPath.section == 0 {
+            return .none
+        }
+        return .delete
+    }
 }
 
 extension MealsViewController: UITableViewDataSource {
