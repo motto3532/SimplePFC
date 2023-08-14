@@ -70,12 +70,13 @@ extension MealsViewController: MealsPresenterOutput {
         self.tableView.reloadData()
     }
     
-    func showAddMeal(meal: MealModel?) {
-        Router.shared.showAddMeal(from: self, meal: meal)
+    func showAddMeal(meal: MealModel?, date: Date?) {
+        //新規と編集があるからdateはoptional
+        Router.shared.showAddMeal(from: self, meal: meal, date: date)
     }
     
-    func showFavoriteMeal() {
-        Router.shared.showFavoriteMeals(from: self)
+    func showFavoriteMeal(date: Date) {
+        Router.shared.showFavoriteMeals(from: self, date: date)
     }
 }
 

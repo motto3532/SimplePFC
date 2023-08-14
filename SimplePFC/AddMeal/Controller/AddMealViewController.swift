@@ -80,7 +80,17 @@ final class AddMealViewController: UIViewController {
 }
 
 extension AddMealViewController: AddMealPresenterOutput {
+    //新規
+    func configure(date: Date) {
+        self.datePicker.date = date
+        self.mealNameTextField.text = ""
+        self.calorieTextField.text = ""
+        self.proteinTextField.text = ""
+        self.fatTextField.text = ""
+        self.carbohydrateTextField.text = ""
+    }
     
+    //編集
     func configure(meal: MealModel) {
         self.datePicker.date = meal.date
         self.mealNameTextField.text = meal.name
@@ -95,8 +105,9 @@ extension AddMealViewController: AddMealPresenterOutput {
         self.addMealButton.titleLabel?.text = "編集"
     }
     
-    func configure(favoriteMeal: FavoriteMealModel) {
-        self.datePicker.date = Date()
+    //お気に入り
+    func configure(favoriteMeal: FavoriteMealModel, date: Date) {
+        self.datePicker.date = date
         self.mealNameTextField.text = favoriteMeal.name
         self.calorieTextField.text = String(describing: favoriteMeal.calorie)
         self.proteinTextField.text = String(describing: favoriteMeal.protein)
@@ -125,9 +136,5 @@ extension AddMealViewController: AddMealPresenterOutput {
         alert.addAction(delete)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
-    }
-    
-    func showFavoriteMeals() {
-        Router.shared.showFavoriteMeals(from: self)
     }
 }

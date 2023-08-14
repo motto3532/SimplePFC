@@ -28,8 +28,8 @@ protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにする�
     var pfcCellHeight: CGFloat { get }
     var mealCellHeight: CGFloat { get }
     func reload()
-    func showAddMeal(meal: MealModel?)
-    func showFavoriteMeal()
+    func showAddMeal(meal: MealModel?, date: Date?)
+    func showFavoriteMeal(date: Date)
 }
 
 final class MealsPresenter {
@@ -127,11 +127,11 @@ extension MealsPresenter: MealsPresenterInput {
     }
     
     func addMealBarButtonItemTapped() {
-        self.output.showAddMeal(meal: nil)
+        self.output.showAddMeal(meal: nil, date: self.date)
     }
     
     func favoriteMealBarButtonItemTapped() {
-        self.output.showFavoriteMeal()
+        self.output.showFavoriteMeal(date: self.date)
     }
     
     func heightForRowAt(indexPath: IndexPath) -> CGFloat {
@@ -152,7 +152,7 @@ extension MealsPresenter: MealsPresenterInput {
     func didSelect(indexPath: IndexPath) {
         guard indexPath.section > 0 else { return }
         let meal = self.sectionRowPairs[indexPath.section - 1].row[indexPath.row]//PFCセルの分
-        self.output.showAddMeal(meal: meal)
+        self.output.showAddMeal(meal: meal, date: nil)//編集だからdateはnil
     }
     
 //    func getMeals() -> [MealModel] {

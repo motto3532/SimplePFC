@@ -14,11 +14,11 @@ protocol FavoriteMealPresenterProtocolInput {
     func didSelect(index: Int, isChecked: Bool)
     func didDeselect(index: Int)
     func deleteFavoriteMeal(index: Int)
-    func selectedFavoriteMeals() -> [FavoriteMealModel]
+    func decisionBarButtonTapped()
 }
 
 protocol FavoriteMealPresenterProtocolOutput: AnyObject {
-    func showAddMeal(favoriteMeal: FavoriteMealModel)
+    func showAddMeal(favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, date: Date)
     func reload()
 }
 
@@ -27,10 +27,12 @@ final class FavoriteMealPresenter {
     private var favoriteMeals: [FavoriteMealModel] = []
     private let realm: MealRealm
     private var selectedIndex: [Int] = []
+    private let date: Date
     
-    init(output: FavoriteMealPresenterProtocolOutput!, realm: MealRealm = MealRealm.shared) {
+    init(output: FavoriteMealPresenterProtocolOutput!, realm: MealRealm = MealRealm.shared, date: Date) {
         self.output = output
         self.realm = realm
+        self.date = date
     }
 }
 
@@ -56,8 +58,17 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
             self.selectedIndex.append(index)
             return
         }
-        
-        self.output.showAddMeal(favoriteMeal: self.favoriteMeals[index])
+        //単選択
+        self.output.showAddMeal(favoriteMeal: self.favoriteMeals[index], favoriteMeals: nil, date: self.date)
+    }
+    
+    func decisionBarButtonTapped() {
+        //複数選択確定
+        var selectedFavoriteMeals: [FavoriteMealModel] = []
+        for index in self.selectedIndex {
+            selectedFavoriteMeals.append(self.favoriteMeals[index])
+        }
+        self.output.showAddMeal(favoriteMeal: nil, favoriteMeals: selectedFavoriteMeals, date: self.date)
     }
     
     func didDeselect(index: Int) {

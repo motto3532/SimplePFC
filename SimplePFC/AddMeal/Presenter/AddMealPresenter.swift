@@ -11,17 +11,16 @@ protocol AddMealPresenterInput {
     func viewDidLoad()
     func addMealButtonTapped(favorite: Bool, date: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
     func deleteMealButtonTapped()
-    func favoriteMealBarButtonItemTapped()
     func synthesizeFavoriteMeals(favoriteMeals: [FavoriteMealModel]) -> FavoriteMealModel
 }
 
 protocol AddMealPresenterOutput: AnyObject {
+    func configure(date: Date)
     func configure(meal: MealModel)
-    func configure(favoriteMeal: FavoriteMealModel)
+    func configure(favoriteMeal: FavoriteMealModel, date: Date)
     func emptyAlert()
     func goBack()
     func deleteAlert(action: @escaping () -> Void)
-    func showFavoriteMeals()
 }
 
 final class AddMealPresenter {
@@ -30,13 +29,15 @@ final class AddMealPresenter {
     private let favoriteMeal: FavoriteMealModel?
     private let favoriteMeals: [FavoriteMealModel]?
     private let realm: MealRealm
+    private let date: Date?
     
-    init(output: AddMealPresenterOutput, meal: MealModel?, favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, realm: MealRealm = MealRealm.shared) {
+    init(output: AddMealPresenterOutput, meal: MealModel?, favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, realm: MealRealm = MealRealm.shared, date: Date?) {
         self.output = output
         self.meal = meal
         self.favoriteMeal = favoriteMeal
         self.favoriteMeals = favoriteMeals
         self.realm = realm
+        self.date = date
     }
 }
 
@@ -49,7 +50,8 @@ extension AddMealPresenter: AddMealPresenterInput {
             
         } else if let _favoriteMeal = self.favoriteMeal {
             //お気に入り単選択
-            self.output.configure(favoriteMeal: _favoriteMeal)
+            guard let date = self.date else { fatalError() }
+            self.output.configure(favoriteMeal: _favoriteMeal, date: date)
             
         } else if let _favoriteMeals = self.favoriteMeals {
             //お気に入り複数選択
@@ -67,7 +69,12 @@ extension AddMealPresenter: AddMealPresenterInput {
                 favMeal.fat += favoriteMeal.fat
                 favMeal.carbohydrate += favoriteMeal.carbohydrate
             }
-            self.output.configure(favoriteMeal: favMeal)
+            guard let date = self.date else { fatalError() }
+            self.output.configure(favoriteMeal: favMeal, date: date)
+        } else {
+            //新規追加
+            guard let date = self.date else { fatalError() }
+            self.output.configure(date: date)
         }
     }
     
@@ -127,10 +134,6 @@ extension AddMealPresenter: AddMealPresenterInput {
             self?.realm.delete(meal: meal)
             self?.output.goBack()
         }
-    }
-    
-    func favoriteMealBarButtonItemTapped() {
-        self.output.showFavoriteMeals()
     }
     
     func synthesizeFavoriteMeals(favoriteMeals: [FavoriteMealModel]) -> FavoriteMealModel {

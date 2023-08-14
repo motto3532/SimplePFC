@@ -52,14 +52,14 @@ final class FavoriteMealViewController: UIViewController {
     }
     
     func decisionBarButtonTapped(_ sender: UIResponder) {
-        Router.shared.showAddMeal(from: self, favoriteMeals: self.presenter.selectedFavoriteMeals())
+        self.presenter.decisionBarButtonTapped()
     }
 }
 
 extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
     
-    func showAddMeal(favoriteMeal: FavoriteMealModel) {
-        Router.shared.showAddMeal(from: self, favoriteMeal: favoriteMeal)
+    func showAddMeal(favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, date: Date) {
+        Router.shared.showAddMeal(from: self, favoriteMeal: favoriteMeal, favoriteMeals: favoriteMeals, date: date)
     }
     
     func reload() {
@@ -74,10 +74,12 @@ extension FavoriteMealViewController: UITableViewDelegate {
          でも下の記述だと分岐処理書いてるからMVPじゃないね
          */
         if self.tableView.allowsMultipleSelection {
+            //複数選択
             guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteMealTableViewCell else { return }
             cell.isChecked()
             self.presenter.didSelect(index: indexPath.row, isChecked: true)
         } else {
+            //単選択
             self.tableView.deselectRow(at: indexPath, animated: true)
             self.presenter.didSelect(index: indexPath.row, isChecked: false)
         }
