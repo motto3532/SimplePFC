@@ -92,6 +92,7 @@ extension MealsViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         view.tintColor = .lightGray
+        view.setCornerRadius(cornerRadius: 5)
         guard let header = view as? UITableViewHeaderFooterView else {
             fatalError()
         }
