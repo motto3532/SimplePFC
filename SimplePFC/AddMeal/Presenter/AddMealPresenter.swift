@@ -50,8 +50,16 @@ extension AddMealPresenter: AddMealPresenterInput {
             
         } else if let _favoriteMeal = self.favoriteMeal {
             //お気に入り単選択
+            //被り
             guard let date = self.date else { fatalError() }
-            self.output.configure(favoriteMeal: _favoriteMeal, date: date)
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy/MM/dd"
+            if dateFormatter.string(from: currentDate) == dateFormatter.string(from: date) {
+                self.output.configure(favoriteMeal: _favoriteMeal, date: currentDate)
+            } else {
+                self.output.configure(favoriteMeal: _favoriteMeal, date: date)
+            }
             
         } else if let _favoriteMeals = self.favoriteMeals {
             //お気に入り複数選択
@@ -69,12 +77,28 @@ extension AddMealPresenter: AddMealPresenterInput {
                 favMeal.fat += favoriteMeal.fat
                 favMeal.carbohydrate += favoriteMeal.carbohydrate
             }
+            //被り
             guard let date = self.date else { fatalError() }
-            self.output.configure(favoriteMeal: favMeal, date: date)
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy/MM/dd"
+            if dateFormatter.string(from: currentDate) == dateFormatter.string(from: date) {
+                self.output.configure(favoriteMeal: favMeal, date: currentDate)
+            } else {
+                self.output.configure(favoriteMeal: favMeal, date: date)
+            }
         } else {
             //新規追加
+            //被り
             guard let date = self.date else { fatalError() }
-            self.output.configure(date: date)
+            let currentDate = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy/MM/dd"
+            if dateFormatter.string(from: currentDate) == dateFormatter.string(from: date) {
+                self.output.configure(date: currentDate)
+            } else {
+                self.output.configure(date: date)
+            }
         }
     }
     
