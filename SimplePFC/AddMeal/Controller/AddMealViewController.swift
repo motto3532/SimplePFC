@@ -24,16 +24,28 @@ final class AddMealViewController: UIViewController {
         didSet { mealNameTextField.configure(onlyNumberPad: false) }
     }
     @IBOutlet private weak var calorieTextField: UITextField! {
-        didSet { calorieTextField.configure(onlyNumberPad: true) }
+        didSet {
+            calorieTextField.configure(onlyNumberPad: true)
+            calorieTextField.textAlignment = .center
+        }
     }
     @IBOutlet private weak var proteinTextField: UITextField! {
-        didSet { proteinTextField.configure(onlyNumberPad: true) }
+        didSet {
+            proteinTextField.configure(onlyNumberPad: true)
+            proteinTextField.textAlignment = .center
+        }
     }
     @IBOutlet private weak var fatTextField: UITextField! {
-        didSet { fatTextField.configure(onlyNumberPad: true) }
+        didSet {
+            fatTextField.configure(onlyNumberPad: true)
+            fatTextField.textAlignment = .center
+        }
     }
     @IBOutlet private weak var carbohydrateTextField: UITextField! {
-        didSet { carbohydrateTextField.configure(onlyNumberPad: true) }
+        didSet {
+            carbohydrateTextField.configure(onlyNumberPad: true)
+            carbohydrateTextField.textAlignment = .center
+        }
     }
     
     @IBOutlet private weak var addMealButton: UIButton! {
