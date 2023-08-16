@@ -10,14 +10,20 @@ import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        IQKeyboardManager.shared.overrideKeyboardAppearance = true
+        IQKeyboardManager.shared.keyboardAppearance = .light
+        IQKeyboardManager.shared.keyboardDistanceFromTextField = 50
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "完了"
+        IQKeyboardManager.shared.shouldToolbarUsesTextFieldTintColor = false
+        IQKeyboardManager.shared.toolbarTintColor = .systemMint
         IQKeyboardManager.shared.enable = true
         return true
     }
-
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
