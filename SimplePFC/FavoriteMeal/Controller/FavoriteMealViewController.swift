@@ -85,6 +85,13 @@ extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
     func reload() {
         self.tableView.reloadData()
     }
+    
+    func emptyAlert() {
+        let alert = UIAlertController(title: "食品が選択されていません", message: nil, preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(ok)
+        present(alert, animated: true, completion: nil)
+    }
 }
 
 extension FavoriteMealViewController: UITableViewDelegate {

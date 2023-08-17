@@ -20,6 +20,7 @@ protocol FavoriteMealPresenterProtocolInput {
 protocol FavoriteMealPresenterProtocolOutput: AnyObject {
     func showAddMeal(favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, date: Date)
     func reload()
+    func emptyAlert()
 }
 
 final class FavoriteMealPresenter {
@@ -63,12 +64,16 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
     }
     
     func decisionBarButtonTapped() {
-        //複数選択確定
-        var selectedFavoriteMeals: [FavoriteMealModel] = []
-        for index in self.selectedIndex {
-            selectedFavoriteMeals.append(self.favoriteMeals[index])
+        if self.selectedIndex.isEmpty {
+            self.output.emptyAlert()
+        } else {
+            //複数選択確定
+            var selectedFavoriteMeals: [FavoriteMealModel] = []
+            for index in self.selectedIndex {
+                selectedFavoriteMeals.append(self.favoriteMeals[index])
+            }
+            self.output.showAddMeal(favoriteMeal: nil, favoriteMeals: selectedFavoriteMeals, date: self.date)
         }
-        self.output.showAddMeal(favoriteMeal: nil, favoriteMeals: selectedFavoriteMeals, date: self.date)
     }
     
     func didDeselect(index: Int) {
