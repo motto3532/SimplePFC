@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         IQKeyboardManager.shared.overrideKeyboardAppearance = true
         IQKeyboardManager.shared.keyboardAppearance = .light
         IQKeyboardManager.shared.keyboardDistanceFromTextField = 50
@@ -21,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.shouldToolbarUsesTextFieldTintColor = false
         IQKeyboardManager.shared.toolbarTintColor = .systemMint
         IQKeyboardManager.shared.enable = true
+        
+        UINavigationBar.appearance().tintColor = .systemMint
+        
         return true
     }
     

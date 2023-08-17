@@ -27,6 +27,9 @@ final class MealsViewController: UIViewController {
         
         self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
         
+        //次の画面のbackボタンを戻るに変更
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "戻る", style: .plain, target: nil, action: nil)
+        
         //追加ボタン
         let addMealBarButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addMealBarButtonItemTapped(_:)))
         

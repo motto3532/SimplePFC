@@ -50,7 +50,7 @@ final class AddMealViewController: UIViewController {
     
     @IBOutlet private weak var addMealButton: UIButton! {
         didSet {
-            addMealButton.setCornerRadius(cornerRadius: CGFloat(10.0))
+            addMealButton.setCornerRadius(cornerRadius: 10)
             addMealButton.addTarget(self, action: #selector(addMealButtonTapped(_:)), for: .touchUpInside)
         }
     }
@@ -59,6 +59,7 @@ final class AddMealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         datePicker.locale = Locale(identifier: "ja_JP")
         datePicker.timeZone = TimeZone(identifier: "Asia/Tokyo")
         datePicker.preferredDatePickerStyle = .compact

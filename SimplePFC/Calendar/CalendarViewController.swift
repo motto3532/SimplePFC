@@ -22,6 +22,10 @@ final class CalendarViewController: UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //次の画面のbackボタンをカレンダーに変更
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "カレンダー", style: .plain, target: nil, action: nil)
+        
         //rootでこの画面きたらすぐmealsへ移動
         Router.shared.showMeals(from: self, date: Date())
         

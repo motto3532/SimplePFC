@@ -29,29 +29,49 @@ final class FavoriteMealViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //次の画面のbackボタンを戻るに変更
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "戻る", style: .plain, target: nil, action: nil)
+        
+        //画面タイトル
         let titleLabel = UILabel()
-        titleLabel.textColor = .systemBlue
+        titleLabel.textColor = .systemMint
         titleLabel.backgroundColor = .clear
         titleLabel.text = "お気に入り食品"
         self.navigationItem.titleView = titleLabel
         
-        self.presenter.reloadData()
-        
         //複数選択ボタン
-        let multipleSelectionBarButton = UIBarButtonItem(title: "複数選択", style: .plain, target: self, action: #selector(multipleSelectionBarButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem = multipleSelectionBarButton
+        let multipleSelectionButton = UIButton(type: .system)
+        multipleSelectionButton.frame.size.width = 70
+        multipleSelectionButton.frame.size.height = 40
+        multipleSelectionButton.setTitle("複数選択", for: .normal)
+        multipleSelectionButton.setTitleColor(.systemMint, for: .normal)
+        multipleSelectionButton.layer.borderColor = UIColor.systemMint.cgColor
+        multipleSelectionButton.layer.borderWidth = 1
+        multipleSelectionButton.layer.cornerRadius = 10
+        multipleSelectionButton.addTarget(self, action: #selector(multipleSelectionButtonTapped(_:)), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: multipleSelectionButton)
+        
+        self.presenter.reloadData()
     }
 }
 
 @objc private extension FavoriteMealViewController {
-    func multipleSelectionBarButtonTapped(_ sender: UIResponder) {
+    func multipleSelectionButtonTapped(_ sender: UIResponder) {
         self.tableView.allowsMultipleSelection = true
         
-        let decisionBarButton = UIBarButtonItem(title: "記録", style: .plain, target: self, action: #selector(decisionBarButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem = decisionBarButton
+        //決定ボタン
+        let decisionButton = UIButton(type: .system)
+        decisionButton.frame.size.width = 70
+        decisionButton.frame.size.height = 40
+        decisionButton.setTitle("決定", for: .normal)
+        decisionButton.setTitleColor(.white, for: .normal)
+        decisionButton.backgroundColor = .systemMint
+        decisionButton.addTarget(self, action: #selector(decisionButtonTapped(_:)), for: .touchUpInside)
+        decisionButton.setCornerRadius(cornerRadius: 10)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: decisionButton)
     }
     
-    func decisionBarButtonTapped(_ sender: UIResponder) {
+    func decisionButtonTapped(_ sender: UIResponder) {
         self.presenter.decisionBarButtonTapped()
     }
 }
