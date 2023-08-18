@@ -59,11 +59,20 @@ final class AddMealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //年月日本語化
         datePicker.locale = Locale(identifier: "ja_JP")
+        //曜日日本語化
+        var calendar = Calendar.current
+        calendar.locale = Locale(identifier: "ja_JP")
+        calendar.firstWeekday = 2//月曜始まり
+        datePicker.calendar = calendar
+        //時間
         datePicker.timeZone = TimeZone(identifier: "Asia/Tokyo")
+        //スタイル
         datePicker.preferredDatePickerStyle = .compact
-        //datePicker.datePickerMode = .dateAndTimeここうまくいかん
+        datePicker.datePickerMode = .dateAndTime
+        //色
+        datePicker.tintColor = .gray
         
         self.presenter.viewDidLoad()
     }
