@@ -25,6 +25,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().tintColor = .systemMint
         
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .white
+
+        UINavigationBar.appearance().standardAppearance = appearance
+
+        let standardAppearance = UINavigationBar.appearance().standardAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = standardAppearance
+        UINavigationBar.appearance().compactAppearance = standardAppearance
+        UINavigationBar.appearance().compactScrollEdgeAppearance = standardAppearance
+        
         return true
     }
     

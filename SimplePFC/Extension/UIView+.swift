@@ -7,7 +7,7 @@
 
 import UIKit
 
-//このエクステンションいらんかも
+//tableViewのSectionでclipsToBoundsをtrueにしないと丸角にならなかった
 extension UIView {
     func setCornerRadius(cornerRadius: CGFloat) {
         self.layer.cornerRadius = cornerRadius

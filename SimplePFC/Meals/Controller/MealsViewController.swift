@@ -25,8 +25,6 @@ final class MealsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.standardAppearance.backgroundColor = .white
-        
         //次の画面のbackボタンを戻るに変更
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "戻る", style: .plain, target: nil, action: nil)
         
