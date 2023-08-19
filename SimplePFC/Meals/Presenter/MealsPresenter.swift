@@ -127,6 +127,7 @@ extension MealsPresenter: MealsPresenterInput {
     }
     
     func addMealBarButtonItemTapped() {
+        //新規
         self.output.showAddMeal(meal: nil, date: self.date)
     }
     
@@ -150,6 +151,7 @@ extension MealsPresenter: MealsPresenterInput {
     }
     
     func didSelect(indexPath: IndexPath) {
+        //編集
         guard indexPath.section > 0 else { return }
         let meal = self.sectionRowPairs[indexPath.section - 1].row[indexPath.row]//PFCセルの分
         self.output.showAddMeal(meal: meal, date: nil)//編集だからdateはnil

@@ -72,7 +72,8 @@ extension MealsViewController: MealsPresenterOutput {
     }
     
     func showAddMeal(meal: MealModel?, date: Date?) {
-        //新規と編集があるからdateはoptional
+        //新規->meal:nil, date:ある
+        //編集->meal:ある, date:nil
         Router.shared.showAddMeal(from: self, meal: meal, date: date)
     }
     
