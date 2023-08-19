@@ -27,15 +27,13 @@ final class AddMealPresenter {
     private weak var output: AddMealPresenterOutput!
     private let meal: MealModel?
     private let favoriteMeal: FavoriteMealModel?
-    private let favoriteMeals: [FavoriteMealModel]?
     private let realm: MealRealm
     private let date: Date?
     
-    init(output: AddMealPresenterOutput, meal: MealModel?, favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, realm: MealRealm = MealRealm.shared, date: Date?) {
+    init(output: AddMealPresenterOutput, meal: MealModel?, favoriteMeal: FavoriteMealModel?, realm: MealRealm = MealRealm.shared, date: Date?) {
         self.output = output
         self.meal = meal
         self.favoriteMeal = favoriteMeal
-        self.favoriteMeals = favoriteMeals
         self.realm = realm
         self.date = date
     }
@@ -45,11 +43,11 @@ extension AddMealPresenter: AddMealPresenterInput {
     
     func viewDidLoad() {
         if let _meal = self.meal {
-            //mealに値があれば編集画面
+            //編集画面
             self.output.configure(meal: _meal)
             
         } else if let _favoriteMeal = self.favoriteMeal {
-            //お気に入り単選択
+            //お気に入り
             //被り
             guard let date = self.date else { fatalError() }
             let currentDate = Date()
@@ -59,33 +57,6 @@ extension AddMealPresenter: AddMealPresenterInput {
                 self.output.configure(favoriteMeal: _favoriteMeal, date: currentDate)
             } else {
                 self.output.configure(favoriteMeal: _favoriteMeal, date: date)
-            }
-            
-        } else if let _favoriteMeals = self.favoriteMeals {
-            //お気に入り複数選択
-            let favMeal = FavoriteMealModel()
-            favMeal.name = ""
-            favMeal.calorie = 0
-            favMeal.protein = 0
-            favMeal.fat = 0
-            favMeal.carbohydrate = 0
-            
-            for favoriteMeal in _favoriteMeals {
-                favMeal.name += favMeal.name.isEmpty ? favoriteMeal.name : "+\(favoriteMeal.name)"
-                favMeal.calorie += favoriteMeal.calorie
-                favMeal.protein += favoriteMeal.protein
-                favMeal.fat += favoriteMeal.fat
-                favMeal.carbohydrate += favoriteMeal.carbohydrate
-            }
-            //被り
-            guard let date = self.date else { fatalError() }
-            let currentDate = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy/MM/dd"
-            if dateFormatter.string(from: currentDate) == dateFormatter.string(from: date) {
-                self.output.configure(favoriteMeal: favMeal, date: currentDate)
-            } else {
-                self.output.configure(favoriteMeal: favMeal, date: date)
             }
         } else {
             //新規追加

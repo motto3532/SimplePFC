@@ -9,8 +9,13 @@ import UIKit
 
 extension UITextField {
     func configure(onlyNumberPad: Bool) {
+        
         self.backgroundColor = .white
         self.textColor = .black
-        if onlyNumberPad { self.keyboardType = UIKeyboardType.numberPad }
+        
+        if onlyNumberPad {
+            self.keyboardType = UIKeyboardType.numberPad
+            self.textAlignment = .center
+        }
     }
 }

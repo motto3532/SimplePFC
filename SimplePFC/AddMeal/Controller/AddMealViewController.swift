@@ -8,44 +8,48 @@
 import UIKit
 
 final class AddMealViewController: UIViewController {
+    
     @IBOutlet private weak var favoriteSwitch: UISwitch! {
         didSet { favoriteSwitch.setOn(false, animated: false) }
     }
-    //現在時刻ボタン追加したい
-    @IBOutlet private weak var datePicker: UIDatePicker!
+    
+    @IBOutlet private weak var datePicker: UIDatePicker! {
+        didSet {
+            //年月日本語化
+            datePicker.locale = Locale(identifier: "ja_JP")
+            //曜日日本語化
+            var calendar = Calendar.current
+            calendar.locale = Locale(identifier: "ja_JP")
+            calendar.firstWeekday = 2//月曜始まり
+            datePicker.calendar = calendar
+            //時間
+            datePicker.timeZone = TimeZone(identifier: "Asia/Tokyo")
+            //スタイル
+            datePicker.preferredDatePickerStyle = .compact
+            datePicker.datePickerMode = .dateAndTime
+            //色
+            datePicker.tintColor = .gray
+        }
+    }
     
     @IBOutlet private weak var addMealView: UIView! {
-        didSet {
-            addMealView.setCornerRadius(cornerRadius: CGFloat(30.0))
-        }
+        didSet { addMealView.setCornerRadius(cornerRadius: CGFloat(30.0)) }
     }
     
     @IBOutlet private weak var mealNameTextField: UITextField! {
         didSet { mealNameTextField.configure(onlyNumberPad: false) }
     }
     @IBOutlet private weak var calorieTextField: UITextField! {
-        didSet {
-            calorieTextField.configure(onlyNumberPad: true)
-            calorieTextField.textAlignment = .center
-        }
+        didSet { calorieTextField.configure(onlyNumberPad: true) }
     }
     @IBOutlet private weak var proteinTextField: UITextField! {
-        didSet {
-            proteinTextField.configure(onlyNumberPad: true)
-            proteinTextField.textAlignment = .center
-        }
+        didSet { proteinTextField.configure(onlyNumberPad: true) }
     }
     @IBOutlet private weak var fatTextField: UITextField! {
-        didSet {
-            fatTextField.configure(onlyNumberPad: true)
-            fatTextField.textAlignment = .center
-        }
+        didSet { fatTextField.configure(onlyNumberPad: true) }
     }
     @IBOutlet private weak var carbohydrateTextField: UITextField! {
-        didSet {
-            carbohydrateTextField.configure(onlyNumberPad: true)
-            carbohydrateTextField.textAlignment = .center
-        }
+        didSet { carbohydrateTextField.configure(onlyNumberPad: true) }
     }
     
     @IBOutlet private weak var addMealButton: UIButton! {
@@ -59,20 +63,6 @@ final class AddMealViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //年月日本語化
-        datePicker.locale = Locale(identifier: "ja_JP")
-        //曜日日本語化
-        var calendar = Calendar.current
-        calendar.locale = Locale(identifier: "ja_JP")
-        calendar.firstWeekday = 2//月曜始まり
-        datePicker.calendar = calendar
-        //時間
-        datePicker.timeZone = TimeZone(identifier: "Asia/Tokyo")
-        //スタイル
-        datePicker.preferredDatePickerStyle = .compact
-        datePicker.datePickerMode = .dateAndTime
-        //色
-        datePicker.tintColor = .gray
         
         self.presenter.viewDidLoad()
     }

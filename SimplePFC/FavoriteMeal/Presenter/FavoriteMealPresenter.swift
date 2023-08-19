@@ -18,7 +18,7 @@ protocol FavoriteMealPresenterProtocolInput {
 }
 
 protocol FavoriteMealPresenterProtocolOutput: AnyObject {
-    func showAddMeal(favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, date: Date)
+    func showAddMeal(favoriteMeal: FavoriteMealModel, date: Date)
     func emptyAlert()
 }
 
@@ -60,7 +60,7 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
         } else {
             //単選択
             deselectCell()
-            self.output.showAddMeal(favoriteMeal: self.favoriteMeals[index], favoriteMeals: nil, date: self.date)
+            self.output.showAddMeal(favoriteMeal: self.favoriteMeals[index], date: self.date)
         }
     }
     
@@ -68,12 +68,23 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
         if self.selectedIndex.isEmpty {
             self.output.emptyAlert()
         } else {
-            //複数選択確定
-            var selectedFavoriteMeals: [FavoriteMealModel] = []
+            //複数選択
+            let combinedFavoriteMeal = FavoriteMealModel()
+            combinedFavoriteMeal.name = ""
+            combinedFavoriteMeal.calorie = 0
+            combinedFavoriteMeal.protein = 0
+            combinedFavoriteMeal.fat = 0
+            combinedFavoriteMeal.carbohydrate = 0
+            
             for index in self.selectedIndex {
-                selectedFavoriteMeals.append(self.favoriteMeals[index])
+                combinedFavoriteMeal.name += combinedFavoriteMeal.name.isEmpty ? self.favoriteMeals[index].name : "+\(self.favoriteMeals[index].name)"
+                combinedFavoriteMeal.calorie += self.favoriteMeals[index].calorie
+                combinedFavoriteMeal.protein += self.favoriteMeals[index].protein
+                combinedFavoriteMeal.fat += self.favoriteMeals[index].fat
+                combinedFavoriteMeal.carbohydrate += self.favoriteMeals[index].carbohydrate
             }
-            self.output.showAddMeal(favoriteMeal: nil, favoriteMeals: selectedFavoriteMeals, date: self.date)
+            
+            self.output.showAddMeal(favoriteMeal: combinedFavoriteMeal, date: self.date)
         }
     }
     

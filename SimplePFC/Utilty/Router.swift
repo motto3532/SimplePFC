@@ -28,9 +28,9 @@ final class Router {
         from.navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showAddMeal(from: UIViewController, meal: MealModel? = nil, favoriteMeal: FavoriteMealModel? = nil, favoriteMeals: [FavoriteMealModel]? = nil, date: Date? = nil) {
+    func showAddMeal(from: UIViewController, meal: MealModel? = nil, favoriteMeal: FavoriteMealModel? = nil, date: Date? = nil) {
         guard let vc = UIStoryboard(name: "AddMeal", bundle: nil).instantiateInitialViewController() as? AddMealViewController else { return }
-        let presenter = AddMealPresenter(output: vc, meal: meal, favoriteMeal: favoriteMeal, favoriteMeals: favoriteMeals, date: date)
+        let presenter = AddMealPresenter(output: vc, meal: meal, favoriteMeal: favoriteMeal, date: date)
         vc.inject(presenter: presenter)
         from.navigationController?.pushViewController(vc, animated: true)
     }

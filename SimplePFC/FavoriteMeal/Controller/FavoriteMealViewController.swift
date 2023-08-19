@@ -74,8 +74,8 @@ final class FavoriteMealViewController: UIViewController {
 
 extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
     
-    func showAddMeal(favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, date: Date) {
-        Router.shared.showAddMeal(from: self, favoriteMeal: favoriteMeal, favoriteMeals: favoriteMeals, date: date)
+    func showAddMeal(favoriteMeal: FavoriteMealModel, date: Date) {
+        Router.shared.showAddMeal(from: self, favoriteMeal: favoriteMeal, date: date)
     }
     
     func emptyAlert() {
