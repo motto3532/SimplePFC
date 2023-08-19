@@ -7,10 +7,6 @@
 
 import UIKit
 
-/*
- ・お気に入り食材同士を合成してお気に入り登録(合成ボタンでも追加するか)
- ・お気に入りを登録/編集するための画面があっても良いかも(今使ってるアプリだと実際にそれが煩わしいし)
- */
 final class FavoriteMealViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView! {
         didSet {
@@ -82,10 +78,6 @@ extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
         Router.shared.showAddMeal(from: self, favoriteMeal: favoriteMeal, favoriteMeals: favoriteMeals, date: date)
     }
     
-    func reload() {
-        self.tableView.reloadData()
-    }
-    
     func emptyAlert() {
         let alert = UIAlertController(title: "食品が選択されていません", message: nil, preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -96,20 +88,17 @@ extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
 
 extension FavoriteMealViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        /*
-         複数選択モードなら.checkmark採用、違うならタップでAddMeal画面に行きたい
-         でも下の記述だと分岐処理書いてるからMVPじゃないね
-         */
-        if self.tableView.allowsMultipleSelection {
-            //複数選択
+        
+        let checkCell = { () -> Void in
             guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteMealTableViewCell else { return }
             cell.isChecked()
-            self.presenter.didSelect(index: indexPath.row, isChecked: true)
-        } else {
-            //単選択
-            self.tableView.deselectRow(at: indexPath, animated: true)
-            self.presenter.didSelect(index: indexPath.row, isChecked: false)
         }
+        
+        let deselectCell = { () -> Void in
+            self.tableView.deselectRow(at: indexPath, animated: true)
+        }
+        
+        self.presenter.didSelect(index: indexPath.row, allowsMultipleSelection: tableView.allowsMultipleSelection, checkCell: checkCell, deselectCell: deselectCell)
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

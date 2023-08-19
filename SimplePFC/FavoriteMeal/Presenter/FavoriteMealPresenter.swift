@@ -11,7 +11,7 @@ protocol FavoriteMealPresenterProtocolInput {
     var numOfFavoriteMeals: Int { get }
     func reloadData()
     func getFavoriteMeal(index: Int) -> FavoriteMealModel
-    func didSelect(index: Int, isChecked: Bool)
+    func didSelect(index: Int, allowsMultipleSelection: Bool, checkCell: () -> Void, deselectCell: () -> Void)
     func didDeselect(index: Int)
     func deleteFavoriteMeal(index: Int)
     func decisionBarButtonTapped()
@@ -19,7 +19,6 @@ protocol FavoriteMealPresenterProtocolInput {
 
 protocol FavoriteMealPresenterProtocolOutput: AnyObject {
     func showAddMeal(favoriteMeal: FavoriteMealModel?, favoriteMeals: [FavoriteMealModel]?, date: Date)
-    func reload()
     func emptyAlert()
 }
 
@@ -53,14 +52,16 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
         return self.favoriteMeals[index]
     }
     
-    func didSelect(index: Int, isChecked: Bool) {
-        guard !isChecked else {
-            //複数選択の時はselectedIndexに格納するだけ
+    func didSelect(index: Int, allowsMultipleSelection: Bool, checkCell: () -> Void, deselectCell: () -> Void) {
+        if allowsMultipleSelection {
+            //複数選択
+            checkCell()
             self.selectedIndex.append(index)
-            return
+        } else {
+            //単選択
+            deselectCell()
+            self.output.showAddMeal(favoriteMeal: self.favoriteMeals[index], favoriteMeals: nil, date: self.date)
         }
-        //単選択
-        self.output.showAddMeal(favoriteMeal: self.favoriteMeals[index], favoriteMeals: nil, date: self.date)
     }
     
     func decisionBarButtonTapped() {
