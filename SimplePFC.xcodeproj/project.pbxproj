@@ -20,6 +20,7 @@
 		3C1E58512A6FB57B0049ED04 /* MealRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C1E58502A6FB57B0049ED04 /* MealRealm.swift */; };
 		3C20127C2A66FC5A00663334 /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C20127B2A66FC5A00663334 /* UITextField+.swift */; };
 		3C20127E2A670C9E00663334 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C20127D2A670C9E00663334 /* UILabel+.swift */; };
+		3C66FB032A91E70D00E35408 /* CalendarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C66FB022A91E70D00E35408 /* CalendarPresenter.swift */; };
 		3C9CBAA62A7568E00074E43E /* FavoriteMealViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9CBAA52A7568E00074E43E /* FavoriteMealViewController.swift */; };
 		3C9CBAA82A7568F90074E43E /* FavoriteMeal.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3C9CBAA72A7568F90074E43E /* FavoriteMeal.storyboard */; };
 		3C9CBAAD2A75E43D0074E43E /* FavoriteMealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C9CBAAB2A75E43D0074E43E /* FavoriteMealTableViewCell.swift */; };
@@ -52,6 +53,7 @@
 		3C1E58502A6FB57B0049ED04 /* MealRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealRealm.swift; sourceTree = "<group>"; };
 		3C20127B2A66FC5A00663334 /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		3C20127D2A670C9E00663334 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		3C66FB022A91E70D00E35408 /* CalendarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPresenter.swift; sourceTree = "<group>"; };
 		3C9CBAA52A7568E00074E43E /* FavoriteMealViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMealViewController.swift; sourceTree = "<group>"; };
 		3C9CBAA72A7568F90074E43E /* FavoriteMeal.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FavoriteMeal.storyboard; sourceTree = "<group>"; };
 		3C9CBAAB2A75E43D0074E43E /* FavoriteMealTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteMealTableViewCell.swift; sourceTree = "<group>"; };
@@ -147,11 +149,28 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		3C8888232A70EF5400A7335E /* Calendar */ = {
+		3C66FB002A91E6D300E35408 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				3C66FB022A91E70D00E35408 /* CalendarPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		3C66FB012A91E6DB00E35408 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				3CF6828E2A70EFDF00FCC010 /* CalendarViewController.swift */,
 				3CF682902A70EFF700FCC010 /* Calendar.storyboard */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3C8888232A70EF5400A7335E /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				3C66FB002A91E6D300E35408 /* Presenter */,
+				3C66FB012A91E6DB00E35408 /* Controller */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -378,6 +397,7 @@
 				3C1E58472A6ED1FC0049ED04 /* MealsPresenter.swift in Sources */,
 				3CCF8E072A5DB81D00ABE104 /* Router.swift in Sources */,
 				3C20127E2A670C9E00663334 /* UILabel+.swift in Sources */,
+				3C66FB032A91E70D00E35408 /* CalendarPresenter.swift in Sources */,
 				3C1589B72A3454520026470F /* SceneDelegate.swift in Sources */,
 				3CCF8E102A5DBC0E00ABE104 /* PFCTableViewCell.swift in Sources */,
 			);

@@ -15,6 +15,8 @@ final class Router {
     
     func showRoot(window: UIWindow) {
         guard let vc = UIStoryboard(name: "Calendar", bundle: nil).instantiateInitialViewController() as? CalendarViewController else { return }
+        let presenter = CalendarPresenter(output: vc)
+        vc.inject(presenter: presenter)
         let nc = UINavigationController(rootViewController: vc)
         window.rootViewController = nc
         window.makeKeyAndVisible()

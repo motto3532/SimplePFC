@@ -29,7 +29,7 @@ final class FavoriteMealPresenter {
     private var selectedIndex: [Int] = []
     private let date: Date
     
-    init(output: FavoriteMealPresenterProtocolOutput!, realm: MealRealm = MealRealm.shared, date: Date) {
+    init(output: FavoriteMealPresenterProtocolOutput, realm: MealRealm = MealRealm.shared, date: Date) {
         self.output = output
         self.realm = realm
         self.date = date

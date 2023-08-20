@@ -17,17 +17,17 @@ final class CalendarViewController: UIViewController{
         }
     }
     
-    private var eventDates: [String] = []
-    private let dateFormatter = DateFormatter()
+    private var presenter: CalendarPresenterInput!
+    
+    func inject(presenter: CalendarPresenterInput){
+        self.presenter = presenter
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //次の画面のbackボタンをカレンダーに変更
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "カレンダー", style: .plain, target: nil, action: nil)
-        
-        //rootでこの画面きたらすぐmealsへ移動
-        Router.shared.showMeals(from: self, date: Date())
         
         calendar.calendarHeaderView.backgroundColor = .white
         calendar.calendarWeekdayView.backgroundColor = .white
@@ -44,54 +44,64 @@ final class CalendarViewController: UIViewController{
         calendar.calendarWeekdayView.weekdayLabels[4].text = "金"
         calendar.calendarWeekdayView.weekdayLabels[5].text = "土"
         calendar.calendarWeekdayView.weekdayLabels[6].text = "日"
+        
+        self.presenter.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.eventDates = []
-        
-        self.dateFormatter.dateFormat = "yyyy/MM/dd"
-        let realmRegistedData = MealRealm.shared.getMealsData()
-        for data in realmRegistedData {
-            let dateStr = self.dateFormatter.string(from: data.date)
-            if !self.eventDates.contains(dateStr) {
-                self.eventDates.append(dateStr)
-            }
-        }
-        
+        self.presenter.reloadEventsData()
+    }
+}
+
+extension CalendarViewController: CalendarPresenterOutput {
+    func deselect(date: Date) {
+        self.calendar.deselect(date)
+    }
+    
+    func reloadData() {
         self.calendar.reloadData()
+    }
+    
+    func showMeals(date: Date) {
+        Router.shared.showMeals(from: self, date: date)
     }
 }
 
 extension CalendarViewController: FSCalendarDelegate {
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
-        //dateはDate型だから、絶対時間(日本より9時間遅い)が格納されてる
-        Router.shared.showMeals(from: self, date: date)
-        self.calendar.deselect(date)
+        self.presenter.didSelect(date: date)
     }
 }
 
 extension CalendarViewController: FSCalendarDataSource {
-    
 }
 
 extension CalendarViewController: FSCalendarDelegateAppearance {
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, fillDefaultColorFor date: Date) -> UIColor? {
-        let dateStr = dateFormatter.string(from: date)
-        if self.eventDates.contains(dateStr) {
-            return UIColor.systemMint
-        } else {
-            return nil
+        
+        var fillDefaultColor: UIColor? = nil
+        
+        let hasEvent = { () -> Void in
+            fillDefaultColor = UIColor.systemMint
         }
+        
+        self.presenter.defaultColorFor(date: date, hasEvent: hasEvent)
+        
+        return fillDefaultColor
     }
     
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
-        let dateStr = dateFormatter.string(from: date)
-        if self.eventDates.contains(dateStr) {
-            return UIColor.white
-        } else {
-            return nil
+        
+        var titleDefaultColor: UIColor? = nil
+        
+        let hasEvent = { () -> Void in
+            titleDefaultColor = UIColor.white
         }
+        
+        self.presenter.defaultColorFor(date: date, hasEvent: hasEvent)
+        
+        return titleDefaultColor
     }
 }
