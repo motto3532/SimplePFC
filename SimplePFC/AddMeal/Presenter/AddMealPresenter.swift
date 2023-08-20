@@ -45,31 +45,28 @@ extension AddMealPresenter: AddMealPresenterInput {
         if let _meal = self.meal {
             //編集画面
             self.output.configure(meal: _meal)
-            
-        } else if let _favoriteMeal = self.favoriteMeal {
-            //お気に入り
-            //被り
-            guard let date = self.date else { fatalError() }
-            let currentDate = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy/MM/dd"
-            if dateFormatter.string(from: currentDate) == dateFormatter.string(from: date) {
-                self.output.configure(favoriteMeal: _favoriteMeal, date: currentDate)
+            return
+        }
+        
+        guard let date = self.date else { fatalError() }
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        //dateが今日の日付と一致するか判別
+        let isToday = { () -> Date in
+            if dateFormatter.string(from: today) == dateFormatter.string(from: date) {
+                return today
             } else {
-                self.output.configure(favoriteMeal: _favoriteMeal, date: date)
+                return date
             }
+        }
+        
+        if let _favoriteMeal = self.favoriteMeal {
+            //お気に入り
+            self.output.configure(favoriteMeal: _favoriteMeal, date: isToday())
         } else {
             //新規追加
-            //被り
-            guard let date = self.date else { fatalError() }
-            let currentDate = Date()
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy/MM/dd"
-            if dateFormatter.string(from: currentDate) == dateFormatter.string(from: date) {
-                self.output.configure(date: currentDate)
-            } else {
-                self.output.configure(date: date)
-            }
+            self.output.configure(date: isToday())
         }
     }
     
