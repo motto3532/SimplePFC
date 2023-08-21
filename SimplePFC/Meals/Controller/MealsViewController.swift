@@ -111,6 +111,10 @@ extension MealsViewController: UITableViewDelegate {
         
         return editingStyle
     }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "削除"
+    }
 }
 
 extension MealsViewController: UITableViewDataSource {

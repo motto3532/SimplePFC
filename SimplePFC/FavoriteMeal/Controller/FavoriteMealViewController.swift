@@ -110,6 +110,10 @@ extension FavoriteMealViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return FavoriteMealTableViewCell.cellHeight
     }
+    
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "削除"
+    }
 }
 
 extension FavoriteMealViewController: UITableViewDataSource {
