@@ -68,7 +68,7 @@ final class FavoriteMealViewController: UIViewController {
     }
     
     func decisionButtonTapped(_ sender: UIResponder) {
-        self.presenter.decisionBarButtonTapped()
+        self.presenter.decisionButtonTapped()
     }
 }
 
@@ -89,12 +89,12 @@ extension FavoriteMealViewController: FavoriteMealPresenterProtocolOutput {
 extension FavoriteMealViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let checkCell = { () -> Void in
+        let checkCell = {() -> Void in
             guard let cell = tableView.cellForRow(at: indexPath) as? FavoriteMealTableViewCell else { return }
             cell.isChecked()
         }
         
-        let deselectCell = { () -> Void in
+        let deselectCell = {() -> Void in
             self.tableView.deselectRow(at: indexPath, animated: true)
         }
         

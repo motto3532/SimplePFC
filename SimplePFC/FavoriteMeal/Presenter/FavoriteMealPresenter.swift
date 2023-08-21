@@ -14,7 +14,7 @@ protocol FavoriteMealPresenterProtocolInput {
     func didSelect(index: Int, allowsMultipleSelection: Bool, checkCell: () -> Void, deselectCell: () -> Void)
     func didDeselect(index: Int)
     func deleteFavoriteMeal(index: Int)
-    func decisionBarButtonTapped()
+    func decisionButtonTapped()
 }
 
 protocol FavoriteMealPresenterProtocolOutput: AnyObject {
@@ -64,7 +64,7 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
         }
     }
     
-    func decisionBarButtonTapped() {
+    func decisionButtonTapped() {
         if self.selectedIndex.isEmpty {
             self.output.emptyAlert()
         } else {

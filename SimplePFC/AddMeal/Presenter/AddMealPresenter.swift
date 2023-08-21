@@ -53,7 +53,7 @@ extension AddMealPresenter: AddMealPresenterInput {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy/MM/dd"
         //dateが今日か判別
-        let isToday = { () -> Date in
+        let isToday = {() -> Date in
             if dateFormatter.string(from: today) == dateFormatter.string(from: date) {
                 return today
             } else {

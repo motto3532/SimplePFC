@@ -102,18 +102,26 @@ extension MealsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        //PFCセルは削除できない
-        if indexPath.section == 0 {
-            return .none
+        var editingStyle = UITableViewCell.EditingStyle.delete
+        
+        let isPFCCell = {() -> Void in
+            editingStyle = UITableViewCell.EditingStyle.none
         }
-        return .delete
+        self.presenter.editingStyleForRowAt(indexPath: indexPath, isPFCCell: isPFCCell)
+        
+        return editingStyle
     }
 }
 
 extension MealsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        let deleteRow: () -> Void = { tableView.deleteRows(at: [indexPath], with: .automatic) }
-        let deleteSection: () -> Void = { tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic) }
+        
+        let deleteRow = {() -> Void in
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        let deleteSection = {() -> Void in
+            tableView.deleteSections(IndexSet(integer: indexPath.section), with: .automatic)
+        }
         self.presenter.deleteMeal(indexPath: indexPath, deleteRow: deleteRow, deleteSection: deleteSection)
     }
     
@@ -152,20 +160,5 @@ extension MealsViewController: UITableViewDataSource {
         
         guard let _cell = cell else { fatalError() }
         return _cell
-        
-        
-        //        if indexPath.section == 0 {
-        //            guard let pfcCell = self.tableView.dequeueReusableCell(withIdentifier: PFCTableViewCell.className) as? PFCTableViewCell else {
-        //                fatalError()
-        //            }
-        //            pfcCell.configure(meals: self.presenter.getMeals(), date: self.presenter.getDate)
-        //            return pfcCell
-        //        }
-        //
-        //        guard let mealCell = tableView.dequeueReusableCell(withIdentifier: MealTableViewCell.className) as? MealTableViewCell else {
-        //            fatalError()
-        //        }
-        //        mealCell.configure(meal: self.presenter.getMeal(indexPath: indexPath))
-        //        return mealCell
     }
 }

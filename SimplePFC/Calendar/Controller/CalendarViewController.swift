@@ -83,7 +83,7 @@ extension CalendarViewController: FSCalendarDelegateAppearance {
         
         var fillDefaultColor: UIColor? = nil
         
-        let hasEvent = { () -> Void in
+        let hasEvent = {() -> Void in
             fillDefaultColor = UIColor.systemMint
         }
         
@@ -96,7 +96,7 @@ extension CalendarViewController: FSCalendarDelegateAppearance {
         
         var titleDefaultColor: UIColor? = nil
         
-        let hasEvent = { () -> Void in
+        let hasEvent = {() -> Void in
             titleDefaultColor = UIColor.white
         }
         

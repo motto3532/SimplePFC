@@ -19,9 +19,8 @@ protocol MealsPresenterInput {
     func favoriteMealBarButtonItemTapped()
     func heightForRowAt(indexPath: IndexPath) -> CGFloat
     func didSelect(indexPath: IndexPath)
-//    func getMeals() -> [MealModel]
-//    func getMeal(indexPath: IndexPath) -> MealModel
     func cellForRowAt(indexPath: IndexPath, pfcCell: ([MealModel], Date) -> Void, mealCell: (MealModel) -> Void)
+    func editingStyleForRowAt(indexPath: IndexPath, isPFCCell: () -> Void)
 }
 //疎結合でコンポーネント間の依存性を最小限に抑える
 protocol MealsPresenterOutput: AnyObject {//class限定プロトコルにすることでweak var使える
@@ -52,6 +51,13 @@ final class MealsPresenter {
 }
 
 extension MealsPresenter: MealsPresenterInput {
+    func editingStyleForRowAt(indexPath: IndexPath, isPFCCell: () -> Void) {
+        //PFCCellはスワイプ削除不可
+        if indexPath.section == 0 {
+            isPFCCell()
+        }
+    }
+    
     func deleteMeal(indexPath: IndexPath, deleteRow: () -> Void, deleteSection: () -> Void) {
         //realmから消す
         self.realm.delete(meal: self.sectionRowPairs[indexPath.section - 1].row[indexPath.row])
@@ -156,14 +162,6 @@ extension MealsPresenter: MealsPresenterInput {
         let meal = self.sectionRowPairs[indexPath.section - 1].row[indexPath.row]//PFCセルの分
         self.output.showAddMeal(meal: meal, date: nil)//編集だからdateはnil
     }
-    
-//    func getMeals() -> [MealModel] {
-//        return self.meals
-//    }
-//
-//    func getMeal(indexPath: IndexPath) -> MealModel {
-//        return self.sectionRowPairs[indexPath.section - 1].row[indexPath.row]//PFCセルの分
-//    }
     
     func cellForRowAt(indexPath: IndexPath, pfcCell: ([MealModel], Date) -> Void, mealCell: (MealModel) -> Void) {
         if indexPath.section == 0 {
