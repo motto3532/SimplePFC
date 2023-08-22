@@ -9,7 +9,7 @@ import Foundation
 
 protocol AddMealPresenterInput {
     func viewDidLoad()
-    func addMealButtonTapped(favorite: Bool, date: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
+    func addMealButtonTapped(favorite: Bool, date: Date, name: String?, amount: String?, amountRatio: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
     func deleteMealButtonTapped()
     func synthesizeFavoriteMeals(favoriteMeals: [FavoriteMealModel]) -> FavoriteMealModel
 }
@@ -70,9 +70,9 @@ extension AddMealPresenter: AddMealPresenterInput {
         }
     }
     
-    func addMealButtonTapped(favorite: Bool, date: Date, name: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
+    func addMealButtonTapped(favorite: Bool, date: Date, name: String?, amount: String?, amountRatio: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
     //食事内容追加・編集
-        guard let _name = name, let _calorie = calorie, let _protein = protein, let _fat = fat, let _carbohydrate = carbohydrate else {
+        guard let _name = name, let _amount = amount, let _amountRatio = amountRatio, let _calorie = calorie, let _protein = protein, let _fat = fat, let _carbohydrate = carbohydrate else {
             return
         }
         //名前とカロリー必須
@@ -80,17 +80,19 @@ extension AddMealPresenter: AddMealPresenterInput {
             self.output.emptyAlert()
             return
         }
-        
+        let amountRatioInt = Int(_amountRatio) ?? 100
         let nutrients = [_calorie, _protein, _fat, _carbohydrate].map{ Int($0) ?? 0 }
         
         if let meal = self.meal {
             //編集処理
-            self.realm.edit(date: date, meal: meal, name: _name, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
+            self.realm.edit(date: date, meal: meal, name: _name, amount: _amount, amountRatio: amountRatioInt, calorie: nutrients[0], protein: nutrients[1], fat: nutrients[2], carbohydrate: nutrients[3])
         } else {
             //追加処理
             let newMeal = MealModel()
             newMeal.date = date
             newMeal.name = _name
+            newMeal.amount = _amount
+            newMeal.amountRatio = amountRatioInt
             newMeal.calorie = nutrients[0]
             newMeal.protein = nutrients[1]
             newMeal.fat = nutrients[2]
@@ -102,6 +104,8 @@ extension AddMealPresenter: AddMealPresenterInput {
         if favorite {
             let favoriteMeal = FavoriteMealModel()
             favoriteMeal.name = _name
+            favoriteMeal.amount = _amount
+            favoriteMeal.amountRatio = amountRatioInt
             favoriteMeal.calorie = nutrients[0]
             favoriteMeal.protein = nutrients[1]
             favoriteMeal.fat = nutrients[2]

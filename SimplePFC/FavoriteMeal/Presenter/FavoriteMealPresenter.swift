@@ -71,6 +71,8 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
             //複数選択
             let combinedFavoriteMeal = FavoriteMealModel()
             combinedFavoriteMeal.name = ""
+            combinedFavoriteMeal.amount = ""
+            combinedFavoriteMeal.amountRatio = 100
             combinedFavoriteMeal.calorie = 0
             combinedFavoriteMeal.protein = 0
             combinedFavoriteMeal.fat = 0
@@ -78,6 +80,7 @@ extension FavoriteMealPresenter: FavoriteMealPresenterProtocolInput {
             
             for index in self.selectedIndex {
                 combinedFavoriteMeal.name += combinedFavoriteMeal.name.isEmpty ? self.favoriteMeals[index].name : "+\(self.favoriteMeals[index].name)"
+                combinedFavoriteMeal.amount += combinedFavoriteMeal.amount.isEmpty ? self.favoriteMeals[index].amount : "+\(self.favoriteMeals[index].amount)"
                 combinedFavoriteMeal.calorie += self.favoriteMeals[index].calorie
                 combinedFavoriteMeal.protein += self.favoriteMeals[index].protein
                 combinedFavoriteMeal.fat += self.favoriteMeals[index].fat

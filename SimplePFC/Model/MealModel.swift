@@ -16,6 +16,8 @@ final class MealModel: Object {
     @Persisted(primaryKey: true) var id: ObjectId//勝手にidうまいことしてくれるぽい
     @Persisted var date: Date
     @Persisted var name: String
+    @Persisted var amount: String
+    @Persisted var amountRatio: Int
     @Persisted var calorie: Int
     @Persisted var protein: Int
     @Persisted var fat: Int
@@ -25,6 +27,8 @@ final class MealModel: Object {
 final class FavoriteMealModel: Object {
     @Persisted(primaryKey: true) var id: ObjectId
     @Persisted var name: String
+    @Persisted var amount: String
+    @Persisted var amountRatio: Int
     @Persisted var calorie: Int
     @Persisted var protein: Int
     @Persisted var fat: Int

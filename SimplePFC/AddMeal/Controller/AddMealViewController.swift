@@ -39,6 +39,15 @@ final class AddMealViewController: UIViewController {
     @IBOutlet private weak var mealNameTextField: UITextField! {
         didSet { mealNameTextField.configure(onlyNumberPad: false) }
     }
+    @IBOutlet private weak var amountTextField: UITextField! {
+        didSet {
+            amountTextField.configure(onlyNumberPad: false)
+            amountTextField.attributedPlaceholder = NSAttributedString(string: "例）100g", attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        }
+    }
+    @IBOutlet private weak var amountRatioTextField: UITextField! {
+        didSet { amountRatioTextField.configure(onlyNumberPad: true) }
+    }
     @IBOutlet private weak var calorieTextField: UITextField! {
         didSet { calorieTextField.configure(onlyNumberPad: true) }
     }
@@ -79,6 +88,8 @@ final class AddMealViewController: UIViewController {
             favorite: self.favoriteSwitch.isOn,
             date: self.datePicker.date,
             name: self.mealNameTextField.text,
+            amount: self.amountTextField.text,
+            amountRatio: self.amountRatioTextField.text,
             calorie: self.calorieTextField.text,
             protein: self.proteinTextField.text,
             fat: self.fatTextField.text,
@@ -96,6 +107,8 @@ extension AddMealViewController: AddMealPresenterOutput {
     func configure(date: Date) {
         self.datePicker.date = date
         self.mealNameTextField.text = ""
+        self.amountTextField.text = ""
+        self.amountRatioTextField.text = "100"
         self.calorieTextField.text = ""
         self.proteinTextField.text = ""
         self.fatTextField.text = ""
@@ -106,6 +119,8 @@ extension AddMealViewController: AddMealPresenterOutput {
     func configure(meal: MealModel) {
         self.datePicker.date = meal.date
         self.mealNameTextField.text = meal.name
+        self.amountTextField.text = meal.amount
+        self.amountRatioTextField.text = String(describing: meal.amountRatio)
         self.calorieTextField.text = String(describing: meal.calorie)
         self.proteinTextField.text = String(describing: meal.protein)
         self.fatTextField.text = String(describing: meal.fat)
@@ -121,6 +136,8 @@ extension AddMealViewController: AddMealPresenterOutput {
     func configure(favoriteMeal: FavoriteMealModel, date: Date) {
         self.datePicker.date = date
         self.mealNameTextField.text = favoriteMeal.name
+        self.amountTextField.text = favoriteMeal.amount
+        self.amountRatioTextField.text = String(describing: favoriteMeal.amountRatio)
         self.calorieTextField.text = String(describing: favoriteMeal.calorie)
         self.proteinTextField.text = String(describing: favoriteMeal.protein)
         self.fatTextField.text = String(describing: favoriteMeal.fat)
