@@ -46,7 +46,10 @@ final class AddMealViewController: UIViewController {
         }
     }
     @IBOutlet private weak var amountRatioTextField: UITextField! {
-        didSet { amountRatioTextField.configure(onlyNumberPad: true) }
+        didSet {
+            amountRatioTextField.configure(onlyNumberPad: true)
+            amountRatioTextField.delegate = self
+        }
     }
     @IBOutlet private weak var calorieTextField: UITextField! {
         didSet { calorieTextField.configure(onlyNumberPad: true) }
@@ -165,5 +168,12 @@ extension AddMealViewController: AddMealPresenterOutput {
         alert.addAction(delete)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
+    }
+}
+
+extension AddMealViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        //presenterに変更を通知（変更後の数値を渡す）
+        //presenterにmeal,favoriteMealが存在すればそのまま計算。なければviewController側から入力値を引っ張ってくる必要あるかな？
     }
 }
