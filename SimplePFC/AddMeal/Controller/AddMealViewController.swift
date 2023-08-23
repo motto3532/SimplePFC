@@ -169,11 +169,29 @@ extension AddMealViewController: AddMealPresenterOutput {
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
+    
+    func update(calorie: String, protein: String, fat: String, carbohydrate: String) {
+        self.calorieTextField.text = calorie
+        self.proteinTextField.text = protein
+        self.fatTextField.text = fat
+        self.carbohydrateTextField.text = carbohydrate
+    }
 }
 
 extension AddMealViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        //変更前のamountRatioをpresenterに通知する
+        self.presenter.set(amountRatio: self.amountRatioTextField.text)
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
-        //presenterに変更を通知（変更後の数値を渡す）
-        //presenterにmeal,favoriteMealが存在すればそのまま計算。なければviewController側から入力値を引っ張ってくる必要あるかな？
+        //presenterに変更を通知（変更後の値を渡す）
+        self.presenter.calculateChangesFor(
+            amountRatio: self.amountRatioTextField.text,
+            calorie: self.calorieTextField.text,
+            protein: self.proteinTextField.text,
+            fat: self.fatTextField.text,
+            carbohydrate: self.carbohydrateTextField.text
+        )
     }
 }

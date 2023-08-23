@@ -12,6 +12,8 @@ protocol AddMealPresenterInput {
     func addMealButtonTapped(favorite: Bool, date: Date, name: String?, amount: String?, amountRatio: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?)
     func deleteMealButtonTapped()
     func synthesizeFavoriteMeals(favoriteMeals: [FavoriteMealModel]) -> FavoriteMealModel
+    func set(amountRatio: String?)
+    func calculateChangesFor(amountRatio: String?, calorie: String?, protein: String?, fat: String? , carbohydrate: String?)
 }
 
 protocol AddMealPresenterOutput: AnyObject {
@@ -21,6 +23,7 @@ protocol AddMealPresenterOutput: AnyObject {
     func emptyAlert()
     func goBack()
     func deleteAlert(action: @escaping () -> Void)
+    func update(calorie: String, protein: String, fat: String, carbohydrate: String)
 }
 
 final class AddMealPresenter {
@@ -29,6 +32,7 @@ final class AddMealPresenter {
     private let favoriteMeal: FavoriteMealModel?
     private let realm: MealRealm
     private let date: Date?
+    private var amountRatio: Double = 0
     
     init(output: AddMealPresenterOutput, meal: MealModel?, favoriteMeal: FavoriteMealModel?, realm: MealRealm = MealRealm.shared, date: Date?) {
         self.output = output
@@ -149,5 +153,45 @@ extension AddMealPresenter: AddMealPresenterInput {
         }
         
         return favMeal
+    }
+    
+    func set(amountRatio: String?) {
+        guard let amountRatioStr = amountRatio, let amountRatioInt = Double(amountRatioStr) else {
+            return
+        }
+        self.amountRatio = amountRatioInt
+    }
+    
+    func calculateChangesFor(amountRatio: String?, calorie: String?, protein: String?, fat: String?, carbohydrate: String?) {
+        guard
+            let _amountRatio = amountRatio,
+            let _calorie = calorie,
+            let _protein = protein,
+            let _fat = fat,
+            let _carbohydrate = carbohydrate
+        else { return }
+        
+        guard
+            let amountRatio = Double(_amountRatio),
+            let calorie = Double(_calorie),
+            let protein = Double(_protein),
+            let fat = Double(_fat),
+            let carbohydrate = Double(_carbohydrate)
+        else { return }
+        
+        //Intにキャストして小数点以下切り捨て
+        if self.amountRatio == 0 { self.amountRatio = 1 }//分母が0にならないように
+        let resultRatio = amountRatio / self.amountRatio
+        let resultCalorie = Int(calorie * resultRatio)
+        let resultProtein = Int(protein * resultRatio)
+        let resultFat = Int(fat * resultRatio)
+        let resultCarbohydrate = Int(carbohydrate * resultRatio)
+        
+        self.output.update(
+            calorie: String(describing: resultCalorie),
+            protein: String(describing: resultProtein),
+            fat: String(describing: resultFat),
+            carbohydrate: String(describing: resultCarbohydrate)
+        )
     }
 }
