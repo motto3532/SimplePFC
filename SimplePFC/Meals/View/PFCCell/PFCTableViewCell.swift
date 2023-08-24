@@ -14,14 +14,38 @@ final class PFCTableViewCell: UITableViewCell {
     @IBOutlet private weak var pfcView: UIView! {
         didSet {
             pfcView.setCornerRadius(cornerRadius: CGFloat(30.0))
+            pfcView.backgroundColor = .systemMint
          }
     }
     
-    @IBOutlet private weak var dateLabel: UILabel!
-    @IBOutlet private weak var calorieLabel: UILabel!
-    @IBOutlet private weak var proteinLabel: UILabel! {didSet{proteinLabel.setBorder()}}
-    @IBOutlet private weak var fatLabel: UILabel! {didSet{fatLabel.setBorder()}}
-    @IBOutlet private weak var carbohydrateLabel: UILabel! {didSet{carbohydrateLabel.setBorder()}}
+    @IBOutlet private weak var dateLabel: UILabel! {
+        didSet {
+            dateLabel.textColor = .white
+        }
+    }
+    @IBOutlet private weak var calorieLabel: UILabel! {
+        didSet {
+            calorieLabel.textColor = .white
+        }
+    }
+    @IBOutlet private weak var proteinLabel: UILabel! {
+        didSet{
+            proteinLabel.setBorder()
+            proteinLabel.textColor = .white
+        }
+    }
+    @IBOutlet private weak var fatLabel: UILabel! {
+        didSet{
+            fatLabel.setBorder()
+            fatLabel.textColor = .white
+        }
+    }
+    @IBOutlet private weak var carbohydrateLabel: UILabel! {
+        didSet{
+            carbohydrateLabel.setBorder()
+            carbohydrateLabel.textColor = .white
+        }
+    }
     
     private var calorie: String { "calorie" }
     private var protein: String { "protein" }
