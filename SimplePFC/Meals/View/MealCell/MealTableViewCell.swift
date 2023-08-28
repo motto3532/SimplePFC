@@ -19,6 +19,10 @@ final class MealTableViewCell: UITableViewCell {
     @IBOutlet private weak var carbohydrateLabel: UILabel! { didSet{ carbohydrateLabel.textColor = .black } }
     @IBOutlet private weak var colonLabel1: UILabel! { didSet{ colonLabel1.textColor = .black } }
     @IBOutlet private weak var colonLabel2: UILabel! { didSet{ colonLabel2.textColor = .black } }
+    @IBOutlet private weak var kcalLabel: UILabel! { didSet{ kcalLabel.textColor = .black } }
+    @IBOutlet private weak var gramLabel1: UILabel! { didSet{ gramLabel1.textColor = .black } }
+    @IBOutlet private weak var gramLabel2: UILabel! { didSet{ gramLabel2.textColor = .black } }
+    @IBOutlet private weak var gramLabel3: UILabel! { didSet{ gramLabel3.textColor = .black } }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,6 +31,10 @@ final class MealTableViewCell: UITableViewCell {
         
         self.colonLabel1.text = ":"
         self.colonLabel2.text = ":"
+        self.kcalLabel.text = "kcal"
+        self.gramLabel1.text = "g"
+        self.gramLabel2.text = "g"
+        self.gramLabel3.text = "g"
         
         let cellSelectedBackgroundView = UIView()
         cellSelectedBackgroundView.backgroundColor = .systemMint
@@ -43,10 +51,10 @@ final class MealTableViewCell: UITableViewCell {
     }
     
     func configure(meal: MealModel) {
-        self.nameLabel.text = "\(meal.name)"
-        self.calorieLabel.text = "\(meal.calorie) kcal"
-        self.proteinLabel.text = "\(String(describing: meal.protein))g"
-        self.fatLabel.text = "\(String(describing: meal.fat))g"
-        self.carbohydrateLabel.text = "\(String(describing: meal.carbohydrate))g"
+        self.nameLabel.text = String(describing: meal.name)
+        self.calorieLabel.text = String(describing: meal.calorie)
+        self.proteinLabel.text = String(describing: meal.protein)
+        self.fatLabel.text = String(describing: meal.fat)
+        self.carbohydrateLabel.text = String(describing: meal.carbohydrate)
     }
 }
