@@ -25,8 +25,8 @@ final class FavoriteMealViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //次の画面のbackボタンを戻るに変更
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "戻る", style: .plain, target: nil, action: nil)
+        //次の画面のbackボタンを変更
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         
         //画面タイトル
         let titleLabel = UILabel()
